@@ -14,6 +14,6 @@ After years of inconsistency, this is my attempt to permanently make the improve
 
 ## Table of Contents
 
-1. [Motivation](#motivation)
+[Motivation](#motivation)
 
 </div>
