@@ -1,3 +1,5 @@
+[![Setup AWS Environment](https://github.com/mdominguez2010/fitness-app/actions/workflows/aws.yml/badge.svg)](https://github.com/mdominguez2010/fitness-app/actions/workflows/aws.yml)
+
 <div align="center">
 
 # My Fitness Journey
