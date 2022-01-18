@@ -1,7 +1,6 @@
 pylint
 pytest
 click
-black
 pytest-cov
 numpy
 pandas
