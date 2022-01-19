@@ -16,5 +16,5 @@ def echo(name):
   val = {"new-name": name}
   return jsonify(val)
 
-if __name__ = "__main__":
+if __name__ == "__main__":
   app.route(host="127.0.0.1", port=8080, debug=True)
