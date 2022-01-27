@@ -18,4 +18,15 @@ cursor.execute("""
     )
 """)
 
+
+
 connection.commit()
+
+
+###########################################################
+
+# CREATE TABLE IF NOT EXISTS weight(
+#   id INT PRIMARY KEY     NOT NULL,
+#   date           TEXT    NOT NULL,
+#   weight            REAL     NOT NULL
+# );
