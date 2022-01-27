@@ -1,1 +1,1 @@
-DB_FILE_PATH = 'app.db'
+DB_FILE_PATH = "/home/ec2-user/environment/fitness-app/db/app.db"
