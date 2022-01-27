@@ -1,1 +1,1 @@
-DB_FILE_PATH = '/Users/dominguez/Documents/Trading-App2/app.db'
+DB_FILE_PATH = 'app.db'
