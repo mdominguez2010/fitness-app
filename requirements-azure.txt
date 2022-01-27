@@ -6,4 +6,3 @@ pytest-cov
 numpy
 pandas
 flask
-sqlite3
