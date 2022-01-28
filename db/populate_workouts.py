@@ -8,7 +8,6 @@ import pathlib
 # sqlite> .mode csv
 # sqlite> .import c:/sqlite/city_no_header.csv cities
 
-# Connect to database
 def create_connection(db_file):
     """ create a database connection to the SQLite database
         specified by the db_file
@@ -23,9 +22,6 @@ def create_connection(db_file):
 
     return connection
 
-connection = create_connection(config.DB_FILE_PATH)
-
-# Create cursor object
 def select_all(connection, n_rows=10):
     """
     Query all rows in the table
@@ -40,7 +36,12 @@ def select_all(connection, n_rows=10):
     for row in rows[:n_rows]:
         print(row)
 
-select_all(connection=connection)
+# Connect to database
+connection = create_connection(config.DB_FILE_PATH)
 
-connection.commit()
+# Select all objects in desired table
+select_all(connection=connection, n_rows=2)
+
+# Close connection
+# connection.commit()
 connection.close()
