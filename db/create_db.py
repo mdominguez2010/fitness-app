@@ -13,14 +13,13 @@ cursor = connection.cursor()
 cursor.execute("""
     CREATE TABLE IF NOT EXISTS weight (
         id INTEGER PRIMARY KEY,
-        date REAL NOT NULL,
+        date TEXT NOT NULL,
         weight REAL NOT NULL
     )
 """)
 
-
-
 connection.commit()
+
 
 
 ###########################################################
