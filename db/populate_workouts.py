@@ -16,32 +16,24 @@ cursor.execute("""
 # Re-create table
 cursor.execute("""
     CREATE TABLE IF NOT EXISTS workouts (
-        id INTEGER PRIMARY KEY,
         date TEXT NOT NULL,
         exercise TEXT NOT NULL,
-        reps INTEGER NOT NULL,
-        weight REAL NOT NULL,
-        duration REAL NOT NULL,
-        distance REAL NOT NULL,
-        incline REAL NOT NULL,
-        resistance REAL NOT NULL,
-        isWarmup NOT NULL,
+        reps TEXT NOT NULL,
+        weight TEXT NOT NULL,
+        duration TEXT NOT NULL,
+        distance TEXT NOT NULL,
+        incline TEXT NOT NULL,
+        resistance TEXT NOT NULL,
+        isWarmup TEXT NOT NULL,
         note TEXT,
-        multiplier INTEGER NOT NULL
+        multiplier TEXT NOT NULL
     )
 """)
 
-# Imports the WorkoutExport file into the workouts table
-cursor.execute("""
-    .mode csv
-""")
+# Imports the WorkoutExport file into the workouts table (run the following 3 lines in shell)
 
-filename = "WorkoutExport.csv"
-tablename = "workouts"
-filepath = str(pathlib.Path(__file__).parent.resolve()) + filename
-
-cursor.execute(f"""
-    .import {filepath} {tablename}
-""")
+# (.fitness-app) md_ghsd@cloudshell:~/fitness-app/db (fitness-app-338622)$ sqlite3
+# sqlite> .mode csv
+# sqlite> .import c:/sqlite/city_no_header.csv cities
 
 connection.commit()
