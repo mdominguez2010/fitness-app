@@ -1,1 +1,6 @@
-DB_FILE_PATH = "/home/ec2-user/environment/fitness-app/db/app.db"
+import pathlib
+
+# Get current directory
+DB_FILE_PATH = str(pathlib.Path(__file__).parent.resolve()) + "/app.db"
+
+print(DB_FILE_PATH)
