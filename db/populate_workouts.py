@@ -11,7 +11,6 @@ cursor = connection.cursor()
 # Drop workouts table
 cursor.execute("""
     DROP TABLE IF EXISTS workouts
-    )
 """)
 
 # Re-create table
@@ -38,10 +37,11 @@ cursor.execute("""
 """)
 
 filename = "WorkoutExport.csv"
+tablename = "workouts"
 filepath = str(pathlib.Path(__file__).parent.resolve()) + filename
 
 cursor.execute(f"""
-    .import {filepath}
+    .import {filepath} {tablename}
 """)
 
 connection.commit()
