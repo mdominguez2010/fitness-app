@@ -18,6 +18,7 @@ cursor.execute("""
 
 cursor.execute("""
     CREATE TABLE IF NOT EXISTS workouts (
+        id INTEGER PRIMARY KEY
         date TEXT NOT NULL,
         exercise TEXT NOT NULL,
         reps TEXT NOT NULL,

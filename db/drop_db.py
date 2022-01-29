@@ -1,13 +1,11 @@
 import sqlite3
-from sqlite3 import Error
 import config
-import pathlib
 
 def create_connection(db_file):
     """
     create a database connection to the SQLite database
     specified by the db_file
-    :param db_file: database file
+    :param db_file: database filepath
     :return: Connection object or None
     """
     connection = None
@@ -18,7 +16,16 @@ def create_connection(db_file):
 
     return connection
 
-# Connect to Sqlite db
+# Establish connection to db
 connection = create_connection(config.DB_FILE_PATH)
+cursor = connection.cursor()
 
-# Execute SQL
+# Drop table(s)
+TABLES = ["weight", "workouts"]
+for table in TABLES:
+    cursor.execute(f"""
+        DROP TABLE {table}
+    """)
+
+connection.commit()
+connection.close()

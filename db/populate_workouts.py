@@ -22,14 +22,14 @@ def create_connection(db_file):
 
     return connection
 
-def select_all(connection, n_rows=10):
+def select_all(table_name, connection, n_rows=10):
     """
     Query all rows in the table
     :param conn: the Connection object
     :return:
     """
     cursor = connection.cursor()
-    cursor.execute("SELECT * FROM workouts")
+    cursor.execute(f"SELECT * FROM {table_name}")
 
     rows = cursor.fetchall()
 
@@ -40,7 +40,8 @@ def select_all(connection, n_rows=10):
 connection = create_connection(config.DB_FILE_PATH)
 
 # Select all objects in desired table
-select_all(connection=connection, n_rows=2)
+TABLE_NAME = "workouts"
+select_all(table_name = TABLE_NAME,connection=connection, n_rows=2)
 
 # Close connection
 connection.commit()
