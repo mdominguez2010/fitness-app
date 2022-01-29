@@ -1,11 +1,15 @@
 import sqlite3
 from sqlite3 import Error
+from remove_header_from_csv import remove_header_from_csv
 import config
 import pathlib
 import csv
 
 FILENAME = "WorkoutExport.csv"
 TABLENAME = "workouts"
+
+# First remove header from csv file
+remove_header_from_csv(filename=FILENAME)
 
 def create_connection(db_file):
     """

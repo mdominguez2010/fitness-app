@@ -1,7 +1,7 @@
 import sqlite3
 from sqlite3 import Error
 import config
-import remove_header_from_csv
+from remove_header_from_csv import remove_header_from_csv
 import pathlib
 import csv
 
