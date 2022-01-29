@@ -12,7 +12,12 @@ cursor.execute("""
     CREATE TABLE IF NOT EXISTS weight (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         date TEXT NOT NULL,
-        weight REAL NOT NULL
+        weight TEXT NOT NULL,
+        fatmass TEXT,
+        bonemass TEXT,
+        muslemass TEXT,
+        hydration TEXT,
+        comments TEXT
     )
 """)
 
