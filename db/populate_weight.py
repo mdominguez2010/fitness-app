@@ -4,6 +4,8 @@ import config
 import pathlib
 import csv
 
+FILENAME = "WorkoutExport.csv"
+
 def create_connection(db_file):
     """
     create a database connection to the SQLite database
@@ -26,7 +28,7 @@ connection = create_connection(config.DB_FILE_PATH)
 cursor = connection.cursor()
 
 # Open the csv file
-file = open("weight.csv")
+file = open(FILENAME)
 
 # Reading contents of file
 contents = csv.reader(file)

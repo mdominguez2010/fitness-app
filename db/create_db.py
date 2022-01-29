@@ -15,7 +15,7 @@ cursor.execute("""
         weight TEXT NOT NULL,
         fatmass TEXT,
         bonemass TEXT,
-        muslemass TEXT,
+        musclemass TEXT,
         hydration TEXT,
         comments TEXT
     )
