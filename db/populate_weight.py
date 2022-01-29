@@ -5,7 +5,7 @@ from remove_header_from_csv import remove_header_from_csv
 import pathlib
 import csv
 
-FILENAME = "weight.csv"
+
 TABLENAME = "weight"
 
 # First remove header from csv file

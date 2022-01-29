@@ -5,7 +5,6 @@ import config
 import pathlib
 import csv
 
-FILENAME = "WorkoutExport.csv"
 TABLENAME = "workouts"
 
 # First remove header from csv file

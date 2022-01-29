@@ -1,6 +1,7 @@
 import csv
 
-FILENAME = "WorkoutExport.csv"
+FILENAME = "weight.csv"
+#FILENAME = "WorkoutExport.csv"
 
 def remove_header_from_csv(filename):
     """
@@ -32,7 +33,7 @@ def remove_header_from_csv(filename):
     for row in csvreader:
         rows.append(row)
 
-    print(rows[:10])
+    # print(rows[:10])
 
     file.close()
 
