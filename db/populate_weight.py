@@ -22,6 +22,9 @@ def create_connection(db_file):
 # Connect to Sqlite db
 connection = create_connection(config.DB_FILE_PATH)
 
+# Create cursor object
+cursor = connection.cursor()
+
 # Open the csv file
 file = open("weight.csv")
 
@@ -29,7 +32,7 @@ file = open("weight.csv")
 contents = csv.reader(file)
 
 # SQL query to execute
-insert_records = "INSERT INTO weight (date, weight) VALUES (?, ?)"
+insert_records = "INSERT INTO weight (date, weight, fatmass, bonemass, musclemass, hydration, comments) VALUES (?, ?, ?, ?, ?, ?, ?)"
 
 # Importing contents of csv file into table
 cursor.executemany(insert_records, contents)
@@ -41,7 +44,7 @@ rows = cursor.execute(select_all).fetchall()
 
 # Output to the console screen
 for row in rows[:5]:
-    print(r)
+    print(row)
 
 # Commit changes
 connection.commit()
