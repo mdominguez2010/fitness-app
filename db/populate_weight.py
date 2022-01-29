@@ -8,6 +8,9 @@ import csv
 FILENAME = "weight.csv"
 TABLENAME = "weight"
 
+# First remove header from csv file
+remove_header_from_csv(filename=FILENAME)
+
 def create_connection(db_file):
     """
     create a database connection to the SQLite database
