@@ -43,5 +43,5 @@ connection = create_connection(config.DB_FILE_PATH)
 select_all(connection=connection, n_rows=2)
 
 # Close connection
-# connection.commit()
+connection.commit()
 connection.close()
