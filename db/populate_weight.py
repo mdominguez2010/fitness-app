@@ -1,10 +1,12 @@
 import sqlite3
 from sqlite3 import Error
 import config
+import remove_header_from_csv
 import pathlib
 import csv
 
-FILENAME = "WorkoutExport.csv"
+FILENAME = "weight.csv"
+TABLENAME = "weight"
 
 def create_connection(db_file):
     """
@@ -34,7 +36,7 @@ file = open(FILENAME)
 contents = csv.reader(file)
 
 # SQL query to execute
-insert_records = "INSERT INTO weight (date, weight, fatmass, bonemass, musclemass, hydration, comments) VALUES (?, ?, ?, ?, ?, ?, ?)"
+insert_records = f"INSERT INTO {TABLENAME} (date, weight, fatmass, bonemass, musclemass, hydration, comments) VALUES (?, ?, ?, ?, ?, ?, ?)"
 
 # Importing contents of csv file into table
 cursor.executemany(insert_records, contents)
