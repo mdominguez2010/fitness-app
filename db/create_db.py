@@ -10,7 +10,7 @@ cursor = connection.cursor()
 # Create tables
 cursor.execute("""
     CREATE TABLE IF NOT EXISTS weight (
-        id INTEGER PRIMARY KEY,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         date TEXT NOT NULL,
         weight REAL NOT NULL
     )
@@ -18,7 +18,7 @@ cursor.execute("""
 
 cursor.execute("""
     CREATE TABLE IF NOT EXISTS workouts (
-        id INTEGER PRIMARY KEY,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         date TEXT NOT NULL,
         exercise TEXT NOT NULL,
         reps TEXT NOT NULL,
