@@ -12,10 +12,9 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
     
-@app.route("/about/<username>")
-def about_page(username):
-    # return render_template("about.html")
-    return f"<h1>This is the about page of {username}<h1>"
+@app.route("/progress")
+def progress():
+    return render_template("progress.html")
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080, debug=DEVELOPMENT_ENV)
