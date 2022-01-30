@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-  Progress Page
+  Market Page
 {% endblock %}
 
 {% block content %}
@@ -10,6 +10,8 @@
                 <!-- Your Columns HERE -->
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
+                <th scope="col">Barcode</th>
+                <th scope="col">Price</th>
                 <th scope="col">Options</th>
             </tr>
         </thead>
@@ -19,6 +21,8 @@
                 <tr>
                     <td>{{ item.id }}</td>
                     <td>{{ item.name }}</td>
+                    <td>{{ item.barcode }}</td>
+                    <td>{{ item.price }}$</td>
                     <td>
                         <button class="btn btn-outline btn-info">More Info</button>
                         <button class="btn btn-outline btn-success">Purchase this Item</button>
