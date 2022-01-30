@@ -40,12 +40,3 @@ cursor.execute("""
 
 connection.commit()
 connection.close()
-
-
-###########################################################
-
-# CREATE TABLE IF NOT EXISTS weight(
-#   id INT PRIMARY KEY     NOT NULL,
-#   date           TEXT    NOT NULL,
-#   weight            REAL     NOT NULL
-# );
