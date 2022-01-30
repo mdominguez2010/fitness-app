@@ -14,7 +14,7 @@ def index():
     
 @app.route("/progress")
 def progress():
-    return render_template("progress.html")
+    return render_template("progress.html", item_name="Strength")
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080, debug=DEVELOPMENT_ENV)
