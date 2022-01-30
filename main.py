@@ -6,24 +6,16 @@ DEVELOPMENT_ENV = True
 
 app = Flask(__name__)
 
-# app_data = {
-#     "name": "Peter's Starter Template for a Flask Web App",
-#     "description": "A basic Flask app using bootstrap for layout",
-#     "author": "Peter Simeth",
-#     "html_title": "Peter's Starter Template for a Flask Web App",
-#     "project_name": "Starter Template",
-#     "keywords": "flask, webapp, template, basic",
-# }
-
 
 @app.route("/")
 def index():
-    # return render_template("index.html", app_data=app_data)
-    return render_template("index.html")
+    # return render_template("index.html")
+    return "<h1>Hello world!<h1>"
     
 @app.route("/about")
 def about_page():
-    return render_template("about.html")
+    # return render_template("about.html")
+    return "<h1>About Page<h1>"
 
 # @app.route("/about")
 # def about():
