@@ -12,10 +12,10 @@ def index():
     # return render_template("index.html")
     return "<h1>Hello world!<h1>"
     
-@app.route("/about")
-def about_page():
+@app.route("/about/<username>")
+def about_page(username):
     # return render_template("about.html")
-    return "<h1>About Page<h1>"
+    return f"<h1>This is the about page of {username}<h1>"
 
 # @app.route("/about")
 # def about():
