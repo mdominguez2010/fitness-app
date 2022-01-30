@@ -1,4 +1,4 @@
-###### IN PROCESS #########
+###### IN DEVELOPMENT #########
 
 from flask import Flask, render_template
 
@@ -9,8 +9,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    # return render_template("index.html")
-    return "<h1>Hello world!<h1>"
+    return render_template("index.html")
     
 @app.route("/about/<username>")
 def about_page(username):
