@@ -21,10 +21,10 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('home') }}">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{ url_for('home_page') }}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('progress') }}">Progress</a>
+                <a class="nav-link" href="{{ url_for('market_page') }}">Market</a>
             </li>
         </ul>
         <ul class="navbar-nav">
@@ -38,7 +38,7 @@
       </div>
     </nav>
       {% block content %}
-        
+
       {% endblock %}
       <!-- Future Content here -->
 
@@ -52,10 +52,9 @@
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
    </body>
    <style>
-    body{
-        background-color: #212121;
-        color: white;
-    }
-
-    </style>
+      body {
+      background-color: #212121;
+      color: white
+      }
+   </style>
 </html>
