@@ -1,11 +1,46 @@
 import sqlite3
 from sqlite3 import Error
-from remove_header_from_csv import remove_header_from_csv
 import config
 import pathlib
 import csv
 
+#FILENAME = "weight.csv"
+FILENAME = "WorkoutExport.csv"
 TABLENAME = "workouts"
+
+def remove_header_from_csv(filename):
+    """
+    Removes first row from csv file
+    """
+    # Open csv file
+    file = open(FILENAME)
+    csvreader = csv.reader(file)
+
+    # Extract data
+    rows = []
+    for row in csvreader:
+        rows.append(row)
+    header = rows[0]
+    data = rows[1:]
+
+    # Close file
+    file.close()
+
+    # Write the rows data into the file
+    with open(FILENAME, 'w', encoding='UTF8', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerows(data)
+
+    # Confirm written file
+    file = open(FILENAME)
+    csvreader = csv.reader(file)
+    rows = []
+    for row in csvreader:
+        rows.append(row)
+
+    # print(rows[:10])
+
+    file.close()
 
 # First remove header from csv file
 remove_header_from_csv(filename=FILENAME)
@@ -43,6 +78,9 @@ insert_records = f"INSERT INTO {TABLENAME} (date, exercise, reps, weight, durati
 # Importing contents of csv file into table
 cursor.executemany(insert_records, contents)
 
+# Commit changes
+connection.commit()
+
 # SQL query to retrieve all data from the table to
 # verify successful insertion
 select_all = f"SELECT * FROM {TABLENAME}"
@@ -51,9 +89,6 @@ rows = cursor.execute(select_all).fetchall()
 # Output to the console screen
 for row in rows[:5]:
     print(row)
-
-# Commit changes
-connection.commit()
 
 # Close db connection
 connection.close()

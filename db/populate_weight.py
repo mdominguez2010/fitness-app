@@ -78,17 +78,17 @@ insert_records = f"INSERT INTO {TABLENAME} (date, weight, fatmass, bonemass, mus
 # Importing contents of csv file into table
 cursor.executemany(insert_records, contents)
 
+# Commit changes
+connection.commit()
+
 # SQL query to retrieve all data from the table to
 # verify successful insertion
-select_all = "SELECT * FROM weight"
+select_all = f"SELECT * FROM {TABLENAME}"
 rows = cursor.execute(select_all).fetchall()
 
 # Output to the console screen
 for row in rows[:5]:
     print(row)
-
-# Commit changes
-connection.commit()
 
 # Close db connection
 connection.close()
