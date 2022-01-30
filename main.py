@@ -10,14 +10,13 @@ DEVELOPMENT_ENV = True
 def home_page():
     return render_template('home.html')
 
-@app.route('/market')
+@app.route('/progress')
 def market_page():
     items = [
-        {'id': 1, 'name': 'Phone', 'barcode': '893212299897', 'price': 500},
-        {'id': 2, 'name': 'Laptop', 'barcode': '123985473165', 'price': 900},
-        {'id': 3, 'name': 'Keyboard', 'barcode': '231985128446', 'price': 150}
+        {'id': 1, 'name': 'Phone'},
+        {'id': 2, 'name': 'Laptop'},
     ]
-    return render_template('market.html', items=items)
+    return render_template('progress.html', items=items)
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080, debug=DEVELOPMENT_ENV)
