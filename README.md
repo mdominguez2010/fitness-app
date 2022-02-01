@@ -2,7 +2,7 @@
 
 [![Setup Azure Environment](https://github.com/mdominguez2010/fitness-app/actions/workflows/azure.yml/badge.svg)](https://github.com/mdominguez2010/fitness-app/actions/workflows/azure.yml)
 
-<div align="left">
+<div align="center">
 
 # My Fitness Journey
 
@@ -14,7 +14,7 @@ After years of inconsistency, this is my attempt to permanently make the improve
 
 </div>
 
-<div align="center">
+<div align="left">
 
 ## Table of Contents
 
