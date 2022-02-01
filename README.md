@@ -1,8 +1,9 @@
-<img src="https://user-images.githubusercontent.com/52106331/148104179-dc255656-1b29-4f22-bc2c-49bf4d64447c.jpg" align="right" />
+<img src="https://user-images.githubusercontent.com/52106331/148104179-dc255656-1b29-4f22-bc2c-49bf4d64447c.jpg" align="right"/>
 
 # My Fitness Journey
 > An app for a lifetime of fitness
-Join me on my personal journey to loose weight, get stronger, fitter, and other fitness goals
+
+Join me on my personal journey to loose weight, get stronger, fitter, and other fitness goals.
 
 After years of inconsistency, this is my attempt to permanently make the improvements for sustainable fitness
 
@@ -26,7 +27,7 @@ After years of inconsistency, this is my attempt to permanently make the improve
 
 [![Setup Azure Environment](https://github.com/mdominguez2010/fitness-app/actions/workflows/azure.yml/badge.svg)](https://github.com/mdominguez2010/fitness-app/actions/workflows/azure.yml)
 
-<div align="center">
+<div align="left">
 
 # My Fitness Journey
 
