@@ -9,15 +9,6 @@ Join me on my personal journey to get fitter and stronger!
 
 ![dumbbell](https://user-images.githubusercontent.com/52106331/148104179-dc255656-1b29-4f22-bc2c-49bf4d64447c.jpg)
 
-## Table of Contents
-[Motivation](#motivation)
-
-[Instructions](#Instructions)
-
-[Measurements](#Measurements)
-
-[Acknowlegements](#Acknowlegements)
-
 #### <u>Motivation</u>
 <p>I am what was referred by Larry David in Curb Your Enthusiasm as a "yo-yo" dieter. Now is the time to put an end to the emotional ups-and-downs of losing weight and quickly re-gaining it.</p>
 
