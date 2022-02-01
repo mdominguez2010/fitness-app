@@ -21,4 +21,15 @@ After years of inconsistency, this is my attempt to permanently make the improve
 [Motivation](#motivation)
 <p>I am what was referred by Larry David in Curb Your Enthusiasm as a "yo-yo" dieter. Now is the time to put an end to the emotional ups-and-downs of losing weight and quickly re-gaining it.</p>
 
+[What does the app do?](#What is this app?)
+<p>Tracking Progress</p>
+
+[Measurements](#Measurements)
+1. Weight
+2. Strength
+    - Weightlifting
+    - Pull-ups
+3. Cardio
+    - Timed mile
+
 </div>
