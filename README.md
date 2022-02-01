@@ -1,6 +1,4 @@
-[![Setup AWS Environment](https://github.com/mdominguez2010/fitness-app/actions/workflows/aws.yml/badge.svg)](https://github.com/mdominguez2010/fitness-app/actions/workflows/aws.yml)
-
-[![Setup Azure Environment](https://github.com/mdominguez2010/fitness-app/actions/workflows/azure.yml/badge.svg)](https://github.com/mdominguez2010/fitness-app/actions/workflows/azure.yml)
+[![Setup AWS Environment](https://github.com/mdominguez2010/fitness-app/actions/workflows/aws.yml/badge.svg)](https://github.com/mdominguez2010/fitness-app/actions/workflows/aws.yml) [![Setup Azure Environment](https://github.com/mdominguez2010/fitness-app/actions/workflows/azure.yml/badge.svg)](https://github.com/mdominguez2010/fitness-app/actions/workflows/azure.yml)
 
 <div align="left">
 
