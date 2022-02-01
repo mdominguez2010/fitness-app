@@ -9,13 +9,13 @@ Join me on my personal journey to get fitter and stronger!
 
 ![dumbbell](https://user-images.githubusercontent.com/52106331/148104179-dc255656-1b29-4f22-bc2c-49bf4d64447c.jpg)
 
-#### <u>Motivation</u>
+### <u>Motivation</u>
 <p>I am what was referred by Larry David in Curb Your Enthusiasm as a "yo-yo" dieter. Now is the time to put an end to the emotional ups-and-downs of losing weight and quickly re-gaining it.</p>
 
-#### <u>Instructions</u>
+### <u>Instructions</u>
 <p>INSTRUCTIONS HERE</p>
 
-#### <u>Measurements</u>
+### <u>Measurements</u>
 <ol type="1">
     <li>Weight</li>
     <li>Strength
@@ -31,5 +31,5 @@ Join me on my personal journey to get fitter and stronger!
     </li>
 </ol>
 
-#### <u>Acknowledgements</u>
+### <u>Acknowledgements</u>
 <p>CREDITS/ACKNOWLEDGEMENTS HERE</p>
