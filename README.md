@@ -21,7 +21,7 @@ After years of inconsistency, this is my attempt to permanently make the improve
 [Motivation](#motivation)
 <p>I am what was referred by Larry David in Curb Your Enthusiasm as a "yo-yo" dieter. Now is the time to put an end to the emotional ups-and-downs of losing weight and quickly re-gaining it.</p>
 
-[What does the app do?](#What is this app?)
+[What does the app do?](#What does the app do?)
 <p>Tracking Progress</p>
 
 [Measurements](#Measurements)
@@ -39,5 +39,11 @@ After years of inconsistency, this is my attempt to permanently make the improve
         </ol>
     </li>
 </ol>
+
+[How to use the app](#How to use the app)
+<p>INSTRUCTIONS HERE</p>
+
+[Acknowlegements](#Acknowlegements)
+<p>CREDITS/ACKNOWLEDGEMENTS HERE</p>
 
 </div>
