@@ -7,7 +7,7 @@
 # My Fitness Journey
 > An app for a lifetime of fitness
 
-Join me on my personal journey to loose weight, get stronger, fitter, and other fitness goals
+Join me on my personal journey to get fitter and stronger!
 
 ![dumbbell](https://user-images.githubusercontent.com/52106331/148104179-dc255656-1b29-4f22-bc2c-49bf4d64447c.jpg)
 
