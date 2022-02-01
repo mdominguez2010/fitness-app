@@ -17,7 +17,9 @@
             <!-- Your rows inside the table HERE: -->
             {% for item in items %}
                 <tr>
-                    <td>{{ item.id }}</td>
+                    <td>
+                        <button class="btn btn-outline btn-info">{{ item.id }}</button>
+                    </td>
                     <td>{{ item.name }}</td>
                     <td>
                         <button class="btn btn-outline btn-info">Info</button>
