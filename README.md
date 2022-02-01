@@ -40,7 +40,7 @@ After years of inconsistency, this is my attempt to permanently make the improve
     </li>
 </ol>
 
-[How to use the app](#How to use the app)
+[Instructions](#Instructions)
 <p>INSTRUCTIONS HERE</p>
 
 [Acknowlegements](#Acknowlegements)
