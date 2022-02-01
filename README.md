@@ -1,7 +1,5 @@
 [![Setup AWS Environment](https://github.com/mdominguez2010/fitness-app/actions/workflows/aws.yml/badge.svg)](https://github.com/mdominguez2010/fitness-app/actions/workflows/aws.yml) [![Setup Azure Environment](https://github.com/mdominguez2010/fitness-app/actions/workflows/azure.yml/badge.svg)](https://github.com/mdominguez2010/fitness-app/actions/workflows/azure.yml)
 
-
-
 # My Fitness Journey
 > An app for a lifetime of fitness
 
