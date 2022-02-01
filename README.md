@@ -25,6 +25,20 @@ After years of inconsistency, this is my attempt to permanently make the improve
 <p>Tracking Progress</p>
 
 [Measurements](#Measurements)
+<ol type="1">
+    <li>Weight</li>
+    <li>Strength
+        <ol>
+            <li>Weightlifting</li>
+            <li>Pull-ups</li>
+        </ol>
+    </li>
+    <li>Cardio
+        <ol>
+            <li>Timed mile</li>
+        </ol>
+    </li>
+</ol>
 1. Weight
 2. Strength
     - Weightlifting
