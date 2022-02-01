@@ -18,12 +18,13 @@
             {% for item in items %}
                 <tr>
                     <td>
-                        <button class="btn btn-outline btn-info">{{ item.id }}</button>
+                        {{ item.id }}
                     </td>
-                    <td>{{ item.name }}</td>
                     <td>
-                        <button class="btn btn-outline btn-info">Info</button>
-                        <button class="btn btn-outline btn-success">Details</button>
+                        <button class="btn btn-outline btn-success">{{ item.name }}</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-outline btn-info">Details</button>
                     </td>
                 </tr>
             {% endfor %}
