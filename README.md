@@ -39,11 +39,5 @@ After years of inconsistency, this is my attempt to permanently make the improve
         </ol>
     </li>
 </ol>
-1. Weight
-2. Strength
-    - Weightlifting
-    - Pull-ups
-3. Cardio
-    - Timed mile
 
 </div>
