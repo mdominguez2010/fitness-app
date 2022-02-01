@@ -18,8 +18,8 @@ Join me on my personal journey to get fitter and stronger!
 [Motivation](#motivation)
 <p>I am what was referred by Larry David in Curb Your Enthusiasm as a "yo-yo" dieter. Now is the time to put an end to the emotional ups-and-downs of losing weight and quickly re-gaining it.</p>
 
-[What does the app do?](#What does the app do?)
-<p>Tracking Progress</p>
+[Instructions](#Instructions)
+<p>INSTRUCTIONS HERE</p>
 
 [Measurements](#Measurements)
 <ol type="1">
@@ -36,9 +36,6 @@ Join me on my personal journey to get fitter and stronger!
         </ol>
     </li>
 </ol>
-
-[Instructions](#Instructions)
-<p>INSTRUCTIONS HERE</p>
 
 [Acknowlegements](#Acknowlegements)
 <p>CREDITS/ACKNOWLEDGEMENTS HERE</p>
