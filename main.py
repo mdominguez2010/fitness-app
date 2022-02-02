@@ -42,8 +42,8 @@ def progress_page():
 
     return render_template('progress.html', items=items)
 
-# @app.route('/progress/weight')
-# def weight_page():
+@app.route('/progress/weight')
+def weight_page():
 
 #     QUERY = "SELECT date(date) as date, MIN(weight) as weight FROM weight WHERE date(date) > '2020-12-31' GROUP BY date ORDER BY date ASC;"
 #     VALUES = () # simple query, no ETL
@@ -62,7 +62,7 @@ def progress_page():
 
 #     data = {'Plot': fig.show()}
 
-#     return render_template('weight.html', items=data)
+    return render_template('weight.html')
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080, debug=DEVELOPMENT_ENV)
