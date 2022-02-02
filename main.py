@@ -54,8 +54,8 @@ def weight_page():
     cursor = executeSQL(db.config.DB_FILE_PATH, sql_query=QUERY, values=VALUES)
     rows = cursor.fetchall()
 
-    X = [row["date"] for row in rows]
-    Y = [row["weight"] for row in rows]
+    labels = [row["date"] for row in rows]
+    values = [row["weight"] for row in rows]
 
     connection.commit()
     connection.close()
@@ -67,7 +67,7 @@ def weight_page():
 
     # graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 
-    return render_template('weight.html', X=X, Y=Y)
+    return render_template('weight.html', labels=labels, values=values)
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080, debug=DEVELOPMENT_ENV)
