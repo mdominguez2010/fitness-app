@@ -60,14 +60,14 @@ def weight_page():
     connection.commit()
     connection.close()
 
-    df = pd.DataFrame({'Date': X, 'Weight': Y})
+    # df = pd.DataFrame({'Date': X, 'Weight': Y})
 
-    fig = px.line(df, x='Date', y='Weight')
+    # fig = px.line(df, x='Date', y='Weight')
     # fig.show()
 
-    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    # graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 
-    return render_template('weight.html', graphJSON=graphJSON)
+    return render_template('weight.html', X=X, Y=Y)
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080, debug=DEVELOPMENT_ENV)
