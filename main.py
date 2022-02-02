@@ -57,17 +57,17 @@ def weight_page():
     connection.commit()
     connection.close()
 
-    data = [
-        {'X': X},
-        {'Y': Y}
-    ]
+    # data = [
+    #     {'X': X},
+    #     {'Y': Y}
+    # ]
 
 #     fig = px.line(x=X, y=Y)
 #     fig.show()
 
 #     data = {'Plot': fig.show()}
 
-    return render_template('weight.html', items=data)
+    return render_template('weight.html')
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080, debug=DEVELOPMENT_ENV)
