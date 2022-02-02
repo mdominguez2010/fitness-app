@@ -1,5 +1,8 @@
 from flask import Flask, render_template
 import sqlite3
+import pandas as pd
+import json
+import plotly
 import db.config
 import plotly.express as px
 
@@ -57,17 +60,14 @@ def weight_page():
     connection.commit()
     connection.close()
 
-    # data = [
-    #     {'X': X},
-    #     {'Y': Y}
-    # ]
+    df = pd.DataFrame({'Date': X, 'Weight': Y})
 
-#     fig = px.line(x=X, y=Y)
-#     fig.show()
+    fig = px.line(df, x='Date', y='Weight')
+    # fig.show()
 
-#     data = {'Plot': fig.show()}
+    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 
-    return render_template('weight.html')
+    return render_template('weight.html', graphJSON=graphJSON)
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080, debug=DEVELOPMENT_ENV)

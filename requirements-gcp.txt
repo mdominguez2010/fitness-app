@@ -6,4 +6,4 @@ pytest-cov
 numpy
 pandas
 flask
-plotly-express
+plotly
