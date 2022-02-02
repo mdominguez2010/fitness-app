@@ -19,9 +19,10 @@
                 labels: {{ labels | safe }},
                 datasets: [
                     {
-                        labels: "Data points",
+                        label: "Data points",
                         data: {{ values | safe }},
                         fill: false,
+                        backgroundColor: "rgb(128, 128, 128)",
                         borderColor: "rgb(32, 150, 80)",
                         lineTension: 0.5
                     },
