@@ -45,24 +45,29 @@ def progress_page():
 @app.route('/weight')
 def weight_page():
 
-#     QUERY = "SELECT date(date) as date, MIN(weight) as weight FROM weight WHERE date(date) > '2020-12-31' GROUP BY date ORDER BY date ASC;"
-#     VALUES = () # simple query, no ETL
+    QUERY = "SELECT date(date) as date, MIN(weight) as weight FROM weight WHERE date(date) > '2020-12-31' GROUP BY date ORDER BY date ASC;"
+    VALUES = () # simple query, no ETL
 
-#     cursor = executeSQL(db.config.DB_FILE_PATH, sql_query=QUERY, values=VALUES)
-#     rows = cursor.fetchall()
+    cursor = executeSQL(db.config.DB_FILE_PATH, sql_query=QUERY, values=VALUES)
+    rows = cursor.fetchall()
 
-#     X = [row["date"] for row in rows]
-#     Y = [row["weight"] for row in rows]
+    X = [row["date"] for row in rows]
+    Y = [row["weight"] for row in rows]
 
-#     connection.commit()
-#     connection.close()
+    connection.commit()
+    connection.close()
+
+    data = [
+        {'X': X},
+        {'Y': Y}
+    ]
 
 #     fig = px.line(x=X, y=Y)
 #     fig.show()
 
 #     data = {'Plot': fig.show()}
 
-    return render_template('weight.html')
+    return render_template('weight.html', items=data)
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080, debug=DEVELOPMENT_ENV)
