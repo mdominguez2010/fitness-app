@@ -1,6 +1,7 @@
 import sqlite3
 import db.config
 import plotly.express as px
+import pandas as pd
 
 def executeSQL(db_filepath, sql_query, values=None):
     """Creates sqlite object and executes an SQL query
@@ -33,6 +34,8 @@ rows = cursor.fetchall()
 X = [row["date"] for row in rows]
 Y = [row["weight"] for row in rows]
 
+df = pd.DataFrame({'Date': X, 'Weight': Y})
+
 connection.commit()
 connection.close()
 
@@ -42,5 +45,5 @@ connection.close()
 # print(type(X[0]))
 # print(type(Y[0]))
 
-fig = px.line(x=X, y=Y)
+fig = px.line(df, x="Date", y="Weight")
 fig.show()
