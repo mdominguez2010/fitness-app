@@ -1,6 +1,5 @@
 from flask import Flask, render_template
 import sqlite3
-import pandas as pd
 import json
 import plotly
 import db.config
@@ -34,16 +33,16 @@ def executeSQL(db_filepath, sql_query, values=None):
 def home_page():
     return render_template('home.html')
 
-@app.route('/progress')
-def progress_page():
+# @app.route('/progress')
+# def progress_page():
 
-    items = [
-        {'id': 1, 'name': 'Weight'},
-        {'id': 2, 'name': 'Strength'},
-        {'id': 3, 'name': 'Cardio'}
-    ]
+#     items = [
+#         {'id': 1, 'name': 'Weight'},
+#         {'id': 2, 'name': 'Strength'},
+#         {'id': 3, 'name': 'Cardio'}
+#     ]
 
-    return render_template('progress.html', items=items)
+#     return render_template('progress.html', items=items)
 
 @app.route('/weight')
 def weight_page():
@@ -59,13 +58,6 @@ def weight_page():
 
     connection.commit()
     connection.close()
-
-    # df = pd.DataFrame({'Date': X, 'Weight': Y})
-
-    # fig = px.line(df, x='Date', y='Weight')
-    # fig.show()
-
-    # graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 
     return render_template('weight.html', labels=labels, values=values)
 
