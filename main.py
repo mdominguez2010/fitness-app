@@ -44,7 +44,9 @@ def weight_page():
 
     ######################## data for Strength Chart HERE ########################
 
-    
+    QUERY = "SELECT date, exercise, SUM(reps * weight) from workouts GROUP BY date, exercise limit 5;"
+    VALUES = ()
+
     ##############################################################################
 
     connection.commit()
