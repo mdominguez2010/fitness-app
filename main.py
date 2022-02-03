@@ -42,6 +42,11 @@ def weight_page():
     labels = [row["date"] for row in rows]
     values = [row["weight"] for row in rows]
 
+    ######################## data for Strength Chart HERE ########################
+
+    
+    ##############################################################################
+
     connection.commit()
     connection.close()
 
