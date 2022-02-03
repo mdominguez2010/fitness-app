@@ -5,32 +5,37 @@
 
 {% block content %}
 
-    <canvas id="linechart"></canvas>
-    <script>
-        var config = {
-            type: "line",
-            data: {
-                labels: {{ labels | safe }},
-                datasets: [
-                    {
-                        label: "Weight",
-                        data: {{ values | safe }},
-                        fill: false,
-                        borderColor: "rgb(0, 163, 108)",
-                        backgroundColor: "rgb(255, 255, 255)",
-                        lineTension: 0.5
-                    },
-                ]
-            },
-            options: {
-                responsive: true
-            }
-        }
+    <table cellpadding="30" width="100%">
+        <tr>
+            <td>
+                <canvas id="linechart"></canvas>
+                <script>
+                    var config = {
+                        type: "line",
+                        data: {
+                            labels: {{ labels | safe }},
+                            datasets: [
+                                {
+                                    label: "Weight",
+                                    data: {{ values | safe }},
+                                    fill: false,
+                                    borderColor: "rgb(0, 163, 108)",
+                                    backgroundColor: "rgb(255, 255, 255)",
+                                    lineTension: 0.5
+                                },
+                            ]
+                        },
+                        options: {
+                            responsive: true
+                        }
+                    }
 
-        var ctx = document.getElementById("linechart").getContext("2d");
-        var linechart = new Chart(
-            ctx, config
-        )
-    </script>
+                    var ctx = document.getElementById("linechart").getContext("2d");
+                    var linechart = new Chart(
+                        ctx, config
+                    )
+                </script>
+            </td>
+        </tr>
 
 {% endblock %}
