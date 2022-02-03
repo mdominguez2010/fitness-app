@@ -5,7 +5,7 @@
 
 {% block content %}
 
-    <canvas id="linechart" width="900" height="400"></canvas>
+    <canvas id="linechart"></canvas>
     <script>
         var config = {
             type: "line",
@@ -29,7 +29,8 @@
 
         var ctx = document.getElementById("linechart").getContext("2d");
         var linechart = new Chart(
-            ctx, config)
+            ctx, config
+        )
     </script>
 
 {% endblock %}
