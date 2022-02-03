@@ -20,7 +20,7 @@ def executeSQL(db_filepath, sql_query, values=None):
     Returns:
         sqlite3 cursor object
     """
-    global connection
+    global connection # for use in other functions
 
     connection = sqlite3.connect(db_filepath)
     connection.row_factory = sqlite3.Row
