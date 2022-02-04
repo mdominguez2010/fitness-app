@@ -36,9 +36,9 @@
                 </script>
             </td>
             <td>
-                <canvas id="linechart"></canvas>
+                <canvas id="linechart2"></canvas>
                 <script>
-                    var config = {
+                    var config2 = {
                         type: "line",
                         data: {
                             labels: {{ labels_ | safe }},
@@ -57,9 +57,9 @@
                             responsive: true
                         }
                     }
-                    var ctx = document.getElementById("linechart").getContext("2d");
-                    var linechart = new Chart(
-                        ctx, config
+                    var ctx2 = document.getElementById("linechart").getContext("2d");
+                    var linechart2 = new Chart2(
+                        ctx2, config2
                     )
                 </script>
             </td>
