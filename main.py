@@ -32,7 +32,6 @@ def executeSQL(db_filepath, sql_query, values=None):
 def home_page():
     return render_template("home.html")
 
-
 @app.route("/weight")
 def weight_page():
 
@@ -45,7 +44,13 @@ def weight_page():
     labels = [row["date"] for row in rows]
     values = [row["weight"] for row in rows]
 
-    ######################## data for Strength Chart HERE ########################
+    connection.commit()
+    connection.close()
+
+    return render_template("weight.html", labels=labels, values=values)
+
+@app.route("/strength")
+def strength_page():
 
     QUERY = "SELECT substr(date, 1, 10) as date, exercise, reps, weight, SUM(reps*weight) AS TotalVolume, duration, distance FROM workouts GROUP BY substr(date, 1, 10) ORDER BY substr(date, 1, 10) ASC LIMIT 10;"
     VALUES = ()
@@ -56,12 +61,10 @@ def weight_page():
     labels_ = [row["date"] for row in rows]
     values_ = [row["TotalVolume"] for row in rows]
 
-    ##############################################################################
-
     connection.commit()
     connection.close()
 
-    return render_template("weight.html", labels=labels, values=values, labels_=labels_, values_=values_)
+    return render_template("strength.html", labels_=labels_, values_=values_)
 
 
 if __name__ == "__main__":
