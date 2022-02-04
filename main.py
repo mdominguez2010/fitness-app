@@ -2,7 +2,7 @@ from flask import Flask, render_template
 import sqlite3
 import db.config
 
-DEVELOPMENT_ENV = True
+DEVELOPMENT_ENV = False
 
 app = Flask(__name__)
 
