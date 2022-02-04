@@ -3,6 +3,7 @@ import db.config
 import plotly.express as px
 import pandas as pd
 
+
 def executeSQL(db_filepath, sql_query, values=None):
     """Creates sqlite object and executes an SQL query
 
@@ -19,11 +20,12 @@ def executeSQL(db_filepath, sql_query, values=None):
     connection.row_factory = sqlite3.Row
     cursor = connection.cursor()
     cursor.execute(f"""{sql_query}""", values)
-    
+
     return cursor
 
+
 QUERY = "SELECT date(date) as date, MIN(weight) as weight FROM weight WHERE date(date) > '2020-12-31' GROUP BY date ORDER BY date ASC;"
-VALUES = () # simple query, no ETL
+VALUES = ()  # simple query, no ETL
 
 cursor = executeSQL(db.config.DB_FILE_PATH, sql_query=QUERY, values=VALUES)
 rows = cursor.fetchall()
@@ -34,7 +36,7 @@ rows = cursor.fetchall()
 X = [row["date"] for row in rows]
 Y = [row["weight"] for row in rows]
 
-df = pd.DataFrame({'Date': X, 'Weight': Y})
+df = pd.DataFrame({"Date": X, "Weight": Y})
 
 connection.commit()
 connection.close()
