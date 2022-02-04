@@ -35,6 +35,34 @@
                     )
                 </script>
             </td>
+            <td>
+                <canvas id="linechart"></canvas>
+                <script>
+                    var config = {
+                        type: "line",
+                        data: {
+                            labels: {{ labels_ | safe }},
+                            datasets: [
+                                {
+                                    label: "Total Volume",
+                                    data: {{ values_ | safe }},
+                                    fill: false,
+                                    borderColor: "rgb(0, 163, 108)",
+                                    backgroundColor: "rgb(255, 255, 255)",
+                                    lineTension: 0.5
+                                },
+                            ]
+                        },
+                        options: {
+                            responsive: true
+                        }
+                    }
+                    var ctx = document.getElementById("linechart").getContext("2d");
+                    var linechart = new Chart(
+                        ctx, config
+                    )
+                </script>
+            </td>
             <!-- INSERT CHARTS.JS TABLE HERE -->
         </tr>
 

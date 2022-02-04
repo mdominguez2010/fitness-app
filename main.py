@@ -47,15 +47,21 @@ def weight_page():
 
     ######################## data for Strength Chart HERE ########################
 
-    QUERY = "SELECT substr(date, 1, 10), exercise, reps, weight, reps*weight AS TotalVolume, duration, distance FROM workouts ORDER BY day ASC;"
+    QUERY = "SELECT substr(date, 1, 10) as date, exercise, reps, weight, SUM(reps*weight) AS TotalVolume, duration, distance FROM workouts GROUP BY substr(date, 1, 10) ORDER BY substr(date, 1, 10) ASC LIMIT 10;"
     VALUES = ()
+    
+    cursor = executeSQL(db.config.DB_FILE_PATH, sql_query=QUERY, values=VALUES)
+    rows = cursor.fetchall()
+    
+    labels_ = [row["date"] for row in rows]
+    values_ = [row["TotalVolume"] for row in rows]
 
     ##############################################################################
 
     connection.commit()
     connection.close()
 
-    return render_template("weight.html", labels=labels, values=values)
+    return render_template("weight.html", labels=labels, values=values, labels_=labels_, values_=values_)
 
 
 if __name__ == "__main__":
