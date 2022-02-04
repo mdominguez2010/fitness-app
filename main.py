@@ -2,7 +2,7 @@ from flask import Flask, render_template
 import sqlite3
 import db.config
 
-DEVELOPMENT_ENV = False
+DEVELOPMENT_ENV = True
 
 app = Flask(__name__)
 
@@ -47,7 +47,7 @@ def weight_page():
 
     ######################## data for Strength Chart HERE ########################
 
-    QUERY = "SELECT date, exercise, SUM(reps * weight) from workouts GROUP BY date, exercise limit 5;"
+    QUERY = "SELECT substr(date, 1, 10), exercise, reps, weight, reps*weight AS TotalVolume, duration, distance FROM workouts ORDER BY day ASC;"
     VALUES = ()
 
     ##############################################################################
