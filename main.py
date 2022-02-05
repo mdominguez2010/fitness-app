@@ -5,8 +5,8 @@ import db.config
 DEVELOPMENT_ENV = True
 app = Flask(__name__)
 
-# Config
-app.config["SERVER_NAME"] = "127.0.0.1:5000"  # FOR TESTING ONLY
+# Config (FOR TESTING ONLY)
+#app.config["SERVER_NAME"] = "127.0.0.1:5000"
 
 
 def executeSQL(db_filepath, sql_query, values=None):
