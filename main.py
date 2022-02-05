@@ -58,14 +58,32 @@ def strength_page():
     cursor = executeSQL(db.config.DB_FILE_PATH, sql_query=QUERY, values=VALUES)
     rows = cursor.fetchall()
     
-    labels_ = [row["date"] for row in rows]
-    values_ = [row["TotalVolume"] for row in rows]
+    labels_strength = [row["date"] for row in rows]
+    values_strength = [row["TotalVolume"] for row in rows]
 
     connection.commit()
     connection.close()
 
-    return render_template("strength.html", labels_=labels_, values_=values_)
+    return render_template("strength.html", labels_=labels_strength, values_=values_strength)
 
+@app.route("/cardio")
+def cardio_page():
+    
+
+    # QUERY = ";"
+    # VALUES = ()
+    
+    # cursor = executeSQL(db.config.DB_FILE_PATH, sql_query=QUERY, values=VALUES)
+    # rows = cursor.fetchall()
+    
+    # labels_cardio = [row["date"] for row in rows]
+    # values_cardio = [row["TotalVolume"] for row in rows]
+
+    # connection.commit()
+    # connection.close()
+
+    # return render_template("cardio.html", labels_=labels_cardio, values_=values_cardio)
+    return render_template("cardio.html")
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080, debug=DEVELOPMENT_ENV)

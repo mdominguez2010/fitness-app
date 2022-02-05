@@ -13,11 +13,11 @@
                     var config = {
                         type: "line",
                         data: {
-                            labels: {{ labels_ | safe }},
+                            labels: {{ labels_strength | safe }},
                             datasets: [
                                 {
                                     label: "Total Volume",
-                                    data: {{ values_ | safe }},
+                                    data: {{ values_strength | safe }},
                                     fill: false,
                                     borderColor: "rgb(0, 163, 108)",
                                     backgroundColor: "rgb(255, 255, 255)",
