@@ -3,7 +3,6 @@ import sqlite3
 import db.config
 
 DEVELOPMENT_ENV = True
-
 app = Flask(__name__)
 
 
@@ -17,14 +16,13 @@ def executeSQL(db_filepath, sql_query, values=None):
     Returns:
         sqlite3 cursor object
     """
-    global connection  # for use in other functions
 
     connection = sqlite3.connect(db_filepath)
     connection.row_factory = sqlite3.Row
     cursor = connection.cursor()
     cursor.execute(f"""{sql_query}""", values)
 
-    return cursor
+    return connection, cursor
 
 
 @app.route("/")
@@ -38,7 +36,7 @@ def weight_page():
     QUERY = "SELECT date(date) as date, MIN(weight) as weight FROM weight WHERE date(date) > '2020-12-31' GROUP BY date ORDER BY date ASC;"
     VALUES = ()  # simple query, no ETL
 
-    cursor = executeSQL(db.config.DB_FILE_PATH, sql_query=QUERY, values=VALUES)
+    connection, cursor = executeSQL(db.config.DB_FILE_PATH, sql_query=QUERY, values=VALUES)
     rows = cursor.fetchall()
 
     labels = [row["date"] for row in rows]
@@ -55,7 +53,7 @@ def strength_page():
     QUERY = "SELECT substr(date, 1, 10) as date, exercise, reps, weight, SUM(reps*weight) AS TotalVolume, duration, distance FROM workouts GROUP BY substr(date, 1, 10) ORDER BY substr(date, 1, 10) ASC LIMIT 10;"
     VALUES = ()
     
-    cursor = executeSQL(db.config.DB_FILE_PATH, sql_query=QUERY, values=VALUES)
+    connection, cursor = executeSQL(db.config.DB_FILE_PATH, sql_query=QUERY, values=VALUES)
     rows = cursor.fetchall()
     
     labels_strength = [row["date"] for row in rows]
@@ -69,11 +67,10 @@ def strength_page():
 @app.route("/cardio")
 def cardio_page():
     
-
     # QUERY = ";"
     # VALUES = ()
     
-    # cursor = executeSQL(db.config.DB_FILE_PATH, sql_query=QUERY, values=VALUES)
+    # connection, cursor = executeSQL(db.config.DB_FILE_PATH, sql_query=QUERY, values=VALUES)
     # rows = cursor.fetchall()
     
     # labels_cardio = [row["date"] for row in rows]
