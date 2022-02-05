@@ -30,8 +30,8 @@ def executeSQL(db_filepath, sql_query, values=None):
 @app.route("/")
 @app.route("/home")
 def home_page():
-    with app.app_context():  # FOR TESTING ONLY
-        return render_template("home.html")
+    # with app.app_context():  # FOR TESTING ONLY
+    return render_template("home.html")
 
 
 @app.route("/weight")
