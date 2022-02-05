@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 # Config (FOR TESTING ONLY)
 # app.config["SERVER_NAME"] = "127.0.0.1:5000"
-
+# Comment
 
 def executeSQL(db_filepath, sql_query, values=None):
     """Creates sqlite object and executes an SQL query
