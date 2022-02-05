@@ -13,6 +13,6 @@ lint:
 	pylint --disable=R,C main.py
 	
 test:
-	python -m pytest -vv --cov=hello hello_test.py
+	python -m pytest -vv --cov=main test_main.py
 	
 all: install format lint test
