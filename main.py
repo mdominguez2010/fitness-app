@@ -4,7 +4,7 @@ import db.config
 
 DEVELOPMENT_ENV = True
 app = Flask(__name__)
-
+app.config['SERVER_NAME'] = "127.0.0.1:5000" # FOR TESTING ONLY
 
 def executeSQL(db_filepath, sql_query, values=None):
     """Creates sqlite object and executes an SQL query
@@ -28,7 +28,8 @@ def executeSQL(db_filepath, sql_query, values=None):
 @app.route("/")
 @app.route("/home")
 def home_page():
-    return render_template("home.html")
+    with app.app_context(): # FOR TESTING ONLY
+        return render_template("home.html")
 
 @app.route("/weight")
 def weight_page():
@@ -62,7 +63,7 @@ def strength_page():
     connection.commit()
     connection.close()
 
-    return render_template("strength.html", labels_=labels_strength, values_=values_strength)
+    return render_template("strength.html", labels_strength=labels_strength, values_strength=values_strength)
 
 @app.route("/cardio")
 def cardio_page():
@@ -84,16 +85,3 @@ def cardio_page():
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080, debug=DEVELOPMENT_ENV)
-
-############################# End #############################
-
-# @app.route('/progress')
-# def progress_page():
-
-#     items = [
-#         {'id': 1, 'name': 'Weight'},
-#         {'id': 2, 'name': 'Strength'},
-#         {'id': 3, 'name': 'Cardio'}
-#     ]
-
-#     return render_template('progress.html', items=items)

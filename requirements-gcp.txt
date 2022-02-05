@@ -6,4 +6,5 @@ pytest-cov
 numpy
 pandas
 flask
+flask-unittest
 plotly
