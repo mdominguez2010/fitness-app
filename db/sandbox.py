@@ -20,3 +20,12 @@ if time_elapsed >= datetime.timedelta(days=1):
     print(">1 day has elapsed since the file was modified")
 else:
     print("<1 days has elapsed since the file was modified")
+    
+def check_file_mod_time(abs_filepath):
+    """[Checks how long ago the file was modified]
+
+    Args:
+        abs_filepath ([string]): [Absolute filepath of file]
+    """
+    
+    return time_elapsed
