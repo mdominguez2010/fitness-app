@@ -4,7 +4,10 @@ import db.config
 
 DEVELOPMENT_ENV = True
 app = Flask(__name__)
-app.config['SERVER_NAME'] = "127.0.0.1:5000" # FOR TESTING ONLY
+
+# Config
+app.config["SERVER_NAME"] = "127.0.0.1:5000"  # FOR TESTING ONLY
+
 
 def executeSQL(db_filepath, sql_query, values=None):
     """Creates sqlite object and executes an SQL query
@@ -28,8 +31,9 @@ def executeSQL(db_filepath, sql_query, values=None):
 @app.route("/")
 @app.route("/home")
 def home_page():
-    with app.app_context(): # FOR TESTING ONLY
+    with app.app_context():  # FOR TESTING ONLY
         return render_template("home.html")
+
 
 @app.route("/weight")
 def weight_page():
@@ -37,7 +41,9 @@ def weight_page():
     QUERY = "SELECT date(date) as date, MIN(weight) as weight FROM weight WHERE date(date) > '2020-12-31' GROUP BY date ORDER BY date ASC;"
     VALUES = ()  # simple query, no ETL
 
-    connection, cursor = executeSQL(db.config.DB_FILE_PATH, sql_query=QUERY, values=VALUES)
+    connection, cursor = executeSQL(
+        db.config.DB_FILE_PATH, sql_query=QUERY, values=VALUES
+    )
     rows = cursor.fetchall()
 
     labels = [row["date"] for row in rows]
@@ -48,32 +54,40 @@ def weight_page():
 
     return render_template("weight.html", labels=labels, values=values)
 
+
 @app.route("/strength")
 def strength_page():
 
     QUERY = "SELECT substr(date, 1, 10) as date, exercise, reps, weight, SUM(reps*weight) AS TotalVolume, duration, distance FROM workouts GROUP BY substr(date, 1, 10) ORDER BY substr(date, 1, 10) ASC LIMIT 10;"
     VALUES = ()
-    
-    connection, cursor = executeSQL(db.config.DB_FILE_PATH, sql_query=QUERY, values=VALUES)
+
+    connection, cursor = executeSQL(
+        db.config.DB_FILE_PATH, sql_query=QUERY, values=VALUES
+    )
     rows = cursor.fetchall()
-    
+
     labels_strength = [row["date"] for row in rows]
     values_strength = [row["TotalVolume"] for row in rows]
 
     connection.commit()
     connection.close()
 
-    return render_template("strength.html", labels_strength=labels_strength, values_strength=values_strength)
+    return render_template(
+        "strength.html",
+        labels_strength=labels_strength,
+        values_strength=values_strength,
+    )
+
 
 @app.route("/cardio")
 def cardio_page():
-    
+
     # QUERY = ";"
     # VALUES = ()
-    
+
     # connection, cursor = executeSQL(db.config.DB_FILE_PATH, sql_query=QUERY, values=VALUES)
     # rows = cursor.fetchall()
-    
+
     # labels_cardio = [row["date"] for row in rows]
     # values_cardio = [row["TotalVolume"] for row in rows]
 
@@ -82,6 +96,7 @@ def cardio_page():
 
     # return render_template("cardio.html", labels_=labels_cardio, values_=values_cardio)
     return render_template("cardio.html")
+
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080, debug=DEVELOPMENT_ENV)
