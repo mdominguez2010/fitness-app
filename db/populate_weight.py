@@ -4,7 +4,8 @@ import config
 import csv
 
 FILENAME = "weight.csv"
-#FILENAME = "WorkoutExport.csv"
+# FILENAME = "WorkoutExport.csv"
+# TABLENAME = "workouts"
 TABLENAME = "weight"
 
 def remove_header_from_csv(filename):

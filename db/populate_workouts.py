@@ -2,10 +2,33 @@ import sqlite3
 from sqlite3 import Error
 import config
 import csv
+from drop_db import drop_tables
+from create_db import create_table
 
-#FILENAME = "weight.csv"
 FILENAME = "WorkoutExport.csv"
 TABLENAME = "workouts"
+
+DB_FILE = config.DB_FILE_PATH
+TABLES = ["workouts"]
+QUERY = """
+CREATE TABLE IF NOT EXISTS workouts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    date TEXT NOT NULL,
+    exercise TEXT NOT NULL,
+    reps TEXT NOT NULL,
+    weight TEXT NOT NULL,
+    duration TEXT NOT NULL,
+    distance TEXT NOT NULL,
+    incline TEXT NOT NULL,
+    resistance TEXT NOT NULL,
+    isWarmup TEXT NOT NULL,
+    note TEXT,
+    multiplier TEXT NOT NULL
+)
+"""
+
+# Drop the tables first
+drop_tables(db_file=DB_FILE, tables_to_drop=TABLES)
 
 def remove_header_from_csv(filename):
     """
@@ -31,15 +54,17 @@ def remove_header_from_csv(filename):
         writer.writerows(data)
 
     # Confirm written file
-    file = open(FILENAME)
-    csvreader = csv.reader(file)
-    rows = []
-    for row in csvreader:
-        rows.append(row)
+    # file = open(FILENAME)
+    # csvreader = csv.reader(file)
+    # rows = []
+    # for row in csvreader:
+    #     rows.append(row)
 
     # print(rows[:10])
 
     file.close()
+
+create_table(db_file=DB_FILE, query=QUERY)
 
 # First remove header from csv file
 remove_header_from_csv(filename=FILENAME)
@@ -60,7 +85,7 @@ def create_connection(db_file):
     return connection
 
 # Connect to Sqlite db
-connection = create_connection(config.DB_FILE_PATH)
+connection = create_connection(DB_FILE)
 
 # Create cursor object
 cursor = connection.cursor()
@@ -86,7 +111,7 @@ select_all = f"SELECT * FROM {TABLENAME}"
 rows = cursor.execute(select_all).fetchall()
 
 # Output to the console screen
-for row in rows[:5]:
+for row in rows[-5:]:
     print(row)
 
 # Close db connection

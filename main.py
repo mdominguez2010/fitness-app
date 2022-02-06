@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 import sqlite3
+from sqlite3 import Error
 import db.config
 
 DEVELOPMENT_ENV = True
@@ -18,12 +19,18 @@ def executeSQL(db_filepath, sql_query, values=None):
     Returns:
         sqlite3 cursor object
     """
-
-    connection = sqlite3.connect(db_filepath)
-    connection.row_factory = sqlite3.Row
-    cursor = connection.cursor()
-    cursor.execute(f"""{sql_query}""", values)
-
+    connection = None
+    
+    try:
+        
+        connection = sqlite3.connect(db_filepath)
+        connection.row_factory = sqlite3.Row
+        cursor = connection.cursor()
+        cursor.execute(f"""{sql_query}""", values)
+        
+    except Error as e:
+        print(e)
+        
     return connection, cursor
 
 

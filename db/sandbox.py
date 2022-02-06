@@ -26,14 +26,17 @@ def time_to_update(timedelta):
     
     if time_elapsed >= datetime.timedelta(days=1):
         print(">1 day has elapsed since the file was modified")
-        return True
-    else:
-        print("<1 days has elapsed since the file was modified")
         return False
+    else:
+        print("The file has been modified recently, let's update our database!")
+        return True
 
 f = config.WOE_FILE_PATH
 time_elapsed = check_file_mod_time(f)
-time_to_update(time_elapsed)
+
+
+if time_to_update(time_elapsed):
+    print("")
 
 # print("\nModification time: {}".format(timestamp_file))
 # print("Current time: {}".format(timestamp_today))
