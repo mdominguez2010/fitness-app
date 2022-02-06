@@ -7,7 +7,7 @@ DEVELOPMENT_ENV = True
 app = Flask(__name__)
 
 ## Config (FOR TESTING ONLY)
-# app.config["SERVER_NAME"] = "127.0.0.1:5000"
+app.config["SERVER_NAME"] = "127.0.0.1:5000"
 
 def executeSQL(db_filepath, sql_query, values=None):
     """Creates sqlite object and executes an SQL query
@@ -64,7 +64,7 @@ def weight_page():
 @app.route("/strength")
 def strength_page():
 
-    QUERY = "SELECT substr(date, 1, 10) as date, exercise, reps, weight, SUM(reps*weight) AS TotalVolume, duration, distance FROM workouts GROUP BY substr(date, 1, 10) ORDER BY substr(date, 1, 10) ASC LIMIT 10;"
+    QUERY = "SELECT substr(date, 1, 10) as date, exercise, reps, weight, SUM(reps*weight) AS TotalVolume, duration, distance FROM workouts GROUP BY substr(date, 1, 10) HAVING SUM(reps*weight) > 0 ORDER BY substr(date, 1, 10) ASC;"
     VALUES = ()
 
     connection, cursor = executeSQL(

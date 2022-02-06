@@ -1,6 +1,5 @@
 import sqlite3
 from sqlite3 import Error
-import config
 
 def create_table(db_file, query):
     """
@@ -24,7 +23,6 @@ def create_table(db_file, query):
     """)
 
     connection.commit()
-    connection.close() 
 
 ## ETL queries
 # """
