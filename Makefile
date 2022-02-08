@@ -10,7 +10,7 @@ format:
 	black *.py
 	
 lint:
-	python -m pylint --load-plugins pylint_flash_sqlalchemy main.py
+	python -m pylint --load-plugins pylint_flask_sqlalchemy main.py
 	
 test:
 	python -m pytest -vv --cov=main test_main.py
