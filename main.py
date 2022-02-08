@@ -1,13 +1,30 @@
 from flask import Flask, render_template
+from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 from sqlite3 import Error
 import db.config
 
-DEVELOPMENT_ENV = True
+# App configurations
 app = Flask(__name__)
-
-## Config (FOR TESTING ONLY)
+DEVELOPMENT_ENV = True
 # app.config["SERVER_NAME"] = "127.0.0.1:5000"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + db.config.DB_FILE_PATH
+
+
+# Data models
+app_db = SQLAlchemy(app)
+
+class Run(app_db.Model):
+    id = app_db.Column(app_db.Integer(), primary_key=True)    
+    date = app_db.Column(app_db.String(length=10), nullable=False)
+    distance = app_db.Column(app_db.String(length=6), nullable=False)
+    duration = app_db.Column(app_db.String(length=6), nullable=False)
+    calories = app_db.Column(app_db.String(length=7), nullable=False)
+    avg_pace = app_db.Column(app_db.String(length=10), nullable=False)
+    
+    def __repr__(self):
+        return f"The run on {self.date} was {self.distance} mile(s)\n"
+
 
 def executeSQL(db_filepath, sql_query, values=None):
     """Creates sqlite object and executes an SQL query
@@ -88,6 +105,7 @@ def strength_page():
 @app.route("/cardio")
 def cardio_page():
 
+    runs = Run.query.all()
     # QUERY = ";"
     # VALUES = ()
 
@@ -101,7 +119,7 @@ def cardio_page():
     # connection.close()
 
     # return render_template("cardio.html", labels_=labels_cardio, values_=values_cardio)
-    return render_template("cardio.html")
+    return render_template("cardio.html", runs = runs)
 
 
 if __name__ == "__main__":
