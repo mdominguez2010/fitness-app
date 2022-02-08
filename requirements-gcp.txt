@@ -9,4 +9,3 @@ flask
 Flask-SQLAlchemy
 pylint
 pylint-flask-sqlalchemy
-pylint-flask
