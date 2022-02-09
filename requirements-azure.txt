@@ -1,10 +1,12 @@
-pylint
 pytest
 black
 click
 pytest-cov
 numpy
 pandas
-flask
 plotly
+flask
 Flask-SQLAlchemy
+pylint
+pylint-flask-sqlalchemy
+pylint-flask

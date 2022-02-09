@@ -1,7 +1,7 @@
-from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 from sqlite3 import Error
+from flask import Flask, render_template
+from flask_sqlalchemy import SQLAlchemy
 import db.config
 
 # App configurations
@@ -15,18 +15,27 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + db.config.DB_FILE_PATH
 app_db = SQLAlchemy(app)
 
 class Run(app_db.Model):
-    id = app_db.Column(app_db.Integer(), primary_key=True)    
+    """
+    Data model for runs
+    """
+    id = app_db.Column(app_db.Integer(), primary_key=True)
     date = app_db.Column(app_db.String(length=10), nullable=False)
     distance = app_db.Column(app_db.String(length=6), nullable=False)
     duration = app_db.Column(app_db.String(length=6), nullable=False)
     calories = app_db.Column(app_db.String(length=7), nullable=False)
     avg_pace = app_db.Column(app_db.String(length=10), nullable=False)
-    
     def __repr__(self):
+<<<<<<< HEAD
         return f"The run on {self.date} was {self.distance} mile(s)"
+=======
+        """
+        Represents class objects as string
+        """
+        return f"The run on {self.date} was {self.distance} mile(s)\n"
+>>>>>>> ad27f75c24f9e4870b70e6c7839e9967bc14b1a8
 
 
-def executeSQL(db_filepath, sql_query, values=None):
+def execute_SQL(db_filepath, sql_query, values=None):
     """Creates sqlite object and executes an SQL query
 
     Args:
@@ -37,19 +46,15 @@ def executeSQL(db_filepath, sql_query, values=None):
         sqlite3 cursor object
     """
     connection = None
-    
+
     try:
-        
         connection = sqlite3.connect(db_filepath)
         connection.row_factory = sqlite3.Row
         cursor = connection.cursor()
         cursor.execute(f"""{sql_query}""", values)
-        
-    except Error as e:
-        print(e)
-        
+    except Error as error:
+        print(error)
     return connection, cursor
-
 
 @app.route("/")
 @app.route("/home")
@@ -61,11 +66,19 @@ def home_page():
 @app.route("/weight")
 def weight_page():
 
-    QUERY = "SELECT date(date) as date, MIN(weight) as weight FROM weight WHERE date(date) > '2020-12-31' GROUP BY date ORDER BY date ASC;"
-    VALUES = ()  # simple query, no ETL
+    query = """SELECT
+                date(date) as date,
+                MIN(weight) as weight
+            FROM
+                weight
+            WHERE date(date) > '2020-12-31'
+            GROUP BY date
+            ORDER BY date ASC;"""
 
-    connection, cursor = executeSQL(
-        db.config.DB_FILE_PATH, sql_query=QUERY, values=VALUES
+    values = ()  # simple query, no ETL
+
+    connection, cursor = execute_SQL(
+        db.config.DB_FILE_PATH, sql_query=query, values=query
     )
     rows = cursor.fetchall()
 
@@ -75,17 +88,19 @@ def weight_page():
     connection.commit()
     connection.close()
 
-    return render_template("weight.html", labels=labels, values=values)
+    return render_template(
+        "weight.html", labels=labels, values=values
+    )
 
 
 @app.route("/strength")
 def strength_page():
 
-    QUERY = "SELECT substr(date, 1, 10) as date, exercise, reps, weight, SUM(reps*weight) AS TotalVolume, duration, distance FROM workouts GROUP BY substr(date, 1, 10) HAVING SUM(reps*weight) > 0 ORDER BY substr(date, 1, 10) ASC;"
-    VALUES = ()
+    query = "SELECT substr(date, 1, 10) as date, exercise, reps, weight, SUM(reps*weight) AS TotalVolume, duration, distance FROM workouts GROUP BY substr(date, 1, 10) HAVING SUM(reps*weight) > 0 ORDER BY substr(date, 1, 10) ASC;"
+    values = ()
 
-    connection, cursor = executeSQL(
-        db.config.DB_FILE_PATH, sql_query=QUERY, values=VALUES
+    connection, cursor = execute_SQL(
+        db.config.DB_FILE_PATH, sql_query=query, values=values
     )
     rows = cursor.fetchall()
 
@@ -104,21 +119,7 @@ def strength_page():
 
 @app.route("/cardio")
 def cardio_page():
-
     runs = Run.query.all()
-    # QUERY = ";"
-    # VALUES = ()
-
-    # connection, cursor = executeSQL(db.config.DB_FILE_PATH, sql_query=QUERY, values=VALUES)
-    # rows = cursor.fetchall()
-
-    # labels_cardio = [row["date"] for row in rows]
-    # values_cardio = [row["TotalVolume"] for row in rows]
-
-    # connection.commit()
-    # connection.close()
-
-    # return render_template("cardio.html", labels_=labels_cardio, values_=values_cardio)
     return render_template("cardio.html", runs = runs)
 
 
