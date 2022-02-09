@@ -1,3 +1,10 @@
+from fitness_app import app
+from fitness_app.db import config
+from fitness_app.models import Run
+import sqlite3
+from sqlite3 import Error
+from flask import render_template
+
 
 def executeSQL(db_filepath, sql_query, values=None):
     """Creates sqlite object and executes an SQL query
@@ -38,7 +45,7 @@ def weight_page():
     VALUES = ()  # simple query, no ETL
 
     connection, cursor = executeSQL(
-        db.config.DB_FILE_PATH, sql_query=QUERY, values=VALUES
+        config.DB_FILE_PATH, sql_query=QUERY, values=VALUES
     )
     rows = cursor.fetchall()
 
@@ -58,7 +65,7 @@ def strength_page():
     VALUES = ()
 
     connection, cursor = executeSQL(
-        db.config.DB_FILE_PATH, sql_query=QUERY, values=VALUES
+        config.DB_FILE_PATH, sql_query=QUERY, values=VALUES
     )
     rows = cursor.fetchall()
 

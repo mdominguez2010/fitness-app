@@ -1,6 +1,4 @@
-
-# Data models
-app_db = SQLAlchemy(app)
+from fitness_app import app_db
 
 class Run(app_db.Model):
     id = app_db.Column(app_db.Integer(), primary_key=True)    

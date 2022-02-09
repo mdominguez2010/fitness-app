@@ -1,6 +1,5 @@
 import unittest
 import main
-from main import home_page
 
 
 class TestMain(unittest.TestCase):
