@@ -1,7 +1,10 @@
 import sqlite3
 from sqlite3 import Error
+import os
+import datetime
 import config
 import csv
+from csv import reader
 from drop_db import drop_tables
 from create_db import create_table
 
@@ -27,7 +30,7 @@ CREATE TABLE IF NOT EXISTS workouts (
 )
 """
 
-# Drop the tables first
+# Drop the table first
 drop_tables(db_file=DB_FILE, tables_to_drop=TABLES)
 
 def remove_header_from_csv(filename):
@@ -42,7 +45,7 @@ def remove_header_from_csv(filename):
     rows = []
     for row in csvreader:
         rows.append(row)
-    header = rows[0]
+    # header = rows[0]
     data = rows[1:]
 
     # Close file

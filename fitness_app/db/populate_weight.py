@@ -1,12 +1,33 @@
 import sqlite3
 from sqlite3 import Error
+import os
+import datetime
 import config
 import csv
+from csv import reader
+from drop_db import drop_tables
+from create_db import create_table
 
 FILENAME = "weight.csv"
-# FILENAME = "WorkoutExport.csv"
-# TABLENAME = "workouts"
 TABLENAME = "weight"
+
+DB_FILE = config.DB_FILE_PATH
+TABLES = ["weight"]
+QUERY = """
+CREATE TABLE IF NOT EXISTS weight (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    date TEXT NOT NULL,
+    weight TEXT NOT NULL,
+    fatmass TEXT,
+    bonemass TEXT,
+    musclemass TEXT,
+    hydration TEXT,
+    comments TEXT
+)
+"""
+
+# Drop the table first
+drop_tables(db_file=DB_FILE, tables_to_drop=TABLES)
 
 def remove_header_from_csv(filename):
     """
@@ -20,7 +41,6 @@ def remove_header_from_csv(filename):
     rows = []
     for row in csvreader:
         rows.append(row)
-    header = rows[0]
     data = rows[1:]
 
     # Close file
@@ -32,15 +52,17 @@ def remove_header_from_csv(filename):
         writer.writerows(data)
 
     # Confirm written file
-    file = open(FILENAME)
-    csvreader = csv.reader(file)
-    rows = []
-    for row in csvreader:
-        rows.append(row)
+    # file = open(FILENAME)
+    # csvreader = csv.reader(file)
+    # rows = []
+    # for row in csvreader:
+    #     rows.append(row)
 
     # print(rows[:10])
 
     file.close()
+
+create_table(db_file=DB_FILE, query=QUERY)
 
 # First remove header from csv file
 remove_header_from_csv(filename=FILENAME)
@@ -80,15 +102,6 @@ cursor.executemany(insert_records, contents)
 
 # Commit changes
 connection.commit()
-
-# SQL query to retrieve all data from the table to
-# verify successful insertion
-select_all = f"SELECT * FROM {TABLENAME}"
-rows = cursor.execute(select_all).fetchall()
-
-# Output to the console screen
-for row in rows[:5]:
-    print(row)
 
 # Close db connection
 connection.close()
