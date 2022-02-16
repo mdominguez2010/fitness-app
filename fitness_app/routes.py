@@ -86,17 +86,17 @@ def strength_page():
 def cardio_page():
 
     runs = Run.query.all()
-    # QUERY = ";"
+    # QUERY = "SELECT substr(date, 1, 10) as date, distance, duration FROM runs ORDER BY date ASC;"
     # VALUES = ()
 
-    # connection, cursor = executeSQL(db.config.DB_FILE_PATH, sql_query=QUERY, values=VALUES)
+    # connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=QUERY, values=VALUES)
     # rows = cursor.fetchall()
 
     # labels_cardio = [row["date"] for row in rows]
-    # values_cardio = [row["TotalVolume"] for row in rows]
+    # values_cardio = [row["distance"] for row in rows]
 
     # connection.commit()
     # connection.close()
 
     # return render_template("cardio.html", labels_=labels_cardio, values_=values_cardio)
-    return render_template("cardio.html", runs = runs)
+    return render_template("cardio.html", runs=runs)
