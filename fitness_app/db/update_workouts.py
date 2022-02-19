@@ -1,7 +1,10 @@
+"""
+Determines if there's been a change in the source csv file.
+If so, it's time to update our db
+"""
 import sqlite3
 from sqlite3 import Error
 import config
-import csv
 from csv import reader
 
 UPDATE_WORKOUTS = False
@@ -44,7 +47,7 @@ rows = cursor.fetchall()
 db_rows = []
 for row in rows:
     db_rows.append([x for x in row])
-n_db_rows = len(db_rows)
+n_db_rows = len(db_rows) + 1 # add 1 to include header
 
 # Count file rows
 file_rows = []
@@ -54,10 +57,15 @@ with open(FILENAME, "r") as read_obj:
         file_rows.append(row)
 n_file_rows = len(file_rows)
 
+# User Feedback
+print(f"# rows in file: {n_file_rows}")
+print(f"# rows in db: {n_db_rows}")
+
+
 # Check for new lines in the file
-if n_file_rows > n_db_rows:
+if n_file_rows > n_db_rows + 1:
     UPDATE_WORKOUTS = True
-    # print("The file has changed and should be updated in the db")
+    print("The file has changed and should be updated in the db")
 else:
     UPDATE_WORKOUTS
-    # print("Currently no changes to the file")
+    print("Currently no changes to the file")

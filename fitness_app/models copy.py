@@ -38,19 +38,22 @@ class Weight(app_db.Model):
 
 class Workouts(app_db.Model):
     id = app_db.Column(app_db.Integer(), primary_key=True)    
-    date = app_db.Column(app_db.String(length=10), nullable=False)
-    exercise = app_db.Column(app_db.String(length=6), nullable=False)
-    reps = app_db.Column(app_db.String(length=6), nullable=False)
-    weight = app_db.Column(app_db.String(length=6), nullable=False)
-    duration = app_db.Column(app_db.String(length=6), nullable=False)
-    incline = app_db.Column(app_db.String(length=6), nullable=False)
-    note = app_db.Column(app_db.String(length=60), nullable=False)
+    Date = app_db.Column(app_db.String(length=10), nullable=False)
+    Exercise = app_db.Column(app_db.String(length=6), nullable=False)
+    Reps = app_db.Column(app_db.String(length=6), nullable=False)
+    Weight = app_db.Column(app_db.String(length=6), nullable=False)
+    Duration = app_db.Column(app_db.String(length=6), nullable=False)
+    Distance = app_db.Column(app_db.String(length=6), nullable=False)
+    Incline = app_db.Column(app_db.String(length=6), nullable=False)
+    Resistance = app_db.Column(app_db.String(length=6), nullable=False)
+    Note = app_db.Column(app_db.String(length=60), nullable=False)
+    Multiplier = app_db.Column(app_db.String(length=6), nullable=False)
     owner = app_db.Column(app_db.Integer(), app_db.ForeignKey("user.id"))
 
     def __repr__(self):
         return f"Date: {self.date}, Exercise: {self.exercise}, Reps: {self.reps}, Weight: {self.weight}"
     
 # Connect to db
-#engine = SQLAlchemy.create_engine("sqlite:///" + config.DB_FILE_PATH)
+engine = SQLAlchemy.create_engine("sqlite:///" + config.DB_FILE_PATH)
 
 #
