@@ -4,36 +4,30 @@
 {% endblock %}
 
 {% block content %}
-    <table cellpadding="30" width="100%">
-        <tr>
-            <td>
-                <canvas id="linechart"></canvas>
-                <script>
-                    var config = {
-                        type: "line",
-                        data: {
-                            labels: {{ labels_strength | safe }},
-                            datasets: [
-                                {
-                                    label: "Total Volume",
-                                    data: {{ values_strength | safe }},
-                                    fill: false,
-                                    borderColor: "rgb(0, 163, 108)",
-                                    backgroundColor: "rgb(255, 255, 255)",
-                                    lineTension: 0.5
-                                },
-                            ]
-                        },
-                        options: {
-                            responsive: true
-                        }
-                    }
-                    var ctx = document.getElementById("linechart").getContext("2d");
-                    var linechart = new Chart(
-                        ctx, config
-                    )
-                </script>
-            </td>
-        </tr>
-    </table>
+<canvas id="strengthchart"></canvas>
+<script>
+    var config = {
+        type: "line",
+        data: {
+            labels: {{ labels_strength | safe }},
+            datasets: [
+                {
+                    label: "Total Volume",
+                    data: {{ values_strength | safe }},
+                    fill: false,
+                    borderColor: "rgb(0, 163, 108)",
+                    backgroundColor: "rgb(255, 255, 255)",
+                    lineTension: 0.5
+                },
+            ]
+        },
+        options: {
+            responsive: true
+        }
+    }
+    var ctx = document.getElementById("strengthchart").getContext("2d");
+    var linechart = new Chart(
+        ctx, config
+    )
+</script>
 {% endblock %}

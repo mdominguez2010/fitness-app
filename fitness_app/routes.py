@@ -1,6 +1,5 @@
 from fitness_app import app
 from fitness_app.db import config
-from fitness_app.models import Run
 import sqlite3
 from sqlite3 import Error
 from flask import render_template
@@ -85,18 +84,18 @@ def strength_page():
 @app.route("/cardio")
 def cardio_page():
 
-    runs = Run.query.all()
-    # QUERY = "SELECT substr(date, 1, 10) as date, distance, duration FROM runs ORDER BY date ASC;"
-    # VALUES = ()
+    QUERY = "SELECT * FROM runs ORDER BY date ASC;"
+    VALUES = ()
 
-    # connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=QUERY, values=VALUES)
-    # rows = cursor.fetchall()
+    connection, cursor = executeSQL(
+        config.DB_FILE_PATH, sql_query=QUERY, values=VALUES
+    )
+    rows = cursor.fetchall()
 
-    # labels_cardio = [row["date"] for row in rows]
-    # values_cardio = [row["distance"] for row in rows]
+    labels_cardio = [row["date"] for row in rows]
+    values_cardio = [row["distance"] for row in rows]
 
-    # connection.commit()
-    # connection.close()
+    connection.commit()
+    connection.close()  
 
-    # return render_template("cardio.html", labels_=labels_cardio, values_=values_cardio)
-    return render_template("cardio.html", runs=runs)
+    return render_template("cardio.html", labels_cardio=labels_cardio, values_cardio=values_cardio)

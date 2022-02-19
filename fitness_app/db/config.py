@@ -10,10 +10,13 @@ WOE_FILE_PATH = str(pathlib.Path(__file__).parent.resolve()) + "/WorkoutExport.c
 # weight
 WEE_FILE_PATH = str(pathlib.Path(__file__).parent.resolve()) + "/weight.csv"
 
+# runs
+R_FILE_PATH = str(pathlib.Path(__file__).parent.resolve()) + "/runs.csv"
+
 # populate_workouts
-WO_FILE_PATH = str(pathlib.Path(__file__).parent.resolve()) + "/populate_workouts.py"
+WO_FILE_PATH = str(pathlib.Path(__file__).parent.resolve()) + "/update_workouts.py"
 
 # populate_weight
-WE_FILE_PATH = str(pathlib.Path(__file__).parent.resolve()) + "/populate_weight.py"
+WE_FILE_PATH = str(pathlib.Path(__file__).parent.resolve()) + "/update_weight.py"
 
 # print(DB_FILE_PATH)

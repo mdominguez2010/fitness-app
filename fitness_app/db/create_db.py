@@ -1,5 +1,6 @@
 import sqlite3
 from sqlite3 import Error
+import config
 
 def create_table(db_file, query):
     """
@@ -54,3 +55,18 @@ def create_table(db_file, query):
 #     multiplier TEXT NOT NULL
 # )
 # """
+
+# db_file = config.DB_FILE_PATH
+
+# query = """
+# CREATE TABLE IF NOT EXISTS runs (
+#     id INTEGER PRIMARY KEY AUTOINCREMENT,
+#     date TEXT NOT NULL,
+#     distance TEXT NOT NULL,
+#     avg_pace TEXT NOT NULL,
+#     duration TEXT NOT NULL,
+#     calories TEXT NOT NULL
+# )
+# """
+
+# create_table(db_file=db_file, query=query)
