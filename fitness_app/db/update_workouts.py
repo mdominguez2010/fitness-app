@@ -116,8 +116,8 @@ if check_workouts.UPDATE_WORKOUTS:
         rows = cursor.execute(select_all).fetchall()
 
         # Output to the console screen
-        for row in rows[-5:]:
-            print(row)
+        # for row in rows[-5:]:
+        #     print(row)
             
     except:
         print("An exception has ocurred")
