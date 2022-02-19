@@ -4,9 +4,9 @@ import config
 import csv
 from drop_db import drop_tables
 from create_db import create_table
-import update_workouts
+import check_workouts
 
-if update_workouts.UPDATE_WORKOUTS:
+if check_workouts.UPDATE_WORKOUTS:
 
     try:
 

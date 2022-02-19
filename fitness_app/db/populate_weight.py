@@ -4,9 +4,9 @@ import config
 import csv
 from drop_db import drop_tables
 from create_db import create_table
-import update_weight
+import check_weight
 
-if update_weight.UPDATE_WEIGHT:
+if check_weight.UPDATE_WEIGHT:
     
     try:
 
