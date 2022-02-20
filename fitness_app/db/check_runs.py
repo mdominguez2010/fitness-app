@@ -47,7 +47,7 @@ rows = cursor.fetchall()
 db_rows = []
 for row in rows:
     db_rows.append([x for x in row])
-n_db_rows = len(db_rows) + 1 # add 1 to include header
+n_db_rows = len(db_rows)
 
 # Count file rows
 file_rows = []
@@ -63,9 +63,9 @@ print(f"# rows in db: {n_db_rows}")
 
 
 # Check for new lines in the file
-if n_file_rows > n_db_rows + 1:
+if n_file_rows > n_db_rows:
     UPDATE_RUNS = True
-    print("The file has changed and should be updated in the db")
+    print("The file has changed. The db is being updated")
 else:
     UPDATE_RUNS
     print("Currently no changes to the file")

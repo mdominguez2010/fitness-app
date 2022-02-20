@@ -84,7 +84,7 @@ def strength_page():
 @app.route("/cardio")
 def cardio_page():
 
-    QUERY = "SELECT * FROM runs ORDER BY date ASC;"
+    QUERY = "SELECT * FROM runs;"
     VALUES = ()
 
     connection, cursor = executeSQL(
@@ -94,8 +94,11 @@ def cardio_page():
 
     labels_cardio = [row["date"] for row in rows]
     values_cardio = [row["distance"] for row in rows]
+    
+    backgroundColors = ['rgba(54, 162, 235, 0.5)' for label in labels_cardio]
+    borderColors= ['rgb(54, 162, 235, 1)' for label in labels_cardio]
 
     connection.commit()
     connection.close()  
 
-    return render_template("cardio.html", labels_cardio=labels_cardio, values_cardio=values_cardio)
+    return render_template("cardio.html", labels_cardio=labels_cardio, values_cardio=values_cardio, backgroundColors=backgroundColors, borderColors=borderColors)

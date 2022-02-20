@@ -20,8 +20,10 @@ if check_runs.UPDATE_RUNS:
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         date TEXT NOT NULL,
         distance TEXT NOT NULL,
-        avg_pace TEXT NOT NULL,
-        duration TEXT NOT NULL,
+        avg_pace_min TEXT NOT NULL,
+        avg_pace_sec TEXT NOT NULL,
+        duration_min TEXT NOT NULL,
+        duration_sec TEXT NOT NULL,
         calories TEXT NOT NULL
         )
         """
@@ -59,7 +61,7 @@ if check_runs.UPDATE_RUNS:
         contents = csv.reader(file)
 
         # SQL query to execute
-        insert_records = f"INSERT INTO {TABLENAME} (date, distance, avg_pace, duration, calories) VALUES (?, ?, ?, ?, ?)"
+        insert_records = f"INSERT INTO {TABLENAME} (date, distance, avg_pace_min, avg_pace_sec, duration_min, duration_sec, calories) VALUES (?, ?, ?, ?, ?, ?, ?)"
 
         # Importing contents of csv file into table
         cursor.executemany(insert_records, contents)
@@ -76,6 +78,6 @@ if check_runs.UPDATE_RUNS:
         # for row in rows[-5:]:
         #     print(row)
             
-    except:
-        print("An exception has ocurred")
+    except Exception as e:
+        print(e)
             
