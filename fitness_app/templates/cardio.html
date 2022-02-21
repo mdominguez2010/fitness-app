@@ -4,29 +4,25 @@
 {% endblock %}
 
 {% block content %}
-<div class="col-12 mb-4">
-    <div class="card bg-yellow-alt shadow-sm">
-        <canvas id="myChart"></canvas>
-        <script>
-            var canvasElement = document.getElementById("myChart");
+<canvas id="myChart"></canvas>
+<script>
+    var canvasElement = document.getElementById("myChart");
 
-            var config = {
-                type: "bar",
-                data: {
-                    labels: {{ labels_cardio | safe }},
-                    datasets: [
-                    {
-                        label: "Runs (mi)",
-                        data: {{ values_cardio | safe }},
-                        backgroundColor: {{ backgroundColors | safe }},
-                        borderColor: {{ borderColors | safe }},
-                        borderWidth: 1,
-                    }],
-                }
-            };
+    var config = {
+        type: "bar",
+        data: {
+            labels: {{ labels_cardio | safe }},
+            datasets: [
+            {
+                label: "Runs (mi)",
+                data: {{ values_cardio | safe }},
+                backgroundColor: {{ backgroundColors | safe }},
+                borderColor: {{ borderColors | safe }},
+                borderWidth: 1,
+            }],
+        }
+    };
 
-            var runsChart = new Chart(canvasElement, config);
-        </script>
-    </div>
-</div>
+    var runsChart = new Chart(canvasElement, config);
+</script>
 {% endblock %}
