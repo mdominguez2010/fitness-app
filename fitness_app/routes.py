@@ -106,21 +106,18 @@ def cardio_page():
 @app.route("/dashboard")
 def dashboard_page():
 
-    # QUERY = "SELECT * FROM runs;"
-    # VALUES = ()
+    QUERY = "SELECT date(date) as date, MIN(weight) as weight FROM weight WHERE date(date) > '2020-12-31' GROUP BY date ORDER BY date ASC;"
+    VALUES = ()  # simple query, no ETL
 
-    # connection, cursor = executeSQL(
-    #     config.DB_FILE_PATH, sql_query=QUERY, values=VALUES
-    # )
-    # rows = cursor.fetchall()
+    connection, cursor = executeSQL(
+        config.DB_FILE_PATH, sql_query=QUERY, values=VALUES
+    )
+    rows = cursor.fetchall()
 
-    # labels_cardio = [row["date"] for row in rows]
-    # values_cardio = [row["distance"] for row in rows]
-    
-    # backgroundColors = ['rgba(54, 162, 235, 0.5)' for label in labels_cardio]
-    # borderColors= ['rgb(54, 162, 235, 1)' for label in labels_cardio]
+    labels_weight = [row["date"] for row in rows]
+    values_weight = [row["weight"] for row in rows]
 
-    # connection.commit()
-    # connection.close()  
+    connection.commit()
+    connection.close()
 
-    return render_template("dashboard.html")
+    return render_template("dashboard.html", labels_weight=labels_weight, values_weight=values_weight)

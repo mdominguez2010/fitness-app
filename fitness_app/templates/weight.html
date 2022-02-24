@@ -5,7 +5,6 @@
 
 {% block content %}
 
-<h1 class="h1">Weight</h1>
 <canvas id="weightchart"></canvas>
 <script>
     var config = {
@@ -16,9 +15,9 @@
                 {
                     label: "Weight",
                     data: {{ values | safe }},
-                    fill: false,
+                    fill: true,
                     borderColor: "rgb(0, 163, 108)",
-                    backgroundColor: "rgb(255, 255, 255)",
+                    backgroundColor: "rgb(105, 105, 105)",
                     lineTension: 0.5
                 },
             ]
