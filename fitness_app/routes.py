@@ -105,19 +105,42 @@ def cardio_page():
 
 @app.route("/dashboard")
 def dashboard_page():
-
-    QUERY = "SELECT date(date) as date, MIN(weight) as weight FROM weight WHERE date(date) > '2020-12-31' GROUP BY date ORDER BY date ASC;"
+    ###### WEIGHT ########
+    QUERY_WEIGHT = "SELECT date(date) as date, MIN(weight) as weight FROM weight WHERE date(date) > '2020-12-31' GROUP BY date ORDER BY date ASC;"
     VALUES = ()  # simple query, no ETL
 
     connection, cursor = executeSQL(
-        config.DB_FILE_PATH, sql_query=QUERY, values=VALUES
+        config.DB_FILE_PATH, sql_query=QUERY_WEIGHT, values=VALUES
     )
     rows = cursor.fetchall()
 
     labels_weight = [row["date"] for row in rows]
     values_weight = [row["weight"] for row in rows]
+    
+    ###### STRENGTH ########
+    QUERY_STRENGTH = "SELECT substr(date, 1, 10) as date, exercise, reps, weight, SUM(reps*weight) AS TotalVolume, duration, distance FROM workouts GROUP BY substr(date, 1, 10) HAVING SUM(reps*weight) > 0 ORDER BY substr(date, 1, 10) ASC;"
+    connection, cursor = executeSQL(
+        config.DB_FILE_PATH, sql_query=QUERY_STRENGTH, values=VALUES
+    )
+    rows = cursor.fetchall()
+    
+    labels_strength = [row["date"] for row in rows]
+    values_strength = [row["TotalVolume"] for row in rows]
+    
+    ###### Cardio ########
+    QUERY_CARDIO = "SELECT * FROM runs;"
+    connection, cursor = executeSQL(
+        config.DB_FILE_PATH, sql_query=QUERY_CARDIO, values=VALUES
+    )
+    rows = cursor.fetchall()
+
+    labels_cardio = [row["date"] for row in rows]
+    values_cardio = [row["distance"] for row in rows]
+    
+    backgroundColors = ['rgba(54, 162, 235, 0.5)' for label in labels_cardio]
+    borderColors= ['rgb(54, 162, 235, 1)' for label in labels_cardio]
 
     connection.commit()
     connection.close()
 
-    return render_template("dashboard.html", labels_weight=labels_weight, values_weight=values_weight)
+    return render_template("dashboard.html", labels_weight=labels_weight, values_weight=values_weight, labels_strength=labels_strength, values_strength=values_strength, labels_cardio=labels_cardio, values_cardio=values_cardio, backgroundColors=backgroundColors, borderColors=borderColors)

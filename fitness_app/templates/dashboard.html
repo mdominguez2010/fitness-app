@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block content %}
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+<main role="main">
 	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 		<h1 class="h1">Dashboard</h1>
 
@@ -24,7 +24,7 @@
 							label: "Weight",
 							data: {{ values_weight | safe }},
 							fill: true,
-							borderColor: "rgb(0, 163, 108)",
+							borderColor: 'rgb(54, 162, 235, 1)',
 							backgroundColor: "rgb(105, 105, 105)",
 							lineTension: 0.5
 						},
@@ -39,4 +39,59 @@
 				ctx, config
 			)
 		</script>
+	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+		<h2 class="h2">Strength</h1>
+
+	</div>
+	<canvas class="my-4 w-100" id="strengthChart" width="900" height="380"></canvas>
+	<script>
+		var config = {
+			type: "line",
+			data: {
+				labels: {{ labels_strength | safe }},
+				datasets: [
+					{
+						label: "Weight",
+						data: {{ values_strength | safe }},
+						fill: true,
+						borderColor: 'rgb(54, 162, 235, 1)',
+						backgroundColor: "rgb(105, 105, 105)",
+						lineTension: 0.5
+					},
+				]
+			},
+			options: {
+				responsive: true
+			}
+		}
+		var ctx = document.getElementById("strengthChart").getContext("2d");
+		var linechart = new Chart(
+			ctx, config
+		)
+	</script>
+	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+		<h2 class="h2">Cardio</h1>
+
+	</div>
+	<canvas id="runsChart"></canvas>
+	<script>
+		var canvasElement = document.getElementById("runsChart");
+
+		var config = {
+			type: "bar",
+			data: {
+				labels: {{ labels_cardio | safe }},
+				datasets: [
+				{
+					label: "Runs (mi)",
+					data: {{ values_cardio | safe }},
+					backgroundColor: {{ backgroundColors | safe }},
+					borderColor: {{ borderColors | safe }},
+					borderWidth: 1,
+				}],
+			}
+		};
+
+		var runsChart = new Chart(canvasElement, config);
+	</script>
 {% endblock %}
