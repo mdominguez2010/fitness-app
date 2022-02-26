@@ -118,10 +118,14 @@ def dashboard_page():
     values_weight = [row["weight"] for row in rows]
     
     ###### STRENGTH ########
-    QUERY_STRENGTH = "SELECT substr(date, 1, 10) as date, exercise, reps, weight, SUM(reps*weight) AS TotalVolume, duration, distance FROM workouts GROUP BY substr(date, 1, 10) HAVING SUM(reps*weight) > 0 ORDER BY substr(date, 1, 10) ASC;"
+    QUERY_STRENGTH = "SELECT substr(date, 1, 10) as date, exercise, reps, weight, SUM(reps*weight*2.2) AS TotalVolume, duration, distance FROM workouts GROUP BY substr(date, 1, 10) HAVING SUM(reps*weight) > 0 ORDER BY substr(date, 1, 10) ASC;"
+    EXERCISE = 'Deadlift'
+    QUERY_ONERM = f"SELECT exercise, MAX(weight*2.205) * (1 + (reps/30)) as one_rm FROM workouts WHERE exercise={EXERCISE} GROUP BY exercise;"
+    
     connection, cursor = executeSQL(
         config.DB_FILE_PATH, sql_query=QUERY_STRENGTH, values=VALUES
     )
+    
     rows = cursor.fetchall()
     
     labels_strength = [row["date"] for row in rows]

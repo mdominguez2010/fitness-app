@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-  Cardio Page
+  Dashboard Page
 {% endblock %}
 
 {% block content %}
@@ -51,7 +51,7 @@
 				labels: {{ labels_strength | safe }},
 				datasets: [
 					{
-						label: "Weight",
+						label: "Total Volume (reps x weight)",
 						data: {{ values_strength | safe }},
 						fill: true,
 						borderColor: 'rgb(54, 162, 235, 1)',
