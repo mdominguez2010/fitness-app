@@ -103,6 +103,9 @@ def cardio_page():
 
     return render_template("cardio.html", labels_cardio=labels_cardio, values_cardio=values_cardio, backgroundColors=backgroundColors, borderColors=borderColors)
 
+
+
+
 @app.route("/dashboard")
 def dashboard_page():
     ###### WEIGHT ########
