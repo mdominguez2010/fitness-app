@@ -1,3 +1,4 @@
+import fitness_app
 from fitness_app import app
 from fitness_app.db import config
 import sqlite3
@@ -32,11 +33,11 @@ def executeSQL(db_filepath, sql_query, values=None):
     return connection, cursor
 
 
-def get_data(connection, cursor):
+def get_data():
     """
     Returns the desired data from executeSQL function
-    
     """
+
     tables = ["weight", "workouts", "runs"]
     exercises = ["Deadlift", "Back Squat", "Barbell Bench Press", "Pull Up"]
     data_dict = dict()
@@ -44,6 +45,8 @@ def get_data(connection, cursor):
     for i in range(len(tables)):
         
         if tables[i] == "weight":
+
+            print(tables[i])
             
             query = "SELECT date(date) as date, MIN(weight) as weight FROM weight WHERE date(date) > '2020-12-31' GROUP BY date ORDER BY date ASC;"
             values = ()
@@ -80,20 +83,28 @@ def get_data(connection, cursor):
                     "Pull Up": 10                    
                 }                    
             }
+            
         else:
             
             print(tables[i])
             
             data_dict[tables[i]] = {
                 "runs": {
+                    "date": [1, 2, 3],
+                    "mile_time": [9, 10, 11],
                     "fastest_mile": int(),
                     "longest_run": int()
                 }
             }
+
+    connection.commit()
+    connection.close()
     
+    print(data_dict)
+
     return data_dict
 
-get_data(connection = "", cursor = "")
+get_data()
 
 ############## Final data object should look like this ##############
 my_dict = {
@@ -120,6 +131,8 @@ my_dict = {
         }
     },
     "runs": {
+        "date": [1, 2, 3],
+        "mile_time": [9, 10, 11],
         "fastest mile": 9, # minutes
         "longest run": 5 # miles 
     }

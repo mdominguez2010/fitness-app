@@ -3,6 +3,7 @@ from fitness_app.db import config
 import sqlite3
 from sqlite3 import Error
 from flask import render_template
+import datetime
 
 
 def executeSQL(db_filepath, sql_query, values=None):
