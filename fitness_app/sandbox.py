@@ -1,4 +1,3 @@
-import fitness_app
 from fitness_app import app
 from fitness_app.db import config
 import sqlite3
@@ -83,7 +82,7 @@ def get_data():
                     "Pull Up": 10                    
                 }                    
             }
-            
+
         else:
             
             print(tables[i])
