@@ -10,16 +10,15 @@ Join me on my personal journey to get fitter and stronger!
 ### <u>Motivation</u>
 <p>I am what was referred by Larry David in Curb Your Enthusiasm as a "yo-yo" dieter. Now is the time to put an end to the emotional ups-and-downs of losing weight and quickly re-gaining it.</p>
 
-### <u>Instructions</u>
-<p>INSTRUCTIONS HERE</p>
-
 ### <u>Measurements</u>
 <ol type="1">
     <li>Weight</li>
     <li>Strength
         <ol>
-            <li>Weightlifting</li>
+            <li>Deadlift</li>
             <li>Pull-ups</li>
+            <li>Back Squat</li>
+            <li>Barbell Bench Press</li>
         </ol>
     </li>
     <li>Cardio
