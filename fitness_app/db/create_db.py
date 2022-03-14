@@ -56,17 +56,18 @@ def create_table(db_file, query):
 # )
 # """
 
-# db_file = config.DB_FILE_PATH
+db_file = config.DB_FILE_PATH
 
-# query = """
-# CREATE TABLE IF NOT EXISTS runs (
-#     id INTEGER PRIMARY KEY AUTOINCREMENT,
-#     date TEXT NOT NULL,
-#     distance TEXT NOT NULL,
-#     avg_pace TEXT NOT NULL,
-#     duration TEXT NOT NULL,
-#     calories TEXT NOT NULL
-# )
-# """
+query = """
+CREATE TABLE IF NOT EXISTS miles (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    date TEXT NOT NULL,
+    miles TEXT NOT NULL,
+    duration_min TEXT NOT NULL,
+    duration_sec TEXT NOT NULL,
+    duration_total_ec TEXT NOT NULL,
+    duration_total_min TEXT NOT NULL
+)
+"""
 
-# create_table(db_file=db_file, query=query)
+create_table(db_file=db_file, query=query)
