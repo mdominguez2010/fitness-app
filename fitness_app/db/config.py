@@ -13,6 +13,9 @@ WEE_FILE_PATH = str(pathlib.Path(__file__).parent.resolve()) + "/weight.csv"
 # runs
 R_FILE_PATH = str(pathlib.Path(__file__).parent.resolve()) + "/runs.csv"
 
+# miles
+M_FILE_PATH = str(pathlib.Path(__file__).parent.resolve()) + "/miles.csv"
+
 # populate_workouts
 WO_FILE_PATH = str(pathlib.Path(__file__).parent.resolve()) + "/update_workouts.py"
 

@@ -4,27 +4,26 @@ import config
 import csv
 from drop_db import drop_tables
 from create_db import create_table
-import check_runs
+import check_miles
 
-if check_runs.UPDATE_RUNS:
+if check_miles.UPDATE_MILES:
 
     try:
 
-        FILENAME = "runs.csv"
-        TABLENAME = "runs"
+        FILENAME = "miles.csv"
+        TABLENAME = "miles"
 
         DB_FILE = config.DB_FILE_PATH
-        TABLES = ["runs"]
+        TABLES = ["miles"]
         QUERY = """
-        CREATE TABLE IF NOT EXISTS runs (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        date TEXT NOT NULL,
-        distance TEXT NOT NULL,
-        avg_pace_min TEXT NOT NULL,
-        avg_pace_sec TEXT NOT NULL,
-        duration_min TEXT NOT NULL,
-        duration_sec TEXT NOT NULL,
-        calories TEXT NOT NULL
+        CREATE TABLE IF NOT EXISTS miles (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            date TEXT NOT NULL,
+            miles TEXT NOT NULL,
+            duration_min TEXT NOT NULL,
+            duration_sec TEXT NOT NULL,
+            duration_total_sec TEXT NOT NULL,
+            duration_total_min TEXT NOT NULL
         )
         """
 
@@ -75,8 +74,8 @@ if check_runs.UPDATE_RUNS:
         rows = cursor.execute(select_all).fetchall()
 
         # Output to the console screen
-        # for row in rows[-5:]:
-        #     print(row)
+        for row in rows[-5:]:
+            print(row)
             
     except Exception as e:
         print(e)

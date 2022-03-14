@@ -7,9 +7,9 @@ from sqlite3 import Error
 import config
 from csv import reader
 
-UPDATE_RUNS = False
-QUERY = 'SELECT * FROM runs;'
-FILENAME = config.R_FILE_PATH
+UPDATE_MILES = False
+QUERY = 'SELECT * FROM miles;'
+FILENAME = config.M_FILE_PATH
 
 def executeSQL(db_filepath, sql_query, values=None):
     """Creates sqlite object and executes an SQL query
@@ -64,8 +64,8 @@ print(f"# rows in db: {n_db_rows}")
 
 # Check for new lines in the file
 if n_file_rows > n_db_rows:
-    UPDATE_RUNS = True
+    UPDATE_MILES = True
     print("The file has changed. The db is being updated")
 else:
-    UPDATE_RUNS
+    UPDATE_MILES
     print("Currently no changes to the file")

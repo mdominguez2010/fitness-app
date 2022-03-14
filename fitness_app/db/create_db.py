@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS miles (
     miles TEXT NOT NULL,
     duration_min TEXT NOT NULL,
     duration_sec TEXT NOT NULL,
-    duration_total_ec TEXT NOT NULL,
+    duration_total_sec TEXT NOT NULL,
     duration_total_min TEXT NOT NULL
 )
 """
