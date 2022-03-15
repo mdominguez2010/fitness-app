@@ -1,7 +1,7 @@
 import datetime
 import sqlite3
 from sqlite3 import Error
-
+from fitness_app.db import config
 
 
 def executeSQL(db_filepath, sql_query, values=None):
@@ -35,8 +35,9 @@ def get_data():
     """
 
     tables = ["weight", "workouts", "runs"]
-    exercises = ["Deadlift", "Back Squat", "Barbell Bench Press", "Pull Up"]
     measurements = ["one_rep_max", "max_volume"]
+    exercises = ["Deadlift", "Back Squat", "Barbell Bench Press", "Pull Up"]
+    
     data_dict = dict()
     
     for i in range(len(tables)):
@@ -97,19 +98,31 @@ def get_data():
             
             # print(tables[i])
 
-            query = ""
+            query_mile_time = "SELECT date, miles, duration_total_min FROM miles ORDER BY date ASC;"
+            connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_mile_time, values=None)
+            rows_mile_times = cursor.fetchall()
+
+            query_fastest_mile = "SELECT MIN(duration_total_min) from miles;"
+            connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_fastest_mile, values=None)
+            rows_fastest_mile = cursor.fetchone()
+
+
+            query_longest_run = "SELECT MAX(total_miles) FROM (SELECT date, SUM(miles) as total_miles FROM miles GROUP BY date ORDER BY date ASC) as longest_run;"
+            connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_longest_run, values=None)
+            rows_longest_run = cursor.fetchone()         
             
             data_dict[tables[i]] = {
-                "runs": {
-                    "date": [1, 2, 3],
-                    "mile_time": [9, 10, 11],
-                    "fastest_mile": int(),
-                    "longest_run": int()
+                "miles": {
+                    "date": [x for x in range(len(rows_mile_times))],
+                    "mile_time": [rows_mile_times["duration_total_min"] for row in rows_mile_times],
+                    "fastest_mile": rows_fastest_mile,
+                    "longest_run": rows_longest_run
                 }
             }
+    
 
-    # connection.commit()
-    # connection.close()
+    connection.commit()
+    connection.close()
     
     for key in data_dict.keys():
         print(key + "-->" + str(data_dict[key]) + "\n")
