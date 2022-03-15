@@ -28,7 +28,7 @@ if check_miles.UPDATE_MILES:
         """
 
         # Drop the table first
-        drop_tables(db_file=DB_FILE, tables_to_drop=TABLES)
+        drop_tables(db_file=DB_FILE, tables_to_drop=TABLES[0])
 
         create_table(db_file=DB_FILE, query=QUERY)
 
@@ -76,6 +76,9 @@ if check_miles.UPDATE_MILES:
         # Output to the console screen
         for row in rows[-5:]:
             print(row)
+
+        # Close db connection
+        connection.close()
             
     except Exception as e:
         print(e)
