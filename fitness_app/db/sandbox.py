@@ -57,5 +57,3 @@ rows = cursor.execute(select_all).fetchall()
 # Output to the console screen
 for row in rows[:5]:
     print(row)
-
-
