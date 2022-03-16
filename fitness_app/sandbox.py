@@ -53,18 +53,19 @@ def get_data():
 
             # Progress
             
+            query_progress = "SELECT ROUND((SELECT weight FROM weight WHERE date = (SELECT MAX(date) FROM weight)) - (SELECT weight FROM weight WHERE date(date) > '2021-12-31' ORDER BY date(date) ASC LIMIT 1), 1);"
+            connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_progress, values=None)
+            rows_progress = cursor.fetchall()            
+
             data_dict[tables[i]] = {
                 "date": [x for x in range(len(rows_weight))],
                 "daily_weight": [rows_weight["weight"] for row in rows_weight],
                 "goal": goal_weight,
-                "progress": int(-5),
+                "progress": rows_progress,
                 "start_date": datetime.datetime.strptime("2022/01/01", "%Y/%m/%d")
             }
             
         elif tables[i] == "workouts":
-            
-            # print(tables[i])
-
             
 
             for measurement in measurements:
