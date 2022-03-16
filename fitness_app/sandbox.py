@@ -44,20 +44,19 @@ def get_data():
         
         if tables[i] == "weight":
 
-            # print(tables[i])
+            # Daily weight
+
+            goal_weight = int(200)
+            query_weight = "SELECT date(date) as date, MIN(weight) as weight FROM weight WHERE date(date) > '2020-12-31' GROUP BY date ORDER BY date ASC;"
+            connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_weight, values=None)
+            rows_weight = cursor.fetchall()
+
+            # Progress
             
-            # query = "SELECT date(date) as date, MIN(weight) as weight FROM weight WHERE date(date) > '2020-12-31' GROUP BY date ORDER BY date ASC;"
-            # values = ()
-            
-            # connection, cursor = executeSQL(
-            #     config.DB_FILE_PATH, sql_query=query, values=values
-            # )
-            
-            # rows = cursor.fetchall()
             data_dict[tables[i]] = {
-                "date": datetime.datetime.strptime("2022/03/04", "%Y/%m/%d"),
-                "daily_weight": 250,
-                "goal": int(210),
+                "date": [x for x in range(len(rows_weight))],
+                "daily_weight": [rows_weight["weight"] for row in rows_weight],
+                "goal": goal_weight,
                 "progress": int(-5),
                 "start_date": datetime.datetime.strptime("2022/01/01", "%Y/%m/%d")
             }
@@ -69,6 +68,7 @@ def get_data():
             
 
             for measurement in measurements:
+
 
                     if measurement == "exercise_volume":
 
@@ -106,12 +106,11 @@ def get_data():
                         for exercise in exercises:
                             
                             # One-rep max
-                            query_one_rep_max = f";"
+                            query_one_rep_max = f"SELECT exercise, MAX((weight * 2.20462) * reps * .0333 + (weight * 2.20462)) as orm FROM workouts WHERE exercise = '{exercise}' LIMIT 10;"
                             connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_one_rep_max, values=None)
                             rows_one_rep_max = cursor.fetchone()
 
-                            data_dict[tables[i]][measurement]["date"] = [x for x in range(len(rows_one_rep_max))]
-                            data_dict[tables[i]][measurement][exercise] = [rows_one_rep_max["volume"] for row in rows_one_rep_max]
+                            data_dict[tables[i]][measurement][exercise] = rows_one_rep_max
 
         else:
             
