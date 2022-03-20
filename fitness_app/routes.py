@@ -6,6 +6,7 @@ from flask import render_template
 import datetime
 
 
+
 def executeSQL(db_filepath, sql_query, values=None):
     """Creates sqlite object and executes an SQL query
 
@@ -30,6 +31,111 @@ def executeSQL(db_filepath, sql_query, values=None):
         
     return connection, cursor
 
+################################### IN PROGRESS ###################################
+
+def get_data():
+    """
+    Returns the desired data from executeSQL function
+    """
+
+    tables = ["weight", "workouts", "runs"]
+    measurements = ["exericise_volume", "one_rep_max"]
+    exercises = ["Deadlift", "Back Squat", "Barbell Bench Press", "Pull Up"]
+    
+    data_dict = dict()
+    
+    for i in range(len(tables)):
+        
+        if tables[i] == "weight":
+
+            # Daily weight
+
+            goal_weight = int(200)
+            query_weight = "SELECT date(date) as date, MIN(weight) as weight FROM weight WHERE date(date) > '2020-12-31' GROUP BY date ORDER BY date ASC;"
+            connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_weight, values=())
+            rows_weight = cursor.fetchall()
+
+            # Progress
+            
+            query_progress = "SELECT ROUND((SELECT weight FROM weight WHERE date = (SELECT MAX(date) FROM weight)) - (SELECT weight FROM weight WHERE date(date) > '2021-12-31' ORDER BY date(date) ASC LIMIT 1), 1);"
+            connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_progress, values=())
+            rows_progress = cursor.fetchall()            
+
+            data_dict[tables[i]] = {
+                "date": [x for x in range(len(rows_weight))],
+                "daily_weight": [rows_weight["weight"] for row in rows_weight],
+                "goal": goal_weight,
+                "progress": rows_progress,
+                "start_date": datetime.datetime.strptime("2022/01/01", "%Y/%m/%d")
+            }
+            
+        elif tables[i] == "workouts":
+            
+
+            for measurement in measurements:
+
+
+                    if measurement == "exercise_volume":
+
+
+                        for exercise in exercises:
+                            
+                            # Exercise volume
+                            query_exercise_volume = f"SELECT exercise, SUM(reps * weight) as volume FROM workouts WHERE exercise = '{exercise}' GROUP BY date HAVING SUM(reps * weight) > 0 ORDER BY date ASC LIMIT 10;"
+                            connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_exercise_volume, values=())
+                            rows_exercise_volume = cursor.fetchall()
+
+                            data_dict[tables[i]][measurement]["date"] = [x for x in range(len(rows_exercise_volume))]
+                            data_dict[tables[i]][measurement][exercise] = [rows_exercise_volume["volume"] for row in rows_exercise_volume]                        
+
+                    else:
+
+                        for exercise in exercises:
+                            
+                            # One-rep max
+                            query_one_rep_max = f"SELECT exercise, MAX((weight * 2.20462) * reps * .0333 + (weight * 2.20462)) as orm FROM workouts WHERE exercise = '{exercise}' LIMIT 10;"
+                            connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_one_rep_max, values=())
+                            rows_one_rep_max = cursor.fetchone()
+
+                            data_dict[tables[i]][measurement][exercise] = rows_one_rep_max
+
+        else:
+            
+            # print(tables[i])
+
+            query_mile_time = "SELECT date, miles, duration_total_min FROM miles ORDER BY date ASC;"
+            connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_mile_time, values=())
+            rows_mile_times = cursor.fetchall()
+
+            query_fastest_mile = "SELECT MIN(duration_total_min) from miles;"
+            connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_fastest_mile, values=())
+            rows_fastest_mile = cursor.fetchone()
+
+
+            query_longest_run = "SELECT MAX(total_miles) FROM (SELECT date, SUM(miles) as total_miles FROM miles GROUP BY date ORDER BY date ASC) as longest_run;"
+            connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_longest_run, values=())
+            rows_longest_run = cursor.fetchone()         
+            
+            data_dict[tables[i]] = {
+                "miles": {
+                    "date": [x for x in range(len(rows_mile_times))],
+                    "mile_time": [rows_mile_times["duration_total_min"] for row in rows_mile_times],
+                    "fastest_mile": rows_fastest_mile,
+                    "longest_run": rows_longest_run
+                }
+            }
+    
+    connection.commit()
+    connection.close()
+    
+    for key in data_dict.keys():
+        print(key + "-->" + str(data_dict[key]) + "\n")
+
+    return data_dict
+
+get_data()
+
+################################### IN PROGRESS ###################################
 
 @app.route("/")
 @app.route("/home")
@@ -40,46 +146,6 @@ def home_page():
 
 @app.route("/dashboard")
 def dashboard_page():
-    VALUES = ()  # simple query, no ETL
-    ###### WEIGHT ########
-    QUERY_WEIGHT = "SELECT date(date) as date, MIN(weight) as weight FROM weight WHERE date(date) > '2020-12-31' GROUP BY date ORDER BY date ASC;"
 
-    connection, cursor = executeSQL(
-        config.DB_FILE_PATH, sql_query=QUERY_WEIGHT, values=VALUES
-    )
-    rows = cursor.fetchall()
 
-    labels_weight = [row["date"] for row in rows]
-    values_weight = [row["weight"] for row in rows]
-    
-    ###### STRENGTH ########
-    QUERY_STRENGTH = "SELECT substr(date, 1, 10) as date, exercise, reps, weight, SUM(reps*weight*2.2) AS TotalVolume, duration, distance FROM workouts GROUP BY substr(date, 1, 10) HAVING SUM(reps*weight) > 0 ORDER BY substr(date, 1, 10) ASC;"
-    # EXERCISE = ['Deadlift', 'Back Squat', 'Barbell Bench Press', 'Pull Up']
-    # QUERY_ONERM = f"SELECT exercise, MAX(weight*2.205) * (1 + (reps/30)) as one_rm FROM workouts WHERE exercise={EXERCISE[0]} GROUP BY exercise;"
-    
-    connection, cursor = executeSQL(
-        config.DB_FILE_PATH, sql_query=QUERY_STRENGTH, values=VALUES
-    )
-    
-    rows = cursor.fetchall()
-    
-    labels_strength = [row["date"] for row in rows]
-    values_strength = [row["TotalVolume"] for row in rows]
-    
-    ###### Cardio ########
-    QUERY_CARDIO = "SELECT * FROM runs;"
-    connection, cursor = executeSQL(
-        config.DB_FILE_PATH, sql_query=QUERY_CARDIO, values=VALUES
-    )
-    rows = cursor.fetchall()
-
-    labels_cardio = [row["date"] for row in rows]
-    values_cardio = [row["distance"] for row in rows]
-    
-    backgroundColors = ['rgba(54, 162, 235, 0.5)' for label in labels_cardio]
-    borderColors= ['rgb(54, 162, 235, 1)' for label in labels_cardio]
-
-    connection.commit()
-    connection.close()
-
-    return render_template("dashboard.html", labels_weight=labels_weight, values_weight=values_weight, labels_strength=labels_strength, values_strength=values_strength, labels_cardio=labels_cardio, values_cardio=values_cardio, backgroundColors=backgroundColors, borderColors=borderColors)
+    return render_template("dashboard.html")

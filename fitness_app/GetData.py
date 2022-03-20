@@ -1,7 +1,7 @@
 import datetime
 import sqlite3
 from sqlite3 import Error
-from fitness_app.db import config
+
 
 
 def executeSQL(db_filepath, sql_query, values=None):
@@ -82,25 +82,7 @@ def get_data():
                             rows_exercise_volume = cursor.fetchall()
 
                             data_dict[tables[i]][measurement]["date"] = [x for x in range(len(rows_exercise_volume))]
-                            data_dict[tables[i]][measurement][exercise] = [rows_exercise_volume["volume"] for row in rows_exercise_volume]
-                        
-                            # data_dict[tables[i]] = {
-                            #     "exercise_volume": {
-                            #         "date": [],
-                            #         "Deadlift": [],
-                            #         "Back Squat": [],
-                            #         "Barbell Bench Press": [],
-                            #         "Pull Up": []
-                            #   },
-                            #     "one_rep_max": {
-                            #         "date": 1,
-                            #         "Deadlift": 200,
-                            #         "Back Squat": 200,
-                            #         "Barbell Bench Press": 200,
-                            #         "Pull Up": 10
-                            #     }              
-                            # }
-                        
+                            data_dict[tables[i]][measurement][exercise] = [rows_exercise_volume["volume"] for row in rows_exercise_volume]                        
 
                     else:
 
@@ -139,7 +121,6 @@ def get_data():
                 }
             }
     
-
     connection.commit()
     connection.close()
     
@@ -147,5 +128,3 @@ def get_data():
         print(key + "-->" + str(data_dict[key]) + "\n")
 
     return data_dict
-
-get_data()
