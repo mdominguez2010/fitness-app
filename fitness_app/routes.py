@@ -39,10 +39,12 @@ def get_data():
     """
 
     tables = ["weight", "workouts", "runs"]
-    measurements = ["exericise_volume", "one_rep_max"]
+    measurements = ["exercise_volume", "one_rep_max"]
     exercises = ["Deadlift", "Back Squat", "Barbell Bench Press", "Pull Up"]
     
     data_dict = dict()
+    
+    ######## Change to <for table in tables>
     
     for i in range(len(tables)):
         
@@ -59,12 +61,12 @@ def get_data():
             
             query_progress = "SELECT ROUND((SELECT weight FROM weight WHERE date = (SELECT MAX(date) FROM weight)) - (SELECT weight FROM weight WHERE date(date) > '2021-12-31' ORDER BY date(date) ASC LIMIT 1), 1);"
             connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_progress, values=())
-            rows_progress = cursor.fetchall()            
+            rows_progress = cursor.fetchone()        
 
             data_dict[tables[i]] = {
                 "date": [x for x in range(len(rows_weight))],
-                "daily_weight": [rows_weight["weight"] for row in rows_weight],
-                "goal": goal_weight,
+                "daily_weight": [x for x in range(len(rows_weight))],
+                "goal": [rows_weight[1] for row in rows_weight],
                 "progress": rows_progress,
                 "start_date": datetime.datetime.strptime("2022/01/01", "%Y/%m/%d")
             }
@@ -72,32 +74,43 @@ def get_data():
         elif tables[i] == "workouts":
             
 
-            for measurement in measurements:
+            for i in range(len(measurements)):
 
 
-                    if measurement == "exercise_volume":
+                    if measurements[i] == "exercise_volume":
 
+                        
 
-                        for exercise in exercises:
+                        for i in range(len(exercises)):
                             
                             # Exercise volume
-                            query_exercise_volume = f"SELECT exercise, SUM(reps * weight) as volume FROM workouts WHERE exercise = '{exercise}' GROUP BY date HAVING SUM(reps * weight) > 0 ORDER BY date ASC LIMIT 10;"
+                            query_exercise_volume = f"SELECT exercise, SUM(reps * weight) as volume FROM workouts WHERE exercise = '{exercises[i]}' GROUP BY date HAVING SUM(reps * weight) > 0 ORDER BY date ASC LIMIT 10;"
                             connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_exercise_volume, values=())
                             rows_exercise_volume = cursor.fetchall()
+                            dates = [x for x in range(len(rows_exercise_volume))]
+                            exercise_volume = [rows_exercise_volume[1] for i in range(len(rows_exercise_volume))]  
+                            
 
-                            data_dict[tables[i]][measurement]["date"] = [x for x in range(len(rows_exercise_volume))]
-                            data_dict[tables[i]][measurement][exercise] = [rows_exercise_volume["volume"] for row in rows_exercise_volume]                        
+                            data_dict[tables[i]] = {
+                                "exercise_volume": {
+                                    "date": dates,
+                                    "exercise_volume": exercise_volume
+                                }
+                            }
+
+                            # data_dict[tables[i]][measurements[i]]["date"] = [x for x in range(len(rows_exercise_volume))]
+                            # data_dict[tables[i]][measurements[i]][exercises[i]] = [rows_exercise_volume[1] for row in rows_exercise_volume]                        
 
                     else:
 
-                        for exercise in exercises:
+                        for i in range(len(exercises)):
                             
                             # One-rep max
-                            query_one_rep_max = f"SELECT exercise, MAX((weight * 2.20462) * reps * .0333 + (weight * 2.20462)) as orm FROM workouts WHERE exercise = '{exercise}' LIMIT 10;"
+                            query_one_rep_max = f"SELECT exercise, MAX((weight * 2.20462) * reps * .0333 + (weight * 2.20462)) as orm FROM workouts WHERE exercise = '{exercises[i]}' LIMIT 10;"
                             connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_one_rep_max, values=())
                             rows_one_rep_max = cursor.fetchone()
 
-                            data_dict[tables[i]][measurement][exercise] = rows_one_rep_max
+                            data_dict[tables[i]][measurements[i]][exercises[i]] = rows_one_rep_max
 
         else:
             
@@ -128,12 +141,10 @@ def get_data():
     connection.commit()
     connection.close()
     
-    for key in data_dict.keys():
-        print(key + "-->" + str(data_dict[key]) + "\n")
+    # for key in data_dict.keys():
+    #     print(key + "-->" + str(data_dict[key]) + "\n")
 
     return data_dict
-
-get_data()
 
 ################################### IN PROGRESS ###################################
 
@@ -147,5 +158,7 @@ def home_page():
 @app.route("/dashboard")
 def dashboard_page():
 
+    data_dict = get_data()
+    
 
-    return render_template("dashboard.html")
+    return render_template("dashboard.html", data_dict=data_dict)
