@@ -1,3 +1,5 @@
+from fitness_app import app_db, SQLAlchemy
+from fitness_app.db import config
 import datetime
 import sqlite3
 from sqlite3 import Error
