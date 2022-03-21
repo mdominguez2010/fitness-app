@@ -38,13 +38,43 @@ def get_data():
     Returns the desired data from executeSQL function
     """
 
-    tables = ["weight", "workouts", "runs"]
+    tables = ["weight", "workouts", "miles"]
     measurements = ["exercise_volume", "one_rep_max"]
     exercises = ["Deadlift", "Back Squat", "Barbell Bench Press", "Pull Up"]
     
-    data_dict = dict()
-    
-    ######## Change to <for table in tables>
+    data_dict = {
+    "weight": {
+        "date": [],
+        "daily_weight": [],
+        "goal": 200,
+        "progress": float(),
+        "start_date": datetime.datetime.strptime("2022/01/01", "%Y/%m/%d")
+    },
+    "workouts": {
+        "measurements": {
+            "exercise_volume": {
+                "dates": [],
+                "Deadlift": [],
+                "Back Squat": [],
+                "Barbell Bench Press": [],
+                "Pull Up":[]
+            },
+            "one_rep_max": {
+                "Deadlift": 1,
+                "Back Squat": 1,
+                "Barbell Bench Press": 1,
+                "Pull Up": 1
+            }
+        }
+    },
+    "miles": {
+        "dates": [],
+        "mile_time": [],
+        "fastest_mile": 1,
+        "longest_run": 1
+        }
+    }
+
     
     for table in tables:
         
@@ -52,7 +82,6 @@ def get_data():
 
             # Daily weight
 
-            goal_weight = int(200)
             query_weight = "SELECT date(date) as date, MIN(weight) as weight FROM weight WHERE date(date) > '2020-12-31' GROUP BY date ORDER BY date ASC;"
             connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_weight, values=())
             rows_weight = cursor.fetchall()
@@ -63,13 +92,11 @@ def get_data():
             connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_progress, values=())
             rows_progress = cursor.fetchone()        
 
-            data_dict[table] = {
-                "date": [x for x in range(len(rows_weight))],
-                "daily_weight": [rows_weight["weight"] for row in rows_weight],
-                "goal": goal_weight,
-                "progress": rows_progress,
-                "start_date": datetime.datetime.strptime("2022/01/01", "%Y/%m/%d")
-            }
+            data_dict[table]["date"] = [x for x in range(len(rows_weight))]
+            data_dict[table]["daily_weight"] = [rows_weight["weight"] for row in rows_weight]
+            data_dict[table]["progress"] = rows_progress
+            data_dict[table]["start_date"] = datetime.datetime.strptime("2022/01/01", "%Y/%m/%d")
+
             
         elif table == "workouts":
             
@@ -79,7 +106,7 @@ def get_data():
 
                     if measurement == "exercise_volume":
 
-                        
+                        data_dict[table] = measurement
 
                         for exercise in exercises:
                             
@@ -91,10 +118,8 @@ def get_data():
                             exercise_volume = [rows_exercise_volume["volume"] for row in rows_exercise_volume]  
                             
 
-                            data_dict[table][measurement][exercise] = {
-                                "dates": dates,
-                                "volume": exercise_volume
-                            }
+                            data_dict[table]["measurements"][measurement]["dates"] = dates
+                            data_dict[table]["measurements"][measurement][exercise] = exercise_volume
 
                             # data_dict[tables[i]][measurements[i]]["date"] = [x for x in range(len(rows_exercise_volume))]
                             # data_dict[tables[i]][measurements[i]][exercises[i]] = [rows_exercise_volume[1] for row in rows_exercise_volume]                        
@@ -109,7 +134,7 @@ def get_data():
                             rows_one_rep_max = cursor.fetchone()
                             one_rep_max = rows_one_rep_max
 
-                            data_dict[table][measurement][exercise] = one_rep_max
+                            data_dict[table]["measurements"][measurement][exercise] = one_rep_max
 
         else:
             
@@ -128,10 +153,14 @@ def get_data():
             connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_longest_run, values=())
             rows_longest_run = cursor.fetchone()         
             
-            data_dict[tables] = {
+            data_dict[tables]["miles"]["dates"] = [x for x in range(len(rows_mile_times))]
+            data_dict[tables]["miles"]["mile_time"] = [rows_mile_times["duration_total_min"] for row in rows_mile_times]
+            data_dict[tables]["miles"]["fastest_mile"] = rows_fastest_mile
+            data_dict[tables]["miles"]["longest_run"] = rows_longest_run
+
                 "miles": {
-                    "date": [x for x in range(len(rows_mile_times))],
-                    "mile_time": [rows_mile_times["duration_total_min"] for row in rows_mile_times],
+                    "dates": ,
+                    "mile_time": ,
                     "fastest_mile": rows_fastest_mile,
                     "longest_run": rows_longest_run
                 }

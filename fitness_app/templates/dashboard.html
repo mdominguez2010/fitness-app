@@ -5,10 +5,16 @@
 
 {% block content %}
 
+
 <h1>Data dictionary:</h1>
 
-{{ data_dict | safe }}
 
 <img src="img/underConstr.jpg" alt="Website under construction :-/">
+
+
+<script>
+    {{ data_dict | safe }}
+</script>
+
 
 {% endblock %}
