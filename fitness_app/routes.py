@@ -46,9 +46,9 @@ def get_data():
     
     ######## Change to <for table in tables>
     
-    for i in range(len(tables)):
+    for table in tables:
         
-        if tables[i] == "weight":
+        if table == "weight":
 
             # Daily weight
 
@@ -63,39 +63,37 @@ def get_data():
             connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_progress, values=())
             rows_progress = cursor.fetchone()        
 
-            data_dict[tables[i]] = {
+            data_dict[table] = {
                 "date": [x for x in range(len(rows_weight))],
-                "daily_weight": [x for x in range(len(rows_weight))],
-                "goal": [rows_weight[1] for row in rows_weight],
+                "daily_weight": [rows_weight["weight"] for row in rows_weight],
+                "goal": goal_weight,
                 "progress": rows_progress,
                 "start_date": datetime.datetime.strptime("2022/01/01", "%Y/%m/%d")
             }
             
-        elif tables[i] == "workouts":
+        elif table == "workouts":
             
 
-            for i in range(len(measurements)):
+            for measurement in measurements:
 
 
-                    if measurements[i] == "exercise_volume":
+                    if measurement == "exercise_volume":
 
                         
 
-                        for i in range(len(exercises)):
+                        for exercise in exercises:
                             
                             # Exercise volume
-                            query_exercise_volume = f"SELECT exercise, SUM(reps * weight) as volume FROM workouts WHERE exercise = '{exercises[i]}' GROUP BY date HAVING SUM(reps * weight) > 0 ORDER BY date ASC LIMIT 10;"
+                            query_exercise_volume = f"SELECT exercise, SUM(reps * weight) as volume FROM workouts WHERE exercise = '{exercise}' GROUP BY date HAVING SUM(reps * weight) > 0 ORDER BY date ASC LIMIT 10;"
                             connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_exercise_volume, values=())
                             rows_exercise_volume = cursor.fetchall()
                             dates = [x for x in range(len(rows_exercise_volume))]
-                            exercise_volume = [rows_exercise_volume[1] for i in range(len(rows_exercise_volume))]  
+                            exercise_volume = [rows_exercise_volume["volume"] for row in rows_exercise_volume]  
                             
 
-                            data_dict[tables[i]] = {
-                                "exercise_volume": {
-                                    "date": dates,
-                                    "exercise_volume": exercise_volume
-                                }
+                            data_dict[table][measurement][exercise] = {
+                                "dates": dates,
+                                "volume": exercise_volume
                             }
 
                             # data_dict[tables[i]][measurements[i]]["date"] = [x for x in range(len(rows_exercise_volume))]
@@ -103,14 +101,15 @@ def get_data():
 
                     else:
 
-                        for i in range(len(exercises)):
+                        for exercise in exercises:
                             
                             # One-rep max
-                            query_one_rep_max = f"SELECT exercise, MAX((weight * 2.20462) * reps * .0333 + (weight * 2.20462)) as orm FROM workouts WHERE exercise = '{exercises[i]}' LIMIT 10;"
+                            query_one_rep_max = f"SELECT exercise, MAX((weight * 2.20462) * reps * .0333 + (weight * 2.20462)) as orm FROM workouts WHERE exercise = '{exercise}' LIMIT 10;"
                             connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_one_rep_max, values=())
                             rows_one_rep_max = cursor.fetchone()
+                            one_rep_max = rows_one_rep_max
 
-                            data_dict[tables[i]][measurements[i]][exercises[i]] = rows_one_rep_max
+                            data_dict[table][measurement][exercise] = one_rep_max
 
         else:
             
