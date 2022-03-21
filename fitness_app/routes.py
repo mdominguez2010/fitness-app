@@ -128,7 +128,7 @@ def get_data():
             connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_longest_run, values=())
             rows_longest_run = cursor.fetchone()         
             
-            data_dict[tables[i]] = {
+            data_dict[tables] = {
                 "miles": {
                     "date": [x for x in range(len(rows_mile_times))],
                     "mile_time": [rows_mile_times["duration_total_min"] for row in rows_mile_times],
