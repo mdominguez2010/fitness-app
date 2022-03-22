@@ -137,7 +137,6 @@ def get_data():
 
         else:
             
-            # print(tables[i])
 
             query_mile_time = "SELECT date, miles, duration_total_min FROM miles ORDER BY date ASC;"
             connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_mile_time, values=())
