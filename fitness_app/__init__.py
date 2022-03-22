@@ -9,4 +9,3 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 app_db = SQLAlchemy(app)
 
 from fitness_app import routes
-from fitness_app import GetData

@@ -1,20 +1,20 @@
-{% extends 'base.html' %}
-{% block title %}
-  Dashboard Page
-{% endblock %}
+<h1 class="h1">Under construction... :-/</h1>
+<div>
+    <img src="https://user-images.githubusercontent.com/52106331/159562828-ecea6a7e-ff21-404f-af37-659fc490b433.jpg" alt="Page under construction :-/">
+</div>
 
-{% block content %}
+<style>
+    img {
+        width: 800px;
+        height: 600px;
+        object-fit: cover;
+    }
+</style>
 
+<canvas id="data_dict">
+    <script>
+        {{ data_dict | safe }}
+        var ctx = document.getElementById("data_dict").getContext("2d");
+    </script>
+</canvas>
 
-<h1>Data dictionary:</h1>
-
-
-<img src="img/underConstr.jpg" alt="Website under construction :-/">
-
-
-<script>
-    {{ data_dict | safe }}
-</script>
-
-
-{% endblock %}

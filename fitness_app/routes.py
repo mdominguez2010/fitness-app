@@ -93,7 +93,7 @@ def get_data():
             rows_progress = cursor.fetchone()        
 
             data_dict[table]["date"] = [x for x in range(len(rows_weight))]
-            data_dict[table]["daily_weight"] = [rows_weight["weight"] for row in rows_weight]
+            data_dict[table]["daily_weight"] = [rows_weight[1] for row in rows_weight]
             data_dict[table]["progress"] = rows_progress
             data_dict[table]["start_date"] = datetime.datetime.strptime("2022/01/01", "%Y/%m/%d")
 
@@ -114,7 +114,7 @@ def get_data():
                             connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_exercise_volume, values=())
                             rows_exercise_volume = cursor.fetchall()
                             dates = [x for x in range(len(rows_exercise_volume))]
-                            exercise_volume = [rows_exercise_volume["volume"] for row in rows_exercise_volume]  
+                            exercise_volume = [rows_exercise_volume[1] for row in rows_exercise_volume]  
                             
 
                             data_dict[table]["measurements"][measurement]["dates"] = dates
@@ -151,10 +151,10 @@ def get_data():
             connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_longest_run, values=())
             rows_longest_run = cursor.fetchone()         
             
-            data_dict[tables]["miles"]["dates"] = [x for x in range(len(rows_mile_times))]
-            data_dict[tables]["miles"]["mile_time"] = [rows_mile_times["duration_total_min"] for row in rows_mile_times]
-            data_dict[tables]["miles"]["fastest_mile"] = rows_fastest_mile
-            data_dict[tables]["miles"]["longest_run"] = rows_longest_run
+            data_dict[table]["dates"] = [x for x in range(len(rows_mile_times))]
+            data_dict[table]["mile_time"] = [rows_mile_times[2] for row in rows_mile_times]
+            data_dict[table]["fastest_mile"] = rows_fastest_mile
+            data_dict[table]["longest_run"] = rows_longest_run
 
     
     connection.commit()
