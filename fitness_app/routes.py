@@ -106,7 +106,6 @@ def get_data():
 
                     if measurement == "exercise_volume":
 
-                        data_dict[table] = measurement
 
                         for exercise in exercises:
                             
@@ -158,13 +157,6 @@ def get_data():
             data_dict[tables]["miles"]["fastest_mile"] = rows_fastest_mile
             data_dict[tables]["miles"]["longest_run"] = rows_longest_run
 
-                "miles": {
-                    "dates": ,
-                    "mile_time": ,
-                    "fastest_mile": rows_fastest_mile,
-                    "longest_run": rows_longest_run
-                }
-            }
     
     connection.commit()
     connection.close()
