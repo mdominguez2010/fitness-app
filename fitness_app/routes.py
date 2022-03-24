@@ -86,14 +86,15 @@ def get_data():
             connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_weight, values=())
             rows_weight = cursor.fetchall()
 
+            data_dict[table]["date"] = [x for x in range(len(rows_weight))]
+            data_dict[table]["daily_weight"] = rows_weight
+
             # Progress
             
             query_progress = "SELECT ROUND((SELECT weight FROM weight WHERE date = (SELECT MAX(date) FROM weight)) - (SELECT weight FROM weight WHERE date(date) > '2021-12-31' ORDER BY date(date) ASC LIMIT 1), 1);"
             connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_progress, values=())
             rows_progress = cursor.fetchone()        
 
-            data_dict[table]["date"] = [x for x in range(len(rows_weight))]
-            data_dict[table]["daily_weight"] = [rows_weight[1] for row in rows_weight]
             data_dict[table]["progress"] = rows_progress
             data_dict[table]["start_date"] = datetime.datetime.strptime("2022/01/01", "%Y/%m/%d")
 
@@ -110,15 +111,11 @@ def get_data():
                         for exercise in exercises:
                             
                             # Exercise volume
-                            query_exercise_volume = f"SELECT exercise, SUM(reps * weight) as volume FROM workouts WHERE exercise = '{exercise}' GROUP BY date HAVING SUM(reps * weight) > 0 ORDER BY date ASC LIMIT 10;"
+                            query_exercise_volume = f"SELECT exercise, SUM(reps * weight) as volume FROM workouts WHERE exercise = '{exercise}' GROUP BY date HAVING SUM(reps * weight) > 0 ORDER BY date ASC;"
                             connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_exercise_volume, values=())
                             rows_exercise_volume = cursor.fetchall()
-                            dates = [x for x in range(len(rows_exercise_volume))]
-                            exercise_volume = [rows_exercise_volume[1] for row in rows_exercise_volume]  
-                            
-
-                            data_dict[table]["measurements"][measurement]["dates"] = dates
-                            data_dict[table]["measurements"][measurement][exercise] = exercise_volume
+                            data_dict[table]["measurements"][measurement]["dates"] = [x for x in range(len(rows_exercise_volume))]
+                            data_dict[table]["measurements"][measurement][exercise] = rows_exercise_volume
 
                             # data_dict[tables[i]][measurements[i]]["date"] = [x for x in range(len(rows_exercise_volume))]
                             # data_dict[tables[i]][measurements[i]][exercises[i]] = [rows_exercise_volume[1] for row in rows_exercise_volume]                        
@@ -152,7 +149,7 @@ def get_data():
             rows_longest_run = cursor.fetchone()         
             
             data_dict[table]["dates"] = [x for x in range(len(rows_mile_times))]
-            data_dict[table]["mile_time"] = [rows_mile_times[2] for row in rows_mile_times]
+            data_dict[table]["mile_time"] = rows_mile_times
             data_dict[table]["fastest_mile"] = rows_fastest_mile
             data_dict[table]["longest_run"] = rows_longest_run
 
@@ -178,6 +175,9 @@ def home_page():
 def dashboard_page():
 
     data_dict = get_data()
+    weights = data_dict["weight"]["daily_weight"]
+    deadlifts = data_dict["workouts"]["measurements"]["exercise_volume"]["Deadlift"]
+    mile_times = data_dict["miles"]["mile_time"]   
     
 
-    return render_template("dashboard.html", data_dict=data_dict)
+    return render_template("dashboard.html", data_dict = data_dict, weights = weights, deadlifts = deadlifts, mile_times = mile_times)
