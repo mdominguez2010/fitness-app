@@ -1,47 +1,98 @@
 {% extends 'base.html' %}
 {% block title %}
-  Dashboard Page
+    Dashboard Page
 {% endblock %}
 
 {% block content %}
 
-<h1 class="h1">Under construction</h1>
-<div>
-    <img src="https://user-images.githubusercontent.com/52106331/159562828-ecea6a7e-ff21-404f-af37-659fc490b433.jpg" alt="Page under construction">
-</div>
+<main role="main">
 
-<h4 class="h4"> daily_weight</h4>
-{% for weight in weights %}
+	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+		<h1 class="h1">Dashboard</h1>
+	</div>
 
-    {{ weight[0] }} , {{ weight[1] }} |
+	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+		<h2 class="h2">Weight</h1>
+	</div>
 
-{% endfor %}
-</h4>
-
-<h4 class="h4"> deadlifts</h4>
-{% for deadlift in deadlifts %}
-
-    Volume: {{ deadlift[1] }} |
-
-{% endfor %}
-</h4>
-
-<h4 class="h4"> mile_time</h4>
-{% for mile_time in mile_times %}
-
-    Mile time: {{ mile_time[2] }} |
-
-{% endfor %}
-</h4>
-
-<style>
-    img {
-        width: 800px;
-        height: 600px;
-        object-fit: cover;
-    }
-</style>
+	<canvas class="my-4 w-100" id="weightChart" width="900" height="380"></canvas>
 
 
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h2">Strength</h1>
+    </div>
+
+    <canvas id="strengthChart" width="400" height="400"></canvas>
+
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h2">Cardio</h2>
+    </div>
+
+    <canvas id="milesChart" width="400" height="400"></canvas>
+
+    <script>
+
+        // weightChart
+
+        const config_weight = {
+            type: "line",
+            data: {
+                labels: {{ dates_list | safe}},
+                datasets: [
+                    {
+                        label: "Weight",
+                        data: {{ weights_list | safe }},
+                        fill: true,
+                        borderColor: 'rgb(54, 162, 235, 1)',
+                        backgroundColor: "rgb(105, 105, 105)",
+                        lineTension: 0.5
+                    },
+                ]
+            },
+            options: {
+                responsive: true
+            }
+        }
+        const ctx_weight = document.getElementById("weightChart").getContext("2d");
+        const linechart_weight = new Chart(
+            ctx_weight, config_weight
+        )
+
+        // strengthChart
+
+        
+
+        // milesChart
+
+        const config_miles = {
+            type: "line",
+            data: {
+                labels: {{ mile_dates_list | safe}},
+                datasets: [
+                    {
+                        label: "Mile Times",
+                        data: {{ mile_times_list | safe }},
+                        fill: true,
+                        borderColor: 'rgb(54, 162, 235, 1)',
+                        backgroundColor: "rgb(105, 105, 105)",
+                        lineTension: 0.8
+                    },
+                ]
+            },
+            options: {
+                responsive: true
+            }
+        }
+        const ctx_miles = document.getElementById("milesChart").getContext("2d");
+        const linechart_miles = new Chart(
+            ctx_miles, config_miles
+        )
+
+        
+
+
+    </script>
+
+</main>
 
 {% endblock %}

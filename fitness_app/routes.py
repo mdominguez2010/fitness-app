@@ -128,9 +128,8 @@ def get_data():
                             query_one_rep_max = f"SELECT exercise, MAX((weight * 2.20462) * reps * .0333 + (weight * 2.20462)) as orm FROM workouts WHERE exercise = '{exercise}' LIMIT 10;"
                             connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_one_rep_max, values=())
                             rows_one_rep_max = cursor.fetchone()
-                            one_rep_max = rows_one_rep_max
 
-                            data_dict[table]["measurements"][measurement][exercise] = one_rep_max
+                            data_dict[table]["measurements"][measurement][exercise] = rows_one_rep_max
 
         else:
             
@@ -175,9 +174,38 @@ def home_page():
 def dashboard_page():
 
     data_dict = get_data()
+
+    # weight
+    
     weights = data_dict["weight"]["daily_weight"]
-    deadlifts = data_dict["workouts"]["measurements"]["exercise_volume"]["Deadlift"]
-    mile_times = data_dict["miles"]["mile_time"]   
+    dates_list = []
+    weights_list = []
+    
+    for weight in weights:
+        dates_list.append(weight[0])
+        weights_list.append(weight[1])
+
+    progress = data_dict["weight"]["progress"]
+        
+    # workouts
+    
+    exercise_volume_deadlift = data_dict["workouts"]["measurements"]["exercise_volume"]["Deadlift"]
+    orm = data_dict["workouts"]["measurements"]["one_rep_max"]["Deadlift"]
+
+    # miles
+
+    mile_times = data_dict["miles"]["mile_time"]
+    mile_dates_list = []
+    mile_times_list = []
+    for mile_time in mile_times:
+        mile_dates_list.append(mile_time[0])
+        mile_times_list.append(mile_time[2])
+
+
+    
+    
+    fastest_mile = data_dict["miles"]["fastest_mile"]
+    longest_run = data_dict["miles"]["longest_run"]
     
 
-    return render_template("dashboard.html", data_dict = data_dict, weights = weights, deadlifts = deadlifts, mile_times = mile_times)
+    return render_template("dashboard.html", data_dict = data_dict, weights_list = weights_list, dates_list=dates_list, mile_times_list = mile_times_list, mile_dates_list=mile_dates_list, progress = progress, orm = orm, fastest_mile=fastest_mile, longest_run=longest_run)

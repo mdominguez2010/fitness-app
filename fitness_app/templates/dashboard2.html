@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}
+  Dashboard Page
+{% endblock %}
+
+{% block content %}
+
+<h1 class="h1">Under construction</h1>
+<div>
+    <img src="https://user-images.githubusercontent.com/52106331/159562828-ecea6a7e-ff21-404f-af37-659fc490b433.jpg" alt="Page under construction">
+</div>
+
+<h1>weight table</h1>
+
+<h4 class="h4"> daily_weight</h4>
+{% for weight in weights %}
+
+    {{ weight[0] }} , {{ weight[1] }} |
+
+{% endfor %}
+</h4>
+
+<h4 class="h4"> progress</h4>
+{{progress[0]}}
+</h4>
+
+
+<h1 class="h1">workouts</h1>
+
+<h4 class="h4"> exercise_volume</h4>
+{% for deadlift in deadlifts %}
+
+    Deadlift: {{ deadlift[1] }} |
+
+{% endfor %}
+
+<h4 class="h4">one_rep_max</h4>
+{{ orm[1] }}
+
+
+<h1 class="h1">miles</h1>
+
+<h4 class="h4"> mile_time</h4>
+{% for mile_time in mile_times %}
+
+    Mile time: {{ mile_time[2] }} |
+
+{% endfor %}
+
+<h4 class="h4">fastes_mile</h4>
+Fastest mile: {{ fastest_mile[0] }}
+
+<h4 class="h4">longest_run</h4>
+Longest run: {{ longest_run[0] }}
+
+<style>
+    img {
+        width: 800px;
+        height: 600px;
+        object-fit: cover;
+    }
+</style>
+
+
+
+{% endblock %}
