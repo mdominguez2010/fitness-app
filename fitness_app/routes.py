@@ -129,13 +129,25 @@ def get_data():
                     else:
 
                         for exercise in exercises:
-                            
-                            # One-rep max
-                            query_one_rep_max = f"SELECT exercise, MAX((weight * 2.20462) * reps * .0333 + (weight * 2.20462)) as orm FROM workouts WHERE exercise = '{exercise}' LIMIT 10;"
-                            connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_one_rep_max, values=())
-                            rows_one_rep_max = cursor.fetchone()
 
-                            data_dict[table]["measurements"][measurement][exercise] = rows_one_rep_max
+                            # One-rep max
+
+                            if exercise != "Pull Up":
+                            
+                                
+                                query_one_rep_max = f"SELECT exercise, MAX((weight * 2.20462) * reps * .0333 + (weight * 2.20462)) as orm FROM workouts WHERE exercise = '{exercise}' LIMIT 10;"
+                                connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_one_rep_max, values=())
+                                rows_one_rep_max = cursor.fetchone()
+
+                                data_dict[table]["measurements"][measurement][exercise] = rows_one_rep_max
+
+                            else:
+
+                                query_pullups_mr = f"SELECT MAX(reps) FROM workouts WHERE exercise = 'Pull Up';"
+                                connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_pullups_mr, values=())
+                                rows_pullups_mr = cursor.fetchone()  
+                                data_dict[table]["measurements"][measurement][exercise] = rows_pullups_mr
+
 
         else:
             
@@ -235,12 +247,8 @@ def dashboard_page():
             for row in pullup_data:
                 pullup_ev.append(row[1])
                 pullup_dates_ev = [x for x in range(len(pullup_ev))]
-                # pullup_max
-    
+                pullup_mr = data_dict["workouts"]["measurements"]["one_rep_max"][exercise]
 
-
-
-    # orm = data_dict["workouts"]["measurements"]["one_rep_max"]["Deadlift"]
 
 
     # miles
@@ -262,5 +270,5 @@ def dashboard_page():
                                 mile_dates_list=mile_dates_list, progress = progress, fastest_mile=fastest_mile, longest_run=longest_run,\
                                 dates_ev=dates_ev, deadlift_ev=deadlift_ev, backsquat_ev=backsquat_ev, barbell_bench_ev=barbell_bench_ev,\
                                 pullup_ev=pullup_ev, deadlift_orm=deadlift_orm, backsquat_orm = backsquat_orm, barbell_bench_orm = barbell_bench_orm,\
-                                deadlift_dates_ev=deadlift_dates_ev, backsquat_dates_ev=backsquat_dates_ev, bench_dates_ev=bench_dates_ev,\
+                                pullup_mr = pullup_mr, deadlift_dates_ev=deadlift_dates_ev, backsquat_dates_ev=backsquat_dates_ev, bench_dates_ev=bench_dates_ev,\
                                 pullup_dates_ev=pullup_dates_ev)

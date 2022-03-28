@@ -8,42 +8,77 @@
 <main role="main">
 
 	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-		<h1 class="h1">Dashboard</h1>
+		<h2 class="h1">Dashboard</h2>
 	</div>
 
-	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-		<h2 class="h2">Weight</h1>
-	</div>
-
-	<canvas class="my-4 w-100" id="weightChart"></canvas>
+	
 
 
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h2 class="h2">Strength</h1>
+    <div class="card">
+        <h3 class="card-header">Weight</h3>
+        <div class="card-body">
+            <canvas class="my-4 w-100" id="weightChart"></canvas>
+        </div>
     </div>
 
-    <div class="container">
-        <div class="row row-cols-2">
-            <div class="col">
-                <canvas class="my-4 w-100" id="deadChart"></canvas>
+    
+
+    <div class="card">
+        <h3 class="card-header">Strength</h3>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Deadlift</h5>
+                        <canvas class="my-4 w-100" id="deadChart"></canvas>
+                        <h6 class="card-title">ORM: {{ deadlift_orm[1] }}</h6>
+                    </div>
+                </div>
             </div>
-            <div class="col">
-                <canvas class="my-4 w-100" id="squatChart"></canvas>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Squat</h5>
+                        <canvas class="my-4 w-100" id="squatChart"></canvas>
+                        <h6 class="card-title">ORM: {{ backsquat_orm[1] }}</h6>
+                    </div>
+                </div>
             </div>
-            <div class="col">
-                <canvas class="my-4 w-100" id="benchChart"></canvas>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Bench Press</h5>
+                        <canvas class="my-4 w-100" id="benchChart"></canvas>
+                        <h6 class="card-title">ORM: {{ barbell_bench_orm[1] }}</h6>
+                    </div>
+                </div>
             </div>
-            <div class="col">
-                <canvas class="my-4 w-100" id="pullupChart"></canvas>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Pull Ups</h5>
+                        <canvas class="my-4 w-100" id="pullupChart"></canvas>
+                        <h6 class="card-title">Max Reps: {{ pullup_mr[0] }}</h6>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h2 class="h2">Cardio</h2>
+
+    <div class="card">
+        <h3 class="card-header">Cardio</h3>
+        <div class="card-body">
+            <canvas class="my-4 w-100" id="milesChart"></canvas>
+        </div>
     </div>
 
-    <canvas id="milesChart"></canvas>
+
+
+    <!-- Javascript -->
+
 
     <script>
         const fillChart = false;
@@ -82,7 +117,7 @@
                 labels: {{ deadlift_dates_ev | safe}},
                 datasets: [
                     {
-                        label: "Deadlift - Exercise Volume",
+                        label: "Deadlift - Total Volume",
                         data: {{ deadlift_ev | safe }},
                         fill: fillChart,
                         borderColor: 'rgb(54, 162, 235, 1)',
@@ -106,7 +141,7 @@
                 labels: {{ backsquat_dates_ev | safe}},
                 datasets: [
                     {
-                        label: "Back Squat - Exercise Volume",
+                        label: "Back Squat - Total Volume",
                         data: {{ backsquat_ev | safe }},
                         fill: fillChart,
                         borderColor: 'rgb(54, 162, 235, 1)',
@@ -131,7 +166,7 @@
                 labels: {{ bench_dates_ev | safe}},
                 datasets: [
                     {
-                        label: "Bench Press - Exercise Volume",
+                        label: "Bench Press - Total Volume",
                         data: {{ barbell_bench_ev | safe }},
                         fill: fillChart,
                         borderColor: 'rgb(54, 162, 235, 1)',
