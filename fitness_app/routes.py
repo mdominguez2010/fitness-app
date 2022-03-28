@@ -116,9 +116,7 @@ def get_data():
                             rows_exercise_volume = cursor.fetchall()
                             data_dict[table]["measurements"][measurement]["dates"] = [x for x in range(len(rows_exercise_volume))]
                             data_dict[table]["measurements"][measurement][exercise] = rows_exercise_volume
-
-                            # data_dict[tables[i]][measurements[i]]["date"] = [x for x in range(len(rows_exercise_volume))]
-                            # data_dict[tables[i]][measurements[i]][exercises[i]] = [rows_exercise_volume[1] for row in rows_exercise_volume]                        
+                     
 
                     else:
 
@@ -134,7 +132,7 @@ def get_data():
         else:
             
 
-            query_mile_time = "SELECT date, miles, duration_total_min FROM miles ORDER BY date ASC;"
+            query_mile_time = "SELECT date, MIN(duration_total_min) as mile_time FROM miles GROUP By date ORDER BY date ASC;"
             connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_mile_time, values=())
             rows_mile_times = cursor.fetchall()
 
@@ -177,35 +175,71 @@ def dashboard_page():
 
     # weight
     
+    
     weights = data_dict["weight"]["daily_weight"]
-    dates_list = []
+    dates_list = data_dict["weight"]["date"]
     weights_list = []
     
     for weight in weights:
-        dates_list.append(weight[0])
+
         weights_list.append(weight[1])
 
     progress = data_dict["weight"]["progress"]
         
     # workouts
+
+    exercises = ["Deadlift", "Back Squat", "Barbell Bench Press", "Pull Up"]
+    exercise_volume = data_dict["workouts"]["measurements"]["exercise_volume"]
+    dates_ev = data_dict["workouts"]["measurements"]["exercise_volume"]["dates"]
+    deadlift_data = data_dict["workouts"]["measurements"]["exercise_volume"][exercises[0]]
+    backsquat_data = data_dict["workouts"]["measurements"]["exercise_volume"][exercises[1]]
+    benchpress_data = data_dict["workouts"]["measurements"]["exercise_volume"][exercises[2]]
+    pullup_data = data_dict["workouts"]["measurements"]["exercise_volume"][exercises[3]]
+    deadlift_ev = []
+    backsquat_ev = []
+    barbell_bench_ev = []
+    pullup_ev = []
+    for exercise in exercises:
+
+        if exercise == "Deadlift":
+
+            for row in deadlift_data:            
+                deadlift_ev.append(row[1])
+
+        elif exercise == "Back Squat":  
+
+            for row in backsquat_data:
+                backsquat_ev.append(row[1])
+
+        elif exercise == "Barbell Bench Press":
+
+            for row in benchpress_data:
+                barbell_bench_ev.append(row[1])
+
+        else:
+
+            for row in pullup_data:
+                pullup_ev.append(row[1])
     
-    exercise_volume_deadlift = data_dict["workouts"]["measurements"]["exercise_volume"]["Deadlift"]
+
+
+
     orm = data_dict["workouts"]["measurements"]["one_rep_max"]["Deadlift"]
+
 
     # miles
 
     mile_times = data_dict["miles"]["mile_time"]
-    mile_dates_list = []
+    mile_dates_list = data_dict["miles"]["dates"]
     mile_times_list = []
     for mile_time in mile_times:
-        mile_dates_list.append(mile_time[0])
-        mile_times_list.append(mile_time[2])
+ 
+        mile_times_list.append(mile_time[1])
 
 
-    
     
     fastest_mile = data_dict["miles"]["fastest_mile"]
     longest_run = data_dict["miles"]["longest_run"]
     
 
-    return render_template("dashboard.html", data_dict = data_dict, weights_list = weights_list, dates_list=dates_list, mile_times_list = mile_times_list, mile_dates_list=mile_dates_list, progress = progress, orm = orm, fastest_mile=fastest_mile, longest_run=longest_run)
+    return render_template("dashboard.html", weights_list = weights_list, dates_list=dates_list, mile_times_list = mile_times_list, mile_dates_list=mile_dates_list, progress = progress, orm = orm, fastest_mile=fastest_mile, longest_run=longest_run, dates_ev=dates_ev, deadlift_ev=deadlift_ev, backsquat_ev=backsquat_ev, barbell_bench_ev=barbell_bench_ev, pullup_ev=pullup_ev)

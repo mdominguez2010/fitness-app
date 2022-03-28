@@ -22,7 +22,22 @@
         <h2 class="h2">Strength</h1>
     </div>
 
-    <canvas id="strengthChart" width="400" height="400"></canvas>
+    <div class="container">
+        <div class="row row-cols-2">
+            <div class="col">
+                <canvas class="my-4 w-100" id="deadChart"></canvas>
+            </div>
+            <div class="col">
+                <canvas class="my-4 w-100" id="squatChart"></canvas>
+            </div>
+            <div class="col">
+                <canvas class="my-4 w-100" id="benchChart"></canvas>
+            </div>
+            <div class="col">
+                <canvas class="my-4 w-100" id="pullupChart"></canvas>
+            </div>
+        </div>
+    </div>
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h2 class="h2">Cardio</h2>
@@ -60,6 +75,30 @@
 
         // strengthChart
 
+        const config_dead = {
+            type: "line",
+            data: {
+                labels: {{ dates_ev | safe}},
+                datasets: [
+                    {
+                        label: "Weight",
+                        data: {{ deadlift_ev | safe }},
+                        fill: true,
+                        borderColor: 'rgb(54, 162, 235, 1)',
+                        backgroundColor: "rgb(105, 105, 105)",
+                        lineTension: 0.5
+                    },
+                ]
+            },
+            options: {
+                responsive: true
+            }
+        }
+        const ctx_dead = document.getElementById("deadChart").getContext("2d");
+        const linechart_dead = new Chart(
+            ctx_dead, config_dead
+        )
+
         
 
         // milesChart
@@ -75,7 +114,7 @@
                         fill: true,
                         borderColor: 'rgb(54, 162, 235, 1)',
                         backgroundColor: "rgb(105, 105, 105)",
-                        lineTension: 0.8
+                        lineTension: 0.5
                     },
                 ]
             },
