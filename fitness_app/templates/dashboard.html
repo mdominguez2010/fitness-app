@@ -15,7 +15,7 @@
 		<h2 class="h2">Weight</h1>
 	</div>
 
-	<canvas class="my-4 w-100" id="weightChart" width="900" height="380"></canvas>
+	<canvas class="my-4 w-100" id="weightChart"></canvas>
 
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -43,9 +43,10 @@
         <h2 class="h2">Cardio</h2>
     </div>
 
-    <canvas id="milesChart" width="400" height="400"></canvas>
+    <canvas id="milesChart"></canvas>
 
     <script>
+        const fillChart = false;
 
         // weightChart
 
@@ -57,7 +58,7 @@
                     {
                         label: "Weight",
                         data: {{ weights_list | safe }},
-                        fill: true,
+                        fill: fillChart,
                         borderColor: 'rgb(54, 162, 235, 1)',
                         backgroundColor: "rgb(105, 105, 105)",
                         lineTension: 0.5
@@ -73,17 +74,17 @@
             ctx_weight, config_weight
         )
 
-        // strengthChart
+        // strength charts
 
         const config_dead = {
             type: "line",
             data: {
-                labels: {{ dates_ev | safe}},
+                labels: {{ deadlift_dates_ev | safe}},
                 datasets: [
                     {
-                        label: "Weight",
+                        label: "Deadlift - Exercise Volume",
                         data: {{ deadlift_ev | safe }},
-                        fill: true,
+                        fill: fillChart,
                         borderColor: 'rgb(54, 162, 235, 1)',
                         backgroundColor: "rgb(105, 105, 105)",
                         lineTension: 0.5
@@ -99,6 +100,79 @@
             ctx_dead, config_dead
         )
 
+        const config_squat = {
+            type: "line",
+            data: {
+                labels: {{ backsquat_dates_ev | safe}},
+                datasets: [
+                    {
+                        label: "Back Squat - Exercise Volume",
+                        data: {{ backsquat_ev | safe }},
+                        fill: fillChart,
+                        borderColor: 'rgb(54, 162, 235, 1)',
+                        backgroundColor: "rgb(105, 105, 105)",
+                        lineTension: 0.5
+                    },
+                ]
+            },
+            options: {
+                responsive: true
+            }
+        }
+        const ctx_squat = document.getElementById("squatChart").getContext("2d");
+        const linechart_squat = new Chart(
+            ctx_squat, config_squat
+        )
+
+
+        const config_bench = {
+            type: "line",
+            data: {
+                labels: {{ bench_dates_ev | safe}},
+                datasets: [
+                    {
+                        label: "Bench Press - Exercise Volume",
+                        data: {{ barbell_bench_ev | safe }},
+                        fill: fillChart,
+                        borderColor: 'rgb(54, 162, 235, 1)',
+                        backgroundColor: "rgb(105, 105, 105)",
+                        lineTension: 0.5
+                    },
+                ]
+            },
+            options: {
+                responsive: true
+            }
+        }
+        const ctx_bench = document.getElementById("benchChart").getContext("2d");
+        const linechart_bench = new Chart(
+            ctx_bench, config_bench
+        )
+
+        const config_pullup = {
+            type: "line",
+            data: {
+                labels: {{ pullup_dates_ev | safe}},
+                datasets: [
+                    {
+                        label: "Pullups - Reps",
+                        data: {{ pullup_ev | safe }},
+                        fill: fillChart,
+                        borderColor: 'rgb(54, 162, 235, 1)',
+                        backgroundColor: "rgb(105, 105, 105)",
+                        lineTension: 0.5
+                    },
+                ]
+            },
+            options: {
+                responsive: true
+            }
+        }
+        const ctx_pullup = document.getElementById("pullupChart").getContext("2d");
+        const linechart_pullup = new Chart(
+            ctx_pullup, config_pullup
+        )
+
         
 
         // milesChart
@@ -111,7 +185,7 @@
                     {
                         label: "Mile Times",
                         data: {{ mile_times_list | safe }},
-                        fill: true,
+                        fill: fillChart,
                         borderColor: 'rgb(54, 162, 235, 1)',
                         backgroundColor: "rgb(105, 105, 105)",
                         lineTension: 0.5

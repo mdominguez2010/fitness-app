@@ -110,13 +110,21 @@ def get_data():
 
                         for exercise in exercises:
                             
-                            # Exercise volume
-                            query_exercise_volume = f"SELECT exercise, SUM(reps * weight) as volume FROM workouts WHERE exercise = '{exercise}' GROUP BY date HAVING SUM(reps * weight) > 0 ORDER BY date ASC;"
-                            connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_exercise_volume, values=())
-                            rows_exercise_volume = cursor.fetchall()
-                            data_dict[table]["measurements"][measurement]["dates"] = [x for x in range(len(rows_exercise_volume))]
-                            data_dict[table]["measurements"][measurement][exercise] = rows_exercise_volume
-                     
+                            if exercise != "Pull Up":
+
+                                # Exercise volume
+                                query_exercise_volume = f"SELECT exercise, SUM(reps * weight) as volume FROM workouts WHERE exercise = '{exercise}' GROUP BY date HAVING SUM(reps * weight) > 0 ORDER BY date ASC;"
+                                connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_exercise_volume, values=())
+                                rows_exercise_volume = cursor.fetchall()
+                                data_dict[table]["measurements"][measurement]["dates"] = [x for x in range(len(rows_exercise_volume))]
+                                data_dict[table]["measurements"][measurement][exercise] = rows_exercise_volume
+
+                            else:
+
+                                query_pullups = f"SELECT exercise, reps from workouts WHERE exercise = 'Pull Up' ORDER BY date ASC;"
+                                connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_pullups, values=())
+                                rows_pullups = cursor.fetchall()  
+                                data_dict[table]["measurements"][measurement][exercise] = rows_pullups
 
                     else:
 
@@ -189,7 +197,7 @@ def dashboard_page():
     # workouts
 
     exercises = ["Deadlift", "Back Squat", "Barbell Bench Press", "Pull Up"]
-    exercise_volume = data_dict["workouts"]["measurements"]["exercise_volume"]
+    # exercise_volume = data_dict["workouts"]["measurements"]["exercise_volume"]
     dates_ev = data_dict["workouts"]["measurements"]["exercise_volume"]["dates"]
     deadlift_data = data_dict["workouts"]["measurements"]["exercise_volume"][exercises[0]]
     backsquat_data = data_dict["workouts"]["measurements"]["exercise_volume"][exercises[1]]
@@ -205,26 +213,34 @@ def dashboard_page():
 
             for row in deadlift_data:            
                 deadlift_ev.append(row[1])
+                deadlift_dates_ev = [x for x in range(len(deadlift_ev))]                
+                deadlift_orm = data_dict["workouts"]["measurements"]["one_rep_max"][exercise]
 
         elif exercise == "Back Squat":  
 
             for row in backsquat_data:
                 backsquat_ev.append(row[1])
+                backsquat_dates_ev = [x for x in range(len(backsquat_ev))]
+                backsquat_orm = data_dict["workouts"]["measurements"]["one_rep_max"][exercise]
 
         elif exercise == "Barbell Bench Press":
 
             for row in benchpress_data:
                 barbell_bench_ev.append(row[1])
+                bench_dates_ev = [x for x in range(len(barbell_bench_ev))]
+                barbell_bench_orm = data_dict["workouts"]["measurements"]["one_rep_max"][exercise]
 
         else:
 
             for row in pullup_data:
                 pullup_ev.append(row[1])
+                pullup_dates_ev = [x for x in range(len(pullup_ev))]
+                # pullup_max
     
 
 
 
-    orm = data_dict["workouts"]["measurements"]["one_rep_max"]["Deadlift"]
+    # orm = data_dict["workouts"]["measurements"]["one_rep_max"]["Deadlift"]
 
 
     # miles
@@ -242,4 +258,9 @@ def dashboard_page():
     longest_run = data_dict["miles"]["longest_run"]
     
 
-    return render_template("dashboard.html", weights_list = weights_list, dates_list=dates_list, mile_times_list = mile_times_list, mile_dates_list=mile_dates_list, progress = progress, orm = orm, fastest_mile=fastest_mile, longest_run=longest_run, dates_ev=dates_ev, deadlift_ev=deadlift_ev, backsquat_ev=backsquat_ev, barbell_bench_ev=barbell_bench_ev, pullup_ev=pullup_ev)
+    return render_template("dashboard.html", weights_list = weights_list, dates_list=dates_list, mile_times_list = mile_times_list,\
+                                mile_dates_list=mile_dates_list, progress = progress, fastest_mile=fastest_mile, longest_run=longest_run,\
+                                dates_ev=dates_ev, deadlift_ev=deadlift_ev, backsquat_ev=backsquat_ev, barbell_bench_ev=barbell_bench_ev,\
+                                pullup_ev=pullup_ev, deadlift_orm=deadlift_orm, backsquat_orm = backsquat_orm, barbell_bench_orm = barbell_bench_orm,\
+                                deadlift_dates_ev=deadlift_dates_ev, backsquat_dates_ev=backsquat_dates_ev, bench_dates_ev=bench_dates_ev,\
+                                pullup_dates_ev=pullup_dates_ev)
