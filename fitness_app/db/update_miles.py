@@ -2,11 +2,63 @@ import sqlite3
 from sqlite3 import Error
 import config
 import csv
-from drop_db import drop_tables
-from create_db import create_table
+# from drop_db import drop_tables
+# from create_db import create_table
 import check_miles
 
+
+def drop_tables(db_file, tables_to_drop):
+    """
+    Create a database connection to the SQLite database
+    specified by the db_file and drops the specified tables
+    
+    :param db_file: database filepath (string)
+    :param tables_to_drop: list-like (list of strings)
+    
+    :return: None
+    """
+    connection = None
+    try:
+        connection = sqlite3.connect(db_file)
+        cursor = connection.cursor()
+    except Error as e:
+        print(e)
+        
+    for table in tables_to_drop:
+        cursor.execute(f"""
+            DROP TABLE IF EXISTS {table};
+        """)
+
+    connection.commit()
+    connection.close()
+
+
+def create_table(db_file, query):
+    """
+    Create a database connection to the SQLite database
+    specified by the db_file and creates specified table
+    
+    :param db_file: database filepath (string)
+    :param tables_to_drop: list-like (list of strings)
+    
+    :return: None
+    """
+    connection = None
+    try:
+        connection = sqlite3.connect(db_file)
+        cursor = connection.cursor()
+    except Error as e:
+        print(e)
+        
+    cursor.execute(f"""
+        {query};
+    """)
+
+    connection.commit()
+
+
 ##### Remove header columns names from miles.csv file before proceeding
+
 
 if check_miles.UPDATE_MILES:
 
@@ -17,7 +69,7 @@ if check_miles.UPDATE_MILES:
 
         DB_FILE = config.DB_FILE_PATH
         TABLES = ["miles"]
-        QUERY = """
+        QUERY_create_table = """
         CREATE TABLE IF NOT EXISTS miles (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             date TEXT NOT NULL,
@@ -32,7 +84,7 @@ if check_miles.UPDATE_MILES:
         # Drop the table first
         drop_tables(db_file=DB_FILE, tables_to_drop=TABLES[0])
 
-        create_table(db_file=DB_FILE, query=QUERY)
+        create_table(db_file=DB_FILE, query=QUERY_create_table)
 
         def create_connection(db_file):
             """
