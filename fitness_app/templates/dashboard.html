@@ -7,76 +7,84 @@
 
 <main role="main">
 
-	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-		<h2 class="h1">Dashboard</h2>
-	</div>
+	<div class="card bg-primary text-white">
+        <h2 class="card-header">Dashboard</h2>        
+        <div class="card-body">
+
+            <div class="card">
+                <h3 class="card-header text-dark">Weight</h3>
+                <div class="card-body">
+                    <canvas class="my-4 w-100" id="weightChart"></canvas>
+                    <h6 class="card-title text-dark">Progress: {{ progress[0] }} lbs</h6>
+                </div>
+            </div>
+        
+            
+        
+            <div class="card">
+                <h3 class="card-header text-dark">Strength</h3>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-dark">Deadlift</h5>
+                                <canvas class="my-4 w-100" id="deadChart"></canvas>
+                                <h6 class="card-title text-dark">ORM: {{ deadlift_orm[1] | round | int }} lbs</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-dark">Squat</h5>
+                                <canvas class="my-4 w-100" id="squatChart"></canvas>
+                                <h6 class="card-title text-dark">ORM: {{ backsquat_orm[1] | round | int }} lbs</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-dark">Bench Press</h5>
+                                <canvas class="my-4 w-100" id="benchChart"></canvas>
+                                <h6 class="card-title text-dark">ORM: {{ barbell_bench_orm[1] | round | int }} lbs</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-dark">Pull Ups</h5>
+                                <canvas class="my-4 w-100" id="pullupChart"></canvas>
+                                <h6 class="card-title text-dark">Max Reps: {{ pullup_mr[0] }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        
+            <div class="card">
+                <h3 class="card-header text-dark">Cardio</h3>
+                <div class="card-body">
+                    <canvas class="my-4 w-100" id="milesChart"></canvas>
+                    <h6 class="card-title text-dark">Longest Run: {{ longest_run[0] }} miles</h6>
+                    <h6 class="card-title text-dark">Fastest Mile: {{ fastest_mile[0] }} minutes</h6>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
 
 	
 
 
-    <div class="card">
-        <h3 class="card-header">Weight</h3>
-        <div class="card-body">
-            <canvas class="my-4 w-100" id="weightChart"></canvas>
-            <h6 class="card-title">Progress: {{ progress[0] }} lbs</h6>
-        </div>
-    </div>
 
-    
-
-    <div class="card">
-        <h3 class="card-header">Strength</h3>
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Deadlift</h5>
-                        <canvas class="my-4 w-100" id="deadChart"></canvas>
-                        <h6 class="card-title">ORM: {{ deadlift_orm[1] | round | int }} lbs</h6>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Squat</h5>
-                        <canvas class="my-4 w-100" id="squatChart"></canvas>
-                        <h6 class="card-title">ORM: {{ backsquat_orm[1] | round | int }} lbs</h6>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Bench Press</h5>
-                        <canvas class="my-4 w-100" id="benchChart"></canvas>
-                        <h6 class="card-title">ORM: {{ barbell_bench_orm[1] | round | int }} lbs</h6>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Pull Ups</h5>
-                        <canvas class="my-4 w-100" id="pullupChart"></canvas>
-                        <h6 class="card-title">Max Reps: {{ pullup_mr[0] }}</h6>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="card">
-        <h3 class="card-header">Cardio</h3>
-        <div class="card-body">
-            <canvas class="my-4 w-100" id="milesChart"></canvas>
-            <h6 class="card-title">Longest Run: {{ longest_run[0] }} miles</h6>
-            <h6 class="card-title">Fastest Mile: {{ fastest_mile[0] }} minutes</h6>
-        </div>
-    </div>
 
 
 
