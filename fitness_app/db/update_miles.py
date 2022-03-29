@@ -6,6 +6,8 @@ from drop_db import drop_tables
 from create_db import create_table
 import check_miles
 
+##### Remove header columns names from miles.csv file before proceeding
+
 if check_miles.UPDATE_MILES:
 
     try:
@@ -60,7 +62,7 @@ if check_miles.UPDATE_MILES:
         contents = csv.reader(file)
 
         # SQL query to execute
-        insert_records = f"INSERT INTO {TABLENAME} (date, distance, avg_pace_min, avg_pace_sec, duration_min, duration_sec, calories) VALUES (?, ?, ?, ?, ?, ?, ?)"
+        insert_records = f"INSERT INTO {TABLENAME} (date, miles, duration_min, duration_sec, duration_total_sec, duration_total_min) VALUES (?, ?, ?, ?, ?, ?)"
 
         # Importing contents of csv file into table
         cursor.executemany(insert_records, contents)

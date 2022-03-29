@@ -18,6 +18,7 @@
         <h3 class="card-header">Weight</h3>
         <div class="card-body">
             <canvas class="my-4 w-100" id="weightChart"></canvas>
+            <h6 class="card-title">Progress: {{ progress[0] }} lbs</h6>
         </div>
     </div>
 
@@ -31,7 +32,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Deadlift</h5>
                         <canvas class="my-4 w-100" id="deadChart"></canvas>
-                        <h6 class="card-title">ORM: {{ deadlift_orm[1] }}</h6>
+                        <h6 class="card-title">ORM: {{ deadlift_orm[1] | round | int }} lbs</h6>
                     </div>
                 </div>
             </div>
@@ -40,7 +41,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Squat</h5>
                         <canvas class="my-4 w-100" id="squatChart"></canvas>
-                        <h6 class="card-title">ORM: {{ backsquat_orm[1] }}</h6>
+                        <h6 class="card-title">ORM: {{ backsquat_orm[1] | round | int }} lbs</h6>
                     </div>
                 </div>
             </div>
@@ -51,7 +52,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Bench Press</h5>
                         <canvas class="my-4 w-100" id="benchChart"></canvas>
-                        <h6 class="card-title">ORM: {{ barbell_bench_orm[1] }}</h6>
+                        <h6 class="card-title">ORM: {{ barbell_bench_orm[1] | round | int }} lbs</h6>
                     </div>
                 </div>
             </div>
@@ -72,6 +73,8 @@
         <h3 class="card-header">Cardio</h3>
         <div class="card-body">
             <canvas class="my-4 w-100" id="milesChart"></canvas>
+            <h6 class="card-title">Longest Run: {{ longest_run[0] }} miles</h6>
+            <h6 class="card-title">Fastest Mile: {{ fastest_mile[0] }} minutes</h6>
         </div>
     </div>
 
@@ -98,7 +101,16 @@
                         backgroundColor: "rgb(105, 105, 105)",
                         lineTension: 0.5
                     },
-                ]
+                
+                    {
+                        label: "Goal",
+                        data: {{ goal_list | safe }},
+                        fill: fillChart,
+                        borderColor: 'rgb(75, 192, 192)',
+                        backgroundColor: 'rgb(75, 192, 192)',
+                        lineTension: 0.5
+                    }
+                ],
             },
             options: {
                 responsive: true
@@ -235,9 +247,6 @@
         const linechart_miles = new Chart(
             ctx_miles, config_miles
         )
-
-        
-
 
     </script>
 

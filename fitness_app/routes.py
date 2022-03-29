@@ -199,10 +199,12 @@ def dashboard_page():
     weights = data_dict["weight"]["daily_weight"]
     dates_list = data_dict["weight"]["date"]
     weights_list = []
+    goal_list = []
     
     for weight in weights:
 
         weights_list.append(weight[1])
+        goal_list.append(int(200))
 
     progress = data_dict["weight"]["progress"]
         
@@ -266,7 +268,7 @@ def dashboard_page():
     longest_run = data_dict["miles"]["longest_run"]
     
 
-    return render_template("dashboard.html", weights_list = weights_list, dates_list=dates_list, mile_times_list = mile_times_list,\
+    return render_template("dashboard.html", weights_list = weights_list, goal_list=goal_list, dates_list=dates_list, mile_times_list = mile_times_list,\
                                 mile_dates_list=mile_dates_list, progress = progress, fastest_mile=fastest_mile, longest_run=longest_run,\
                                 dates_ev=dates_ev, deadlift_ev=deadlift_ev, backsquat_ev=backsquat_ev, barbell_bench_ev=barbell_bench_ev,\
                                 pullup_ev=pullup_ev, deadlift_orm=deadlift_orm, backsquat_orm = backsquat_orm, barbell_bench_orm = barbell_bench_orm,\
