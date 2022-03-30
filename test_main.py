@@ -3,6 +3,7 @@ import main
 
 
 class TestMain(unittest.TestCase):
+    
 
     # Assert status code 200 for both routes
     def test_home_page(self):
@@ -13,19 +14,10 @@ class TestMain(unittest.TestCase):
         response = tester.get("/home", content_type="html/text")
         self.assertEqual(response.status_code, 200)
 
-    def test_weight_page(self):
-        tester = main.app.test_client(self)
-        response = tester.get("/weight", content_type="html/text")
-        self.assertEqual(response.status_code, 200)
 
-    def test_strength_page(self):
+    def test_dashboard_page(self):
         tester = main.app.test_client(self)
-        response = tester.get("/strength", content_type="html/text")
-        self.assertEqual(response.status_code, 200)
-
-    def test_cardio_page(self):
-        tester = main.app.test_client(self)
-        response = tester.get("/strength", content_type="html/text")
+        response = tester.get("/dashboard", content_type="html/text")
         self.assertEqual(response.status_code, 200)
 
 
