@@ -31,9 +31,9 @@ Join me on my personal journey to get fitter and stronger!
 
 ### <u>Acknowledgements</u>
 
-<ul>
-[Python](https://www.python.org/)
-[Flask](https://flask.palletsprojects.com/en/2.1.x/)
-[Giphy](https://giphy.com/)
+
+[Python](https://www.python.org/) <br />
+[Flask](https://flask.palletsprojects.com/en/2.1.x/) <br />
+[Giphy](https://giphy.com/) <br />
 [Web developer jimdevops19](https://github.com/jimdevops19/FlaskSeries)
-</ul>
+
