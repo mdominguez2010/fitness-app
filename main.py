@@ -1,3 +1,4 @@
+"""System module."""
 from fitness_app import app
 
 DEVELOPMENT_ENV = True
