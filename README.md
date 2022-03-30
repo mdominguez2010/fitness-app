@@ -24,9 +24,15 @@ Join me on my personal journey to get fitter and stronger!
     <li>Cardio
         <ol>
             <li>Timed mile</li>
+            <li>Distance</li>
         </ol>
     </li>
 </ol>
 
 ### <u>Acknowledgements</u>
-<p>CREDITS/ACKNOWLEDGEMENTS HERE</p>
+<ol>
+    <li>[Python](https://www.python.org/)</li>
+    <li>[Flask](https://flask.palletsprojects.com/en/2.1.x/)</li>
+    <li>[Giphy](https://giphy.com/)</li>
+    <li>[Web developer jimdevops19](https://github.com/jimdevops19/FlaskSeries)</li>
+</ol>
