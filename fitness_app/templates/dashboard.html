@@ -1,263 +1,278 @@
-{% extends 'base.html' %}
-{% block title %}
-    Dashboard Page
-{% endblock %}
+<!doctype html>
+<html lang="en">
+    <head>
+	  <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        <!-- Icon -->
+        <link rel="icon" href="https://user-images.githubusercontent.com/52106331/151423707-a37ca86a-bb62-4cad-87cf-486040fce8fe.png">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+        <title>
+            Dashboard Page
+        </title>
+    </head>
 
-{% block content %}
+    <main role="main">
 
-<main role="main">
-
-	<div class="card bg-primary text-white">
-        <h2 class="card-header">Dashboard</h2>        
-        <div class="card-body">
-
-            <div class="card">
-                <h3 class="card-header text-dark">Weight</h3>
-                <div class="card-body">
-                    <canvas class="my-4 w-100" id="weightChart"></canvas>
-                    <h6 class="card-title text-dark">Progress: {{ progress[0] }} lbs</h6>
-                </div>
+        <div class="card">
+            <div class="card-body">
+                <a class="btn btn-outline-primary" href="/home" role="button">Home</a>
             </div>
-        
-            
-        
-            <div class="card">
-                <h3 class="card-header text-dark">Strength</h3>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title text-dark">Deadlift</h5>
-                                <canvas class="my-4 w-100" id="deadChart"></canvas>
-                                <h6 class="card-title text-dark">ORM: {{ deadlift_orm[1] | round | int }} lbs</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title text-dark">Squat</h5>
-                                <canvas class="my-4 w-100" id="squatChart"></canvas>
-                                <h6 class="card-title text-dark">ORM: {{ backsquat_orm[1] | round | int }} lbs</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title text-dark">Bench Press</h5>
-                                <canvas class="my-4 w-100" id="benchChart"></canvas>
-                                <h6 class="card-title text-dark">ORM: {{ barbell_bench_orm[1] | round | int }} lbs</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title text-dark">Pull Ups</h5>
-                                <canvas class="my-4 w-100" id="pullupChart"></canvas>
-                                <h6 class="card-title text-dark">Max Reps: {{ pullup_mr[0] }}</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        
-        
-            <div class="card">
-                <h3 class="card-header text-dark">Cardio</h3>
-                <div class="card-body">
-                    <canvas class="my-4 w-100" id="milesChart"></canvas>
-                    <h6 class="card-title text-dark">Longest Run: {{ longest_run[0] }} miles</h6>
-                    <h6 class="card-title text-dark">Fastest Mile: {{ fastest_mile[0] }} minutes</h6>
-                </div>
-            </div>
-
-
-
-
         </div>
-    </div>
 
-	
-
-
-
-
-
-
-    <!-- Javascript -->
-
-
-    <script>
-        const fillChart = false;
-
-        // weightChart
-
-        const config_weight = {
-            type: "line",
-            data: {
-                labels: {{ dates_list | safe}},
-                datasets: [
-                    {
-                        label: "Weight",
-                        data: {{ weights_list | safe }},
-                        fill: fillChart,
-                        borderColor: 'rgb(54, 162, 235, 1)',
-                        backgroundColor: "rgb(105, 105, 105)",
-                        lineTension: 0.5
-                    },
+        <div class="card text-dark">
+            <h2 class="card-header">Dashboard</h2>  
                 
-                    {
-                        label: "Goal",
-                        data: {{ goal_list | safe }},
-                        fill: fillChart,
-                        borderColor: 'rgb(75, 192, 192)',
-                        backgroundColor: 'rgb(75, 192, 192)',
-                        lineTension: 0.5
-                    }
-                ],
-            },
-            options: {
-                responsive: true
-            }
-        }
-        const ctx_weight = document.getElementById("weightChart").getContext("2d");
-        const linechart_weight = new Chart(
-            ctx_weight, config_weight
-        )
+            <div class="card-body">
 
-        // strength charts
-
-        const config_dead = {
-            type: "line",
-            data: {
-                labels: {{ deadlift_dates_ev | safe}},
-                datasets: [
-                    {
-                        label: "Deadlift - Total Volume",
-                        data: {{ deadlift_ev | safe }},
-                        fill: fillChart,
-                        borderColor: 'rgb(54, 162, 235, 1)',
-                        backgroundColor: "rgb(105, 105, 105)",
-                        lineTension: 0.5
-                    },
-                ]
-            },
-            options: {
-                responsive: true
-            }
-        }
-        const ctx_dead = document.getElementById("deadChart").getContext("2d");
-        const linechart_dead = new Chart(
-            ctx_dead, config_dead
-        )
-
-        const config_squat = {
-            type: "line",
-            data: {
-                labels: {{ backsquat_dates_ev | safe}},
-                datasets: [
-                    {
-                        label: "Back Squat - Total Volume",
-                        data: {{ backsquat_ev | safe }},
-                        fill: fillChart,
-                        borderColor: 'rgb(54, 162, 235, 1)',
-                        backgroundColor: "rgb(105, 105, 105)",
-                        lineTension: 0.5
-                    },
-                ]
-            },
-            options: {
-                responsive: true
-            }
-        }
-        const ctx_squat = document.getElementById("squatChart").getContext("2d");
-        const linechart_squat = new Chart(
-            ctx_squat, config_squat
-        )
+                <div class="card">
+                    <h3 class="card-header text-dark">Weight</h3>
+                    <div class="card-body">
+                        <canvas class="my-4 w-100" id="weightChart"></canvas>
+                        <h6 class="card-title text-dark">Progress: {{ progress[0] }} lbs</h6>
+                    </div>
+                </div>
+            
+                
+            
+                <div class="card">
+                    <h3 class="card-header text-dark">Strength</h3>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title text-dark">Deadlift</h5>
+                                    <canvas class="my-4 w-100" id="deadChart"></canvas>
+                                    <h6 class="card-title text-dark">ORM: {{ deadlift_orm[1] | round | int }} lbs</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title text-dark">Squat</h5>
+                                    <canvas class="my-4 w-100" id="squatChart"></canvas>
+                                    <h6 class="card-title text-dark">ORM: {{ backsquat_orm[1] | round | int }} lbs</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title text-dark">Bench Press</h5>
+                                    <canvas class="my-4 w-100" id="benchChart"></canvas>
+                                    <h6 class="card-title text-dark">ORM: {{ barbell_bench_orm[1] | round | int }} lbs</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title text-dark">Pull Ups</h5>
+                                    <canvas class="my-4 w-100" id="pullupChart"></canvas>
+                                    <h6 class="card-title text-dark">Max Reps: {{ pullup_mr[0] }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+            
+                <div class="card">
+                    <h3 class="card-header text-dark">Cardio</h3>
+                    <div class="card-body">
+                        <canvas class="my-4 w-100" id="milesChart"></canvas>
+                        <h6 class="card-title text-dark">Longest Run: {{ longest_run[0] }} miles</h6>
+                        <h6 class="card-title text-dark">Fastest Mile: {{ fastest_mile[0] }} minutes</h6>
+                    </div>
+                </div>
 
 
-        const config_bench = {
-            type: "line",
-            data: {
-                labels: {{ bench_dates_ev | safe}},
-                datasets: [
-                    {
-                        label: "Bench Press - Total Volume",
-                        data: {{ barbell_bench_ev | safe }},
-                        fill: fillChart,
-                        borderColor: 'rgb(54, 162, 235, 1)',
-                        backgroundColor: "rgb(105, 105, 105)",
-                        lineTension: 0.5
-                    },
-                ]
-            },
-            options: {
-                responsive: true
-            }
-        }
-        const ctx_bench = document.getElementById("benchChart").getContext("2d");
-        const linechart_bench = new Chart(
-            ctx_bench, config_bench
-        )
 
-        const config_pullup = {
-            type: "line",
-            data: {
-                labels: {{ pullup_dates_ev | safe}},
-                datasets: [
-                    {
-                        label: "Pullups - Reps",
-                        data: {{ pullup_ev | safe }},
-                        fill: fillChart,
-                        borderColor: 'rgb(54, 162, 235, 1)',
-                        backgroundColor: "rgb(105, 105, 105)",
-                        lineTension: 0.5
-                    },
-                ]
-            },
-            options: {
-                responsive: true
-            }
-        }
-        const ctx_pullup = document.getElementById("pullupChart").getContext("2d");
-        const linechart_pullup = new Chart(
-            ctx_pullup, config_pullup
-        )
+
+            </div>
+        </div>
 
         
 
-        // milesChart
 
-        const config_miles = {
-            type: "line",
-            data: {
-                labels: {{ mile_dates_list | safe}},
-                datasets: [
-                    {
-                        label: "Mile Times",
-                        data: {{ mile_times_list | safe }},
-                        fill: fillChart,
-                        borderColor: 'rgb(54, 162, 235, 1)',
-                        backgroundColor: "rgb(105, 105, 105)",
-                        lineTension: 0.5
-                    },
-                ]
-            },
-            options: {
-                responsive: true
+
+
+
+
+        <!-- Javascript -->
+
+
+        <script>
+            const fillChart = false;
+
+            // weightChart
+
+            const config_weight = {
+                type: "line",
+                data: {
+                    labels: {{ dates_list | safe}},
+                    datasets: [
+                        {
+                            label: "Weight",
+                            data: {{ weights_list | safe }},
+                            fill: fillChart,
+                            borderColor: 'rgb(54, 162, 235, 1)',
+                            backgroundColor: "rgb(105, 105, 105)",
+                            lineTension: 0.5
+                        },
+                    
+                        {
+                            label: "Goal",
+                            data: {{ goal_list | safe }},
+                            fill: fillChart,
+                            borderColor: 'rgb(75, 192, 192)',
+                            backgroundColor: 'rgb(75, 192, 192)',
+                            lineTension: 0.5
+                        }
+                    ],
+                },
+                options: {
+                    responsive: true
+                }
             }
-        }
-        const ctx_miles = document.getElementById("milesChart").getContext("2d");
-        const linechart_miles = new Chart(
-            ctx_miles, config_miles
-        )
+            const ctx_weight = document.getElementById("weightChart").getContext("2d");
+            const linechart_weight = new Chart(
+                ctx_weight, config_weight
+            )
 
-    </script>
+            // strength charts
 
-</main>
+            const config_dead = {
+                type: "line",
+                data: {
+                    labels: {{ deadlift_dates_ev | safe}},
+                    datasets: [
+                        {
+                            label: "Deadlift - Total Volume",
+                            data: {{ deadlift_ev | safe }},
+                            fill: fillChart,
+                            borderColor: 'rgb(54, 162, 235, 1)',
+                            backgroundColor: "rgb(105, 105, 105)",
+                            lineTension: 0.5
+                        },
+                    ]
+                },
+                options: {
+                    responsive: true
+                }
+            }
+            const ctx_dead = document.getElementById("deadChart").getContext("2d");
+            const linechart_dead = new Chart(
+                ctx_dead, config_dead
+            )
 
-{% endblock %}
+            const config_squat = {
+                type: "line",
+                data: {
+                    labels: {{ backsquat_dates_ev | safe}},
+                    datasets: [
+                        {
+                            label: "Back Squat - Total Volume",
+                            data: {{ backsquat_ev | safe }},
+                            fill: fillChart,
+                            borderColor: 'rgb(54, 162, 235, 1)',
+                            backgroundColor: "rgb(105, 105, 105)",
+                            lineTension: 0.5
+                        },
+                    ]
+                },
+                options: {
+                    responsive: true
+                }
+            }
+            const ctx_squat = document.getElementById("squatChart").getContext("2d");
+            const linechart_squat = new Chart(
+                ctx_squat, config_squat
+            )
+
+
+            const config_bench = {
+                type: "line",
+                data: {
+                    labels: {{ bench_dates_ev | safe}},
+                    datasets: [
+                        {
+                            label: "Bench Press - Total Volume",
+                            data: {{ barbell_bench_ev | safe }},
+                            fill: fillChart,
+                            borderColor: 'rgb(54, 162, 235, 1)',
+                            backgroundColor: "rgb(105, 105, 105)",
+                            lineTension: 0.5
+                        },
+                    ]
+                },
+                options: {
+                    responsive: true
+                }
+            }
+            const ctx_bench = document.getElementById("benchChart").getContext("2d");
+            const linechart_bench = new Chart(
+                ctx_bench, config_bench
+            )
+
+            const config_pullup = {
+                type: "line",
+                data: {
+                    labels: {{ pullup_dates_ev | safe}},
+                    datasets: [
+                        {
+                            label: "Pullups - Reps",
+                            data: {{ pullup_ev | safe }},
+                            fill: fillChart,
+                            borderColor: 'rgb(54, 162, 235, 1)',
+                            backgroundColor: "rgb(105, 105, 105)",
+                            lineTension: 0.5
+                        },
+                    ]
+                },
+                options: {
+                    responsive: true
+                }
+            }
+            const ctx_pullup = document.getElementById("pullupChart").getContext("2d");
+            const linechart_pullup = new Chart(
+                ctx_pullup, config_pullup
+            )
+
+            
+
+            // milesChart
+
+            const config_miles = {
+                type: "line",
+                data: {
+                    labels: {{ mile_dates_list | safe}},
+                    datasets: [
+                        {
+                            label: "Mile Times",
+                            data: {{ mile_times_list | safe }},
+                            fill: fillChart,
+                            borderColor: 'rgb(54, 162, 235, 1)',
+                            backgroundColor: "rgb(105, 105, 105)",
+                            lineTension: 0.5
+                        },
+                    ]
+                },
+                options: {
+                    responsive: true
+                }
+            }
+            const ctx_miles = document.getElementById("milesChart").getContext("2d");
+            const linechart_miles = new Chart(
+                ctx_miles, config_miles
+            )
+
+        </script>
+
+    </main>
+</html>
