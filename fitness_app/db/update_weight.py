@@ -20,7 +20,7 @@ if check_weight.UPDATE_WEIGHT:
         QUERY = """
         CREATE TABLE IF NOT EXISTS weight (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            date TEXT NOT NULL,
+            date date NOT NULL,
             weight TEXT NOT NULL,
             fatmass TEXT,
             bonemass TEXT,
