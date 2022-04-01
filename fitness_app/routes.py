@@ -82,7 +82,7 @@ def get_data():
 
             # Daily weight
 
-            query_weight = "SELECT weight FROM weight;"
+            query_weight = "SELECT weight FROM weight ORDER BY date asc;"
             connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_weight, values=())
             rows_weight = cursor.fetchall()
 
@@ -91,9 +91,9 @@ def get_data():
 
             # Progress
             
-            # query_progress = "SELECT ROUND((SELECT weight FROM weight WHERE date = (SELECT MAX(date) FROM weight)) - (SELECT weight FROM weight WHERE date(date) > '2021-12-31' ORDER BY date(date) ASC LIMIT 1), 1);"
-            #connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_progress, values=())
-            rows_progress = -6.4      
+            query_progress = "SELECT ROUND((SELECT weight from weight LIMIT 1) - 241.6, 1);"
+            connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_progress, values=())
+            rows_progress = cursor.fetchone()
 
             data_dict[table]["progress"] = rows_progress
             data_dict[table]["start_date"] = datetime.datetime.strptime("2022/01/01", "%Y/%m/%d")
