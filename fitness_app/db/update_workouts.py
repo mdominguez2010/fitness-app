@@ -6,6 +6,9 @@ from drop_db import drop_tables
 from create_db import create_table
 import check_workouts
 
+
+## Leave header in csv file, this script will auto-remove ##
+
 if check_workouts.UPDATE_WORKOUTS:
 
     try:

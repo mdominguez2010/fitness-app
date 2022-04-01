@@ -6,6 +6,8 @@ from drop_db import drop_tables
 from create_db import create_table
 import check_weight
 
+## Leave header in csv file, this script will remove it before updating db ##
+
 if check_weight.UPDATE_WEIGHT:
     
     try:
@@ -108,5 +110,6 @@ if check_weight.UPDATE_WEIGHT:
         # Close db connection
         connection.close()
     
-    except:
+    except Exception as e:
         print("An exception has ocurred")
+        print(e)
