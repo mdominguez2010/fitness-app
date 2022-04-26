@@ -82,7 +82,7 @@ def get_data():
 
             # Daily weight
 
-            query_weight = "SELECT weight FROM weight;"
+            query_weight = "SELECT weight FROM weight ORDER BY date ASC;"
             connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_weight, values=())
             rows_weight = cursor.fetchall()
 
