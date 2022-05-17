@@ -31,7 +31,7 @@ def executeSQL(db_filepath, sql_query, values=None):
         
     return connection, cursor
 
-################################### IN PROGRESS ###################################
+######################################################################
 
 def get_data():
     """
@@ -82,7 +82,7 @@ def get_data():
 
             # Daily weight
 
-            query_weight = "SELECT weight FROM weight ORDER BY date ASC;"
+            query_weight = "SELECT weight FROM weight WHERE date > '2021-12-31' ORDER BY date ASC;"
             connection, cursor = executeSQL(config.DB_FILE_PATH, sql_query=query_weight, values=())
             rows_weight = cursor.fetchall()
 
@@ -173,13 +173,10 @@ def get_data():
     
     connection.commit()
     connection.close()
-    
-    # for key in data_dict.keys():
-    #     print(key + "-->" + str(data_dict[key]) + "\n")
 
     return data_dict
 
-################################### IN PROGRESS ###################################
+######################################################################
 
 @app.route("/")
 @app.route("/home")
