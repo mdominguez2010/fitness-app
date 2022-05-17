@@ -185,6 +185,23 @@ def home_page():
     return render_template("home.html")
 
 
+@app.route("/weight")
+def weight_page():
+
+    data_dict = get_data()
+    weights = data_dict["weight"]["daily_weight"]
+    dates_list = data_dict["weight"]["date"]
+    weights_list = []
+
+    for weight in weights:
+        weights_list.append(float(weight[0]))
+
+    data = dict(zip(dates_list, weights_list))
+    # print(data)
+
+    return render_template("weight.html", data = data)
+
+
 @app.route("/dashboard")
 def dashboard_page():
 
