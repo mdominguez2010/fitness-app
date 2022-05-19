@@ -97,9 +97,15 @@
 
         <script>
 
-            const fillChart = false;
+            const fillChart = true;
 
             // weightChart
+            
+            const ctx_weight = document.getElementById("weightChart").getContext("2d");
+
+            let gradient = ctx_weight.createLinearGradient(0,0,0,400);
+            gradient.addColorStop(0, 'rgba(58, 123, 213, 1');
+            gradient.addColorStop(1, 'rgba(0,210,255, 0.3)');
 
             const config_weight = {
                 type: "line",
@@ -111,7 +117,7 @@
                             data: {{ weights_list | safe }},
                             fill: fillChart,
                             borderColor: 'rgb(54, 162, 235, 1)',
-                            backgroundColor: "rgb(105, 105, 105)",
+                            backgroundColor: gradient,
                             lineTension: 0.5,
                             pointRadius: 0                            
                         },
@@ -120,21 +126,24 @@
                             label: "Goal",
                             data: {{ goal_list | safe }},
                             fill: fillChart,
-                            borderColor: 'rgb(75, 192, 192)',
-                            backgroundColor: 'rgb(75, 192, 192)',
+                            borderColor: 'rgb(162, 0, 33)',
+                            backgroundColor: 'rgb(162, 0, 33)',
                             lineTension: 0.5,
                             pointRadius: 0
                         }
                     ],
                 },
                 options: {
-                    responsive: true
+                    responsive: true,
                 }
             }
-            const ctx_weight = document.getElementById("weightChart").getContext("2d");
+
             const linechart_weight = new Chart(
                 ctx_weight, config_weight
             )
+
+            
+            
 
             // strength charts
 
@@ -148,7 +157,7 @@
                             data: {{ deadlift_ev | safe }},
                             fill: fillChart,
                             borderColor: 'rgb(54, 162, 235, 1)',
-                            backgroundColor: "rgb(105, 105, 105)",
+                            backgroundColor: gradient,
                             lineTension: 0.5,
                             pointRadius: 0
                         },
@@ -173,7 +182,7 @@
                             data: {{ backsquat_ev | safe }},
                             fill: fillChart,
                             borderColor: 'rgb(54, 162, 235, 1)',
-                            backgroundColor: "rgb(105, 105, 105)",
+                            backgroundColor: gradient,
                             lineTension: 0.5,
                             pointRadius: 0
                         },
@@ -199,7 +208,7 @@
                             data: {{ barbell_bench_ev | safe }},
                             fill: fillChart,
                             borderColor: 'rgb(54, 162, 235, 1)',
-                            backgroundColor: "rgb(105, 105, 105)",
+                            backgroundColor: gradient,
                             lineTension: 0.5,
                             pointRadius: 0
                         },
@@ -224,7 +233,7 @@
                             data: {{ pullup_ev | safe }},
                             fill: fillChart,
                             borderColor: 'rgb(54, 162, 235, 1)',
-                            backgroundColor: "rgb(105, 105, 105)",
+                            backgroundColor: gradient,
                             lineTension: 0.5,
                             pointRadius: 0
                         },
@@ -251,7 +260,7 @@
                             data: {{ mile_times_list | safe }},
                             fill: fillChart,
                             borderColor: 'rgb(54, 162, 235, 1)',
-                            backgroundColor: "rgb(105, 105, 105)",
+                            backgroundColor: gradient,
                             lineTension: 0.5,
                             pointRadius: 0
                         },
